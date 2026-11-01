@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Life on the Moving Map</title>
+<meta name="description" content="An interactive map of the Earth through 540 million years: the continents drifting, Pangaea gathering and breaking up, and 409,895 fossil finds of 24 animal groups, from trilobites to dinosaurs, whales and hominids, put back where they lived.">
+<meta property="og:title" content="Life on the moving map: 540 million years of animals on the drifting continents">
+<meta property="og:description" content="409,895 fossil occurrences from the Paleobiology Database, from trilobites to hominids, plotted at their ancient positions on the PALEOMAP continents. Watch Pangaea form and split.">
+<meta property="og:image" content="https://maps.tristanhotham.com/deep-time-life/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/deep-time-life/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Deep time: chalk paper, old-sea blue, sandstone land, Permian red. Group colours are set in the script. */
+:root{
+  --bg:#F7F4EE; --panel:#EDE8DE; --fg:#1F1D22; --muted:#6A6570; --rule:#E0D9CC; --card:#FFFDF8; --border:#D0C7B6;
+  --hot:#B0352B; --cool:#2D6A8E; --gold:#C98A12; --land:#E6D8BC; --landedge:#BFA982; --sea:#DCE7EB; --seaedge:#B9CBD3; --grat:#C3D3DA;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141619; --panel:#1E2125; --fg:#ECE8E1; --muted:#A39FA8; --rule:#33373D; --card:#1A1D21; --border:#454A52;
+  --hot:#E57466; --cool:#7FB3D3; --gold:#E9B24A; --land:#4A4336; --landedge:#6E6450; --sea:#18242B; --seaedge:#2A3A44; --grat:#24343D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141619; --panel:#1E2125; --fg:#ECE8E1; --muted:#A39FA8; --rule:#33373D; --card:#1A1D21; --border:#454A52;
+  --hot:#E57466; --cool:#7FB3D3; --gold:#E9B24A; --land:#4A4336; --landedge:#6E6450; --sea:#18242B; --seaedge:#2A3A44; --grat:#24343D; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:700px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1180px,calc(100vw - 32px));margin-left:calc((100% - min(1180px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--hot);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--hot);color:#fff;padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(44px,11vw,96px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 .a{color:var(--hot)} h1 .b{color:var(--cool)}
+.mark{width:clamp(78px,16vw,128px);height:auto;display:block}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:56ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:54px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--hot);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--hot)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(22px,4.4vw,32px)/1 var(--display);letter-spacing:-.01em}
+.stats b.h{color:var(--hot)} .stats b.c{color:var(--cool)} .stats b.g{color:var(--gold)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:10.5px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:290px;z-index:100001;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.scrollrow{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px;max-width:100%}
+.scrollrow .btn{flex:0 0 auto;white-space:nowrap}
+.ctl-l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex:0 0 auto;align-self:center}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.btn.ex{border-color:var(--hot);color:var(--hot)}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.searchbox{position:relative;flex:1 1 260px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.side{background:var(--card);border:1px solid var(--border);padding:12px 12px 10px;font:400 13px/1.45 var(--mono);max-height:640px;overflow:auto}
+@media (max-width:900px){.side{max-height:none}}
+.side h4{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.side h4:first-child{margin-top:2px}
+.side .big{font:800 26px/1.1 var(--display);margin:2px 0 4px}
+.side .sub{color:var(--muted);font-size:12px;margin:0 0 8px}
+.side table{width:100%;border-collapse:collapse;margin:4px 0 6px}
+.side td{padding:3px 4px 3px 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+.side td.num{text-align:right;white-space:nowrap;width:1%}
+.side td.bar{width:38%}
+.side td.bar i{display:block;height:8px;border-radius:1px}
+.side tr.off{opacity:.35}
+.side tr.gr{cursor:pointer}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.18)}
+.go{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px;background:none;border:0;padding:0;font:inherit;color:inherit}
+/* the map */
+.mapbox{position:relative;height:min(64vh,600px);min-height:340px;border:1px solid var(--border);background:var(--bg);border-radius:2px;overflow:hidden;touch-action:none}
+@media (max-width:600px){.mapbox{height:calc(49vw + 128px);min-height:300px}.zbtn{display:none}}
+.mapbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+.mapbox canvas.hand{cursor:pointer}
+.mapnote{position:absolute;left:10px;top:10px;z-index:5;background:color-mix(in srgb,var(--card) 90%,transparent);border:1px solid var(--border);border-radius:3px;padding:7px 10px;font:400 12px/1.35 var(--mono);max-width:min(330px,58%);box-shadow:0 1px 4px rgba(0,0,0,.12);pointer-events:none}
+.mapnote b{font:800 22px/1 var(--display);display:block;margin-bottom:3px}
+.mapnote .x{color:var(--hot);font-weight:500}
+@media (max-width:600px){.mapnote{font-size:10.5px;padding:5px 7px;max-width:62%;left:6px;top:6px}.mapnote b{font-size:15px}.mapctl{right:6px;top:6px}.mapbar{left:6px;right:6px;bottom:6px;padding:4px 6px;gap:6px}.play{padding:7px 9px}}
+.mapbar{position:absolute;left:10px;right:10px;bottom:10px;z-index:6;display:flex;gap:10px;align-items:center;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--border);border-radius:3px;padding:6px 10px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.mapbar input[type=range]{flex:1 1 auto;min-width:0;accent-color:var(--hot);direction:ltr}
+.mapbar .age{font:500 13px/1 var(--mono);white-space:nowrap;min-width:64px;text-align:right}
+.play{font:600 13px/1 var(--mono);background:var(--hot);color:#fff;border:0;border-radius:3px;padding:8px 12px;min-height:34px;cursor:pointer;white-space:nowrap}
+.mapctl{position:absolute;right:10px;top:10px;z-index:7;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.mapctl .row1{display:flex;gap:6px;align-items:center}
+.zbtn{width:34px;height:34px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--fg);font:600 18px/1 var(--mono);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:10px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12);min-height:34px}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;width:270px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono);max-height:calc(100% - 120px);overflow:auto}
+.mapbox:fullscreen .lyrPanel,.mapbox.mfs-fake .lyrPanel{max-height:70vh}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{margin:0 0 8px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.lyrPanel label.b{font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel .sub{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px;margin-top:3px}
+.lyrPanel .hd{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 7px;border-top:1px solid var(--rule);padding-top:9px}
+.lyrPanel .seg{display:flex;gap:0;margin:2px 0 4px}
+.lyrPanel .seg button{flex:1;font:500 11px/1 var(--mono);padding:7px 4px;border:1px solid var(--border);background:var(--bg);color:var(--fg);cursor:pointer}
+.lyrPanel .seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.lyrPanel .gl label{font-weight:400;margin:0 0 5px}
+.lyrPanel .gl small{color:var(--muted);margin-left:auto}
+.lyrPanel .mini{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;margin-right:10px}
+.mfs-host.mapbox .mfs-btn{top:auto;bottom:62px;left:10px;right:auto}
+@media (max-width:600px){.mfs-host.mapbox .mfs-btn{bottom:54px;left:6px;width:30px;height:30px}}
+.pop{position:absolute;z-index:8;background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:4px;box-shadow:0 3px 14px rgba(0,0,0,.22);padding:10px 12px 10px;font:400 12px/1.45 var(--mono);width:min(300px,calc(100% - 24px));display:none}
+@media (max-width:600px){.pop{max-height:calc(100% - 64px);overflow:auto;font-size:11.5px;padding:8px 10px}.pop h5{font-size:14px}}
+.pop .cl{position:absolute;right:6px;top:4px;border:0;background:none;color:var(--muted);font:500 18px/1 var(--mono);cursor:pointer;padding:2px 4px}
+.pop h5{font:600 16px/1.2 var(--display);margin:0 22px 4px 0}
+.pop p{margin:0 0 5px}
+.pop .m{color:var(--muted)}
+.pop .tx{margin-top:4px}
+.pop .tx a{white-space:nowrap}
+.timeline{margin-top:10px;user-select:none;touch-action:pan-y}
+.timeline svg{display:block;width:100%;height:auto;cursor:pointer}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:6px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--hot);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:20px 0}
+@media (max-width:1000px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-top:6px solid var(--hot);padding:12px 12px;font:400 12px/1.45 var(--mono)}
+.card b{font:600 17px/1.2 var(--display);display:block;margin-bottom:2px}
+.card .big{font:900 30px/1.05 var(--display);margin:6px 0 2px;color:var(--hot)}
+.card .big span{color:var(--muted);font:400 12px/1.3 var(--mono);display:block;margin-top:4px}
+.card .rows{margin-top:8px}
+.card .r{display:grid;grid-template-columns:1fr 34px;gap:4px;align-items:center;margin:3px 0}
+.card .r em{font-style:normal;display:block;font-size:11px}
+.card .r i{display:block;height:6px;border-radius:1px;margin-top:2px}
+.card .r span{text-align:right;font-size:11px}
+.card button{margin-top:10px}
+.mini-maps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.mini-maps{grid-template-columns:1fr}}
+.mini-maps figure{margin:0}
+.mini-maps canvas{width:100%;height:auto;display:block;border:1px solid var(--border);background:var(--bg)}
+.mini-maps figcaption{font:400 12px/1.4 var(--mono);color:var(--muted);margin-top:4px}
+.mini-maps figcaption b{color:var(--fg);font-weight:500}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--hot);border-color:var(--hot);color:#fff}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+@media print{.theme,.controls,.mapbar{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>Deep time</span><span>540 million years, 2026</span></div>
+<header class="hero">
+  <h1>Life on the <span class="a">moving</span> <span class="b">map</span></h1>
+  <svg class="mark" viewBox="0 0 120 120" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">Half a billion years of animals, from trilobites to us, put back where they lived. 409,895 fossil finds from the Paleobiology Database, each carried to its ancient latitude and longitude on the drifting continents of the PALEOMAP plate model, so you can watch Pangaea gather and break apart and see who lived on it.</p>
+</header>
+<div class="byline">Dr Tristan Hotham · Independent researcher · 2026 · Data: The Paleobiology Database; PALEOMAP (C. R. Scotese) via the GPlates Web Service; Natural Earth</div>
+
+<div class="stats">
+  <div><b class="h">409,895</b><span>fossil occurrences in 98,147 collections, placed at their ancient positions</span></div>
+  <div><b class="c">30,959</b><span>genera in 24 animal groups, from trilobites to hominids</span></div>
+  <div><b class="g">90%</b><span>of the land joined in one block at the height of Pangaea, 180 million years ago (today: 54%)</span></div>
+  <div><b>66%</b><span>of the finds come from North America and Europe, which hold 32% of the land</span></div>
+</div>
+
+<p class="lede">Every fossil has two addresses. One is where it was dug up: a quarry in Montana, a sea cliff in Dorset, a dry riverbed in Kenya. The other is where the animal actually lived, and for anything more than a few million years old that was somewhere else. Continents creep a few centimetres a year, and over hundreds of millions of years that adds up to thousands of kilometres. The fossils found in Britain tell the story: its Silurian sea creatures lived around 23 degrees south of the equator, its coal-swamp animals of 300 to 320 million years ago lived on it (the median collection lies within a degree of it), and its early dinosaurs and ichthyosaurs at about 38 degrees north, the latitude of the Mediterranean today.</p>
+<p>The Paleobiology Database, a huge shared catalogue built over decades by hundreds of palaeontologists, records both addresses. For each collection of fossils it gives the present-day place and, using the PALEOMAP plate model of Christopher Scotese, the position on the ancient Earth. I took the records of 24 animal groups that people ask about, from trilobites and sea scorpions through the dinosaurs to whales, elephants and our own family, and put them on a map of the moving continents.</p>
+
+<h2><span class="n">01 · The map</span>Earth through time</h2>
+<div class="bleed" id="atlas">
+<div class="controls">
+  <div class="scrollrow" id="jumpRow"><span class="ctl-l">Jump to</span></div>
+</div>
+<div class="controls">
+  <div class="searchbox"><input type="search" id="q" placeholder="Find a genus: Tyrannosaurus, Diplodocus, Homo, Mammuthus..." aria-label="Find a genus" autocomplete="off"><ul class="suggest" id="sug" role="listbox"></ul></div>
+</div>
+<div class="mapgrid">
+  <div>
+    <div class="mapbox" id="mapbox" data-fullscreen-map role="application" aria-label="Map of the Earth through time with fossil finds">
+      <canvas id="mapc"></canvas>
+      <div class="mapnote" id="mapnote"></div>
+      <div class="mapctl" id="mapctl">
+        <div class="row1"><button class="zbtn" id="zin" aria-label="Zoom in">+</button><button class="zbtn" id="zout" aria-label="Zoom out">&#8722;</button><button class="lyrBtn" id="lyrBtn" aria-expanded="false" aria-controls="lyrPanel">Layers</button></div>
+        <div class="lyrPanel" id="lyrPanel" hidden></div>
+      </div>
+      <div class="pop" id="pop" role="dialog" aria-live="polite"></div>
+      <div class="mapbar"><button class="play" id="play" aria-label="Play through time">&#9654; Play</button><input type="range" id="slider" min="0" max="540" step="1" aria-label="Millions of years ago"><span class="age" id="ageLab"></span></div>
+    </div>
+    <div class="timeline" id="timeline" aria-label="Geological timeline: click to move the map"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="side" id="side" aria-live="polite"></div>
+</div>
+<p class="src" id="mapsrc">Fossils: The Paleobiology Database (paleobiodb.org, CC BY 4.0), data accessed 2026, palaeo-positions from the PALEOMAP model. Continents: PALEOMAP coastlines and blocks (C. R. Scotese, PALEOMAP Project), reconstructed with the GPlates Web Service (EarthByte, University of Sydney). Equal Earth projection. Each dot is a 1 degree square with finds of one group, sized by number of occurrences.</p>
+</div>
+<p>Press play to run from 540 million years ago to today, drag the slider or the timeline, or jump to a key moment. Each frame shows the fossils dated within 5 million years of the moment shown (by the midpoint of each collection's age range); at the five mass extinctions it shows the 10 million years before. Click a dot to see what was found there, when, and where that patch of ancient ground is today. The layers panel switches every dot between its ancient position and today's, turns groups on and off, and changes the background.</p>
+
+<h2><span class="n">02 · Pangaea</span>When nearly all the land was one</h2>
+<p>For about the first half of this story the continents were scattered: Gondwana, a giant made of today's South America, Africa, Antarctica, Australia and India, lay across the south, with smaller continents such as Laurentia (North America) and Baltica (northern Europe) around the tropics. From about 335 million years ago they began to collide, and Pangaea came together in stages through the Carboniferous and Permian. To put a number on it I merged the PALEOMAP blocks at each age into joined land masses (closing gaps narrower than about a third of a degree) and measured the largest land mass as a share of all the land.</p>
+<div class="figure"><p class="fig-h">How much of the land was joined in one block</p><p class="fig-sub">Largest connected land mass as a share of all land in the PALEOMAP outlines, 66 ages from 540 Ma to today. Hover for values; click to move the map there.</p><div class="chart" id="panChart"></div></div>
+<p>By 270 million years ago 88% of the land was one block, and it stayed above 85% for 90 million years, peaking at 90.2% around 180 million years ago, in the Early Jurassic. Then it came apart: 72% at 170 million years ago, 50% at 150 as the central Atlantic opened, and 23% by 100 million years ago, with the South Atlantic open between South America and Africa. Today the biggest block, Africa joined to Eurasia, holds 54%.</p>
+<p>One caution about the outlines. They are today's coastlines and continental blocks carried back in time by the plate model, not ancient shorelines. Sea level rose and fell by hundreds of metres, and at times shallow seas flooded much of the continents (a seaway split North America in two for much of the Cretaceous), so some dots that sit on 'land' here were in fact on a sea floor. Many of the oldest fossils, trilobites and ammonites above all, are sea creatures for exactly that reason.</p>
+
+<h2><span class="n">03 · Who ruled when</span>The record, group by group</h2>
+<p>Counting fossils is not counting animals. A group with hard shells that lived in shallow seas, like ammonites, fossilises far more readily than one that lived in forests. So the chart below asks a simpler question for each group: when is it most diverse in the record? It counts the distinct genera found in each 5 million years and scales each group to its own peak, so a pale lane is a quiet time for that group, not necessarily a rare animal.</p>
+<div class="figure"><p class="fig-h">When each group was at its most diverse</p><p class="fig-sub">Distinct genera per 5 million years, each lane scaled to its own peak (or switch to each group's share of all genera). Dashed lines: the five mass extinctions. Hover for numbers.</p>
+<div class="controls"><div class="scrollrow" id="laneMode"><span class="ctl-l">Scale</span><button class="btn" data-m="own" aria-pressed="true">Each to its own peak</button><button class="btn" data-m="share" aria-pressed="false">Share of all genera</button></div></div>
+<div class="chart" id="laneChart"></div></div>
+<p>By that measure trilobites were the dominant group of the early seas: they make up 57% of all genera from the Paleozoic era in these groups, peaking between 495 and 490 million years ago. In the Mesozoic the largest share is not the dinosaurs but the insects (42%), and in the Cenozoic the mammals (39%). Insects are absurdly diverse (12,832 genera in this data), and their record is lumpy: a quarter of all insect finds (25%) come from just 50 of 5,580 collections, rare deposits where delicate bodies were preserved. Ammonites, with 2,790 genera, are the other great presence of the Mesozoic seas, until the very end of the Cretaceous.</p>
+
+<h2><span class="n">04 · Dinosaurs</span>From one continent to many</h2>
+<p>The data hold 20,231 occurrences of dinosaurs other than birds, in 1,588 genera: 693 genera of theropods (the meat-eaters and their kin), 380 of sauropods and their relatives (the long-necked plant-eaters) and 471 of ornithischians (the horned, armoured and duck-billed plant-eaters), plus 1,596 finds identified only as 'dinosaur'. The oldest records are from the Triassic, and the busiest 5 million years in the record is 80 to 75 million years ago, with 316 genera, 75% of their finds from North America, where rock of that age is unusually well exposed and well searched.</p>
+<div class="figure"><p class="fig-h">Dinosaur genera through time</p><p class="fig-sub">Distinct genera per 5 million years, stacked by group; birds as a line. Ages are collection midpoints. Hover for numbers.</p><div class="chart" id="dinoChart"></div></div>
+<p>Dinosaurs appeared on Pangaea and spent their first 50 million years or so on one connected land mass, then watched it break apart. That shows in where their genera turn up. Of the 203 genera from the Late Triassic to the Early Jurassic, 11.3% (about 1 in 9) are found on more than one of today's continents. Of the 1,180 Cretaceous genera only 5.1% are (1 in 20): the separating continents grew their own faunas. Every tyrannosaur and horned dinosaur (ceratopsid) in the data is from North America, Asia or Europe, while 88% of abelisaur finds are from the southern continents and India.</p>
+<div class="figure"><p class="fig-h">Dinosaurs on Pangaea, and after it</p><p class="fig-sub">Non-bird dinosaur finds at three moments, coloured by group, on the continents of that time.</p><div class="mini-maps" id="miniMaps"></div></div>
+<div class="figure"><p class="fig-h">Genera found on more than one of today's continents</p><p class="fig-sub">Share of dinosaur genera (not birds) in each interval found on two or more present-day continents (bars), against the share of land in the largest land mass (line).</p><div class="chart" id="cosmoChart"></div></div>
+<p>Caution is needed. More genera are named from the Cretaceous, palaeontologists in different countries sometimes give similar animals different names, and a genus 'on two continents' may be two closely related animals. But the drop from about 1 in 9 to 1 in 20 is the direction you would expect as an ocean opens between populations. Dinosaurs also lived much nearer the poles than the word 'reptile' suggests: 245 dinosaur collections lay more than 60 degrees from the equator, and 53 more than 75 degrees, most of them in Alaska (23) and in Victoria, Australia (17), places that had weeks or months of winter darkness.</p>
+
+<h2><span class="n">05 · Latitude</span>Tropics, poles and drifting ground</h2>
+<p>Because the palaeo-positions are known, we can ask how far from the equator each group lived. The chart shows the middle 80% of each group's collections by palaeo-latitude, every 10 million years. Trilobite collections lay a median of 20 degrees from the equator; turtles 41; insects 43. Hominids sit at 8 degrees: 88% of their record is from Africa and Asia, most of it in the tropics. Much of this is the shape of the record rather than of life: most of today's fossil hunting is in the northern mid-latitudes, so recent groups look northern too.</p>
+<div class="figure"><p class="fig-h">How far from the equator each group lived</p><p class="fig-sub">Palaeo-latitude of collections per 10 million years: median (line) and the middle 80% (band). Only time steps with at least 5 collections. Pick a group.</p>
+<div class="controls"><div class="scrollrow" id="latRow"><span class="ctl-l">Group</span></div></div>
+<div class="chart" id="latChart"></div></div>
+
+<h2><span class="n">06 · Five extinctions</span>What was lost, in these groups</h2>
+<p>Five times in the last half-billion years a large part of life vanished in a geological moment. A crude way to see them in this data: take the genera known from at least two collections that were around in the 10 million years before each extinction, and ask how many are never found again. At an ordinary 10 million year step the median is 37% (genera come and go, and many are rarely found), with 1 step in 10 above 63%. The end-Permian, the 'Great Dying', stands out at 74%. At the end of the Cretaceous every genus of non-bird dinosaur, plesiosaur and mosasaur in the data is last seen before the line, and 97% of ammonites, while insects (1.5%) sail through.</p>
+<div class="bleed"><div class="cards" id="extCards"></div></div>
+<p>The end-Triassic extinction barely registers here (33%), even though it is one of the five: much of what it killed (reef animals, many marine reptiles and the crocodile-line archosaurs that rivalled early dinosaurs) is outside these groups or thinly recorded. The groups chosen and the patchy record shape every number on this page.</p>
+
+<h2><span class="n">07 · The gaps</span>A map of where palaeontologists dig</h2>
+<p>The fossil record is not a random sample of ancient life. It depends on which rocks of each age survive at the surface, and on where people have looked. North America and Europe hold 32% of the world's land but 66% of the finds here; the United States alone has 28%. Africa has 8.5% and South America 6.5%. The ancient continents look busiest where the modern ones have the most universities, museums and roads cut through rock. Dots are records, not abundance: an empty ocean or continent on the map usually means no rock, or no one looking, rather than no life.</p>
+<div class="two">
+<div class="figure"><p class="fig-h">Where the finds are today</p><p class="fig-sub">Share of 409,895 occurrences by present-day continent.</p><div class="chart" id="contChart"></div></div>
+<div class="figure"><p class="fig-h">North America and Europe through time</p><p class="fig-sub">Their share of the occurrences in each 5 million years.</p><div class="chart" id="naeuChart"></div></div>
+</div>
+<p class="pull">A dot on this map is a place where rock of the right age reached the surface and someone went to look.</p>
+
+<h2><span class="n">08 · How I did this</span>Methods and caveats</h2>
+<p><b>Fossils.</b> I downloaded every occurrence in the Paleobiology Database for 23 named groups through its data service (480,977 rows), asking for palaeo-coordinates from the PALEOMAP model at each collection's midpoint age. The groups overlap (the dinosaurs include the birds, the mammals include the whales), so every occurrence is kept once, in its most specific group (47,354 repeats removed). Three names reach further than meant and were corrected: 'Proboscidea' also matches an insect name (5,679 insect records dropped from the elephants, which the insect group already holds); the database places frogs, salamanders and caecilians inside Temnospondyli, so I split these 4,301 records off as their own group; and 1,138 records of Mesozoic and living birds that came back under 'theropods, not birds' were moved to the birds. 5 non-bird dinosaur records dated after the end-Cretaceous extinction were left out.</p>
+<p><b>Ages and positions.</b> Each occurrence takes the midpoint of its collection's age range. Collections dated only to within more than 25 million years (3,155 occurrences) are left out of the analysis. PALEOMAP cannot place some collections; for the 37,781 occurrences younger than 1 million years I used the present position (plates move a few tens of kilometres at most in that time), and 14,889 older occurrences without a palaeo-position are left out. That leaves 409,895 occurrences in 98,147 collections from 211 present-day countries. On the map the fossils of each frame are binned by group into 1 degree squares of palaeo-latitude and longitude. The positions are for each collection's own age, which can differ from the frame's age by up to 5 million years, so dots can sit a little off the outline of that frame. Present-day places come from Natural Earth countries and provinces.</p>
+<p><b>Diversity.</b> Because ages are the midpoints of ranges that often span a whole geological stage, the 5 million year bins fill unevenly, and one, 225 to 230 million years ago, holds no midpoints at all; it shows as a gap in the charts. Genera are counted as distinct genus names found in each 5 million years, with no correction for how much rock or effort each interval has. For the extinctions, a genus is 'last seen' before a boundary if no collection younger than the boundary has it; one-off finds are left out. These are simple counts, chosen to be transparent rather than to give the best estimate of true diversity, which needs methods that correct for sampling.</p>
+<p><b>What this is not.</b> It is not a census of ancient life. The record is dominated by animals with hard parts, by marine sediments, and by the places and ages where rock is exposed and has been studied. The coastlines are present-day outlines moved by a plate model, which is itself a reconstruction with uncertainty that grows with age. The time scale follows the International Commission on Stratigraphy, rounded.</p>
+<details><summary>Sources and licences</summary>
+<ul>
+<li>The Paleobiology Database (paleobiodb.org), data accessed 2026, via the data service, version 1.2 (Peters and McClennen 2016). CC BY 4.0. Palaeo-coordinates computed by the database with the PALEOMAP model. The derived tables in this study's data folder are shared under CC BY 4.0 with this credit.</li>
+<li>PALEOMAP plate model and coastlines: C. R. Scotese, PALEOMAP Project (Scotese 2016; Scotese and Wright 2018), reconstructed with the GPlates Web Service (gws.gplates.org), EarthByte group, University of Sydney (Müller et al. 2018). The outlines are simplified here for the web. I could not check PALEOMAP's own reuse terms from the build environment; they are credited in full here, and anyone reusing the outlines should check the PALEOMAP Project's terms.</li>
+<li>Natural Earth countries and states and provinces (public domain), for present-day places.</li>
+<li>Geological time scale: International Commission on Stratigraphy, International Chronostratigraphic Chart (2023 and later versions), rounded.</li>
+<li>Code: MIT. Text, figures and derived data: CC BY 4.0.</li>
+</ul></details>
+
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23856870">Read the paper</a><a href="https://github.com/Tristan-Hotham/deep-time-life">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/31/deep-time-life/">Blog post</a><a href="https://blog.tristanhotham.com/">Blog home</a></div>
+
+<footer>
+<p>Dr Tristan Hotham, Independent researcher. ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a>.</p>
+<p>Cite as: Hotham, T. (2026) Life on the moving map: 540 million years of animal fossils on the drifting continents, from the Paleobiology Database and the PALEOMAP plate model. Zenodo. <a href="https://doi.org/10.5281/zenodo.23856870">10.5281/zenodo.23856870</a></p>
+<p>Fossil data: The Paleobiology Database (paleobiodb.org), data accessed 2026, CC BY 4.0. Continents: PALEOMAP (C. R. Scotese) via the GPlates Web Service (EarthByte, University of Sydney). Licence: code MIT; text, figures and derived data CC BY 4.0.</p>
+<p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">&#9680;</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const R = {"meta":{"accessed":"2026","page":"https://maps.tristanhotham.com/deep-time-life/","repo":"https://github.com/Tristan-Hotham/deep-time-life","slug":"deep-time-life"},"records":{"rows_raw":480977,"occ_unique":427944,"dupes":47354,"pro_not_mammal":5679,"tem_to_lis":4301,"the_to_ave":1138,"dino_late":5,"paleo_missing":52670,"paleo_filled":37781,"dropped_no_paleo":14889,"with_paleo":413050,"wide_age":3155,"n":409895,"collections":98147,"genera":30959,"with_genus_pct":87.5,"countries":211,"n_groups":24,"n_queries":23,"max_range":25.0,"collections_rows":121840},"sampling":{"by_continent":[{"name":"North America","n":146437,"pct":35.7},{"name":"Europe","n":122635,"pct":29.9},{"name":"Asia","n":64917,"pct":15.8},{"name":"Africa","n":34651,"pct":8.5},{"name":"South America","n":26787,"pct":6.5},{"name":"Oceania","n":12358,"pct":3.0},{"name":"Antarctica","n":1617,"pct":0.4},{"name":"Ocean","n":493,"pct":0.1}],"na_eu_pct":65.6,"africa_pct":8.5,"sam_pct":6.5,"top_countries":[{"name":"United States of America","n":113692,"pct":27.7},{"name":"France","n":23172,"pct":5.7},{"name":"Russia","n":22989,"pct":5.6},{"name":"Canada","n":21977,"pct":5.4},{"name":"China","n":21438,"pct":5.2},{"name":"Germany","n":15372,"pct":3.8},{"name":"United Kingdom","n":15045,"pct":3.7},{"name":"Argentina","n":13360,"pct":3.3},{"name":"Spain","n":12730,"pct":3.1},{"name":"Australia","n":8112,"pct":2.0}],"usa_pct":27.7,"na_eu_by_era":{"Paleozoic":67.0,"Mesozoic":62.4,"Cenozoic":67.4},"na_eu_land_pct":32.2},"groups":{"tri":{"k":"tri","short":"Trilobites","name":"Trilobites (Trilobita)","c":"#B5523B","n":53823,"coll":16764,"genera":2674,"oldest":529.4,"youngest":253.0,"first":518.5,"last":265.6,"peak_bin":[490.0,495.0],"peak_genera":456,"top_country":"United States of America","top_country_pct":28.7,"na_eu_pct":71.9},"eur":{"k":"eur","short":"Sea scorpions","name":"Sea scorpions (Eurypterida)","c":"#E39BB0","n":595,"coll":319,"genera":70,"oldest":463.8,"youngest":253.0,"first":455.2,"last":279.5,"peak_bin":[420.0,425.0],"peak_genera":34,"top_country":"United States of America","top_country_pct":33.9,"na_eu_pct":88.9},"pla":{"k":"pla","short":"Armoured fish","name":"Armoured fish (placoderms)","c":"#56677A","n":1004,"coll":477,"genera":272,"oldest":435.8,"youngest":203.6,"first":428.6,"last":352.8,"peak_bin":[385.0,390.0],"peak_genera":54,"top_country":"Australia","top_country_pct":14.5,"na_eu_pct":62.6},"amm":{"k":"amm","short":"Ammonites","name":"Ammonites and kin (Ammonoidea)","c":"#A8841C","n":85962,"coll":29520,"genera":2790,"oldest":411.8,"youngest":61.0,"first":399.3,"last":69.1,"peak_bin":[245.0,250.0],"peak_genera":313,"top_country":"United States of America","top_country_pct":14.9,"na_eu_pct":63.4},"ela":{"k":"ela","short":"Sharks and rays","name":"Sharks and rays (Elasmobranchii)","c":"#1F6FB4","n":24821,"coll":5506,"genera":632,"oldest":416.3,"youngest":0.0,"first":338.5,"last":0.1,"peak_bin":[40.0,45.0],"peak_genera":153,"top_country":"United States of America","top_country_pct":22.7,"na_eu_pct":68.3},"ins":{"k":"ins","short":"Insects","name":"Insects (Insecta)","c":"#7C8C2A","n":50489,"coll":5580,"genera":12832,"oldest":470.2,"youngest":0.0,"first":317.8,"last":0.0,"peak_bin":[35.0,40.0],"peak_genera":3079,"top_country":"Russia","top_country_pct":22.8,"na_eu_pct":65.0},"tem":{"k":"tem","short":"Temnospondyls","name":"Temnospondyls (early amphibians)","c":"#3BA24A","n":1738,"coll":1068,"genera":280,"oldest":338.5,"youngest":91.8,"first":333.1,"last":120.5,"peak_bin":[245.0,250.0],"peak_genera":63,"top_country":"United States of America","top_country_pct":35.0,"na_eu_pct":80.4},"syn":{"k":"syn","short":"Early synapsids","name":"Early synapsids (mammal forerunners)","c":"#9B7BC4","n":3137,"coll":1329,"genera":564,"oldest":317.8,"youngest":59.2,"first":308.6,"last":117.3,"peak_bin":[255.0,260.0],"peak_genera":152,"top_country":"South Africa","top_country_pct":46.0,"na_eu_pct":31.2},"lis":{"k":"lis","short":"Frogs and salamanders","name":"Frogs and salamanders (Lissamphibia)","c":"#5CC98B","n":4229,"coll":1654,"genera":239,"oldest":250.3,"youngest":0.0,"first":191.8,"last":0.0,"peak_bin":[0.0,5.0],"peak_genera":74,"top_country":"United States of America","top_country_pct":36.7,"na_eu_pct":84.3},"tes":{"k":"tes","short":"Turtles","name":"Turtles and kin (Testudinata)","c":"#A9C23F","n":10839,"coll":6331,"genera":572,"oldest":247.8,"youngest":0.0,"first":216.5,"last":0.0,"peak_bin":[0.0,5.0],"peak_genera":105,"top_country":"United States of America","top_country_pct":41.0,"na_eu_pct":69.9},"ich":{"k":"ich","short":"Ichthyosaurs","name":"Ichthyosaurs (Ichthyosauromorpha)","c":"#22B5C9","n":669,"coll":516,"genera":87,"oldest":250.3,"youngest":97.2,"first":249.7,"last":97.2,"peak_bin":[240.0,245.0],"peak_genera":18,"top_country":"United Kingdom","top_country_pct":21.1,"na_eu_pct":77.0},"cro":{"k":"cro","short":"Crocodile relatives","name":"Crocodiles and relatives (Crocodylomorpha)","c":"#1E6B53","n":5397,"coll":3854,"genera":401,"oldest":232.2,"youngest":0.0,"first":232.2,"last":0.0,"peak_bin":[65.0,70.0],"peak_genera":41,"top_country":"United States of America","top_country_pct":28.7,"na_eu_pct":59.1},"ple":{"k":"ple","short":"Plesiosaurs","name":"Plesiosaurs (Plesiosauria)","c":"#123F73","n":1138,"coll":859,"genera":130,"oldest":224.2,"youngest":64.1,"first":207.1,"last":69.1,"peak_bin":[65.0,70.0],"peak_genera":19,"top_country":"United Kingdom","top_country_pct":25.4,"na_eu_pct":67.8},"ptr":{"k":"ptr","short":"Pterosaurs","name":"Pterosaurs (Pterosauria)","c":"#F08BC0","n":1105,"coll":785,"genera":202,"oldest":232.2,"youngest":69.1,"first":231.8,"last":69.1,"peak_bin":[115.0,120.0],"peak_genera":39,"top_country":"United States of America","top_country_pct":14.5,"na_eu_pct":60.9},"the":{"k":"the","short":"Theropods","name":"Theropods, not birds (Theropoda)","c":"#D7262B","n":8035,"coll":4673,"genera":693,"oldest":249.7,"youngest":66.9,"first":242.0,"last":69.1,"peak_bin":[65.0,70.0],"peak_genera":141,"top_country":"United States of America","top_country_pct":31.3,"na_eu_pct":60.5},"sau":{"k":"sau","short":"Sauropods","name":"Sauropods and relatives (Sauropodomorpha)","c":"#8E1F55","n":3842,"coll":2952,"genera":380,"oldest":244.2,"youngest":69.1,"first":232.2,"last":69.1,"peak_bin":[65.0,70.0],"peak_genera":46,"top_country":"United States of America","top_country_pct":19.1,"na_eu_pct":46.5},"orn":{"k":"orn","short":"Ornithischians","name":"Ornithischians (Ornithischia)","c":"#EF7D27","n":6758,"coll":4737,"genera":471,"oldest":244.2,"youngest":66.9,"first":232.2,"last":69.1,"peak_bin":[75.0,80.0],"peak_genera":149,"top_country":"United States of America","top_country_pct":39.7,"na_eu_pct":76.1},"din":{"k":"din","short":"Other dinosaurs","name":"Dinosaurs not identified further","c":"#C9A3A0","n":1596,"coll":1467,"genera":44,"oldest":249.5,"youngest":66.9,"first":248.0,"last":69.1,"peak_bin":[200.0,205.0],"peak_genera":11,"top_country":"United States of America","top_country_pct":29.1,"na_eu_pct":58.0},"mam":{"k":"mam","short":"Mammals","name":"Mammals, other (Mammalia)","c":"#3E3A40","n":116607,"coll":19636,"genera":5648,"oldest":238.2,"youngest":0.0,"first":148.9,"last":0.0,"peak_bin":[0.0,5.0],"peak_genera":1495,"top_country":"United States of America","top_country_pct":42.6,"na_eu_pct":65.9},"ave":{"k":"ave","short":"Birds","name":"Birds (Aves)","c":"#F2BE00","n":16205,"coll":3713,"genera":1421,"oldest":158.2,"youngest":0.0,"first":123.6,"last":0.0,"peak_bin":[0.0,5.0],"peak_genera":828,"top_country":"United States of America","top_country_pct":29.7,"na_eu_pct":58.5},"mos":{"k":"mos","short":"Mosasaurs","name":"Mosasaurs (Mosasauridae)","c":"#6B3FA0","n":832,"coll":518,"genera":44,"oldest":97.2,"youngest":64.1,"first":97.2,"last":66.9,"peak_bin":[65.0,70.0],"peak_genera":29,"top_country":"United States of America","top_country_pct":36.7,"na_eu_pct":63.6},"pro":{"k":"pro","short":"Elephants","name":"Elephants and relatives (Proboscidea)","c":"#8A6F5C","n":4322,"coll":3390,"genera":61,"oldest":57.6,"youngest":0.0,"first":49.8,"last":0.0,"peak_bin":[10.0,15.0],"peak_genera":32,"top_country":"United States of America","top_country_pct":31.5,"na_eu_pct":56.9},"cet":{"k":"cet","short":"Whales","name":"Whales and dolphins (Cetacea)","c":"#1AA39A","n":6138,"coll":3752,"genera":440,"oldest":52.0,"youngest":0.0,"first":45.0,"last":0.0,"peak_bin":[5.0,10.0],"peak_genera":151,"top_country":"United States of America","top_country_pct":21.5,"na_eu_pct":68.2},"hom":{"k":"hom","short":"Hominids","name":"Hominids (great apes and humans)","c":"#E8452C","n":614,"coll":474,"genera":21,"oldest":19.5,"youngest":0.0,"first":18.2,"last":0.0,"peak_bin":[5.0,10.0],"peak_genera":11,"top_country":"Kenya","top_country_pct":29.5,"na_eu_pct":9.4}},"group_order":["tri","eur","pla","amm","ela","tem","ins","syn","ich","din","the","cro","sau","orn","ptr","tes","ple","lis","mam","ave","mos","pro","cet","hom"],"largest_group":"mam","smallest_group":"eur","empty_bins":[225],"leaders":{"Paleozoic":{"k":"tri","pct":56.8},"Mesozoic":{"k":"ins","pct":41.7},"Cenozoic":{"k":"mam","pct":39.3}},"lead_runs":[{"k":"tri","old":520.0,"young":385.0},{"k":"pla","old":385.0,"young":375.0},{"k":"amm","old":375.0,"young":360.0},{"k":"tri","old":360.0,"young":335.0},{"k":"amm","old":335.0,"young":320.0},{"k":"ins","old":320.0,"young":295.0},{"k":"tem","old":295.0,"young":290.0},{"k":"ins","old":290.0,"young":285.0},{"k":"syn","old":285.0,"young":280.0},{"k":"ins","old":280.0,"young":265.0},{"k":"syn","old":265.0,"young":255.0},{"k":"ins","old":255.0,"young":250.0},{"k":"amm","old":250.0,"young":240.0},{"k":"ins","old":240.0,"young":230.0},{"k":"amm","old":225.0,"young":220.0},{"k":"ins","old":220.0,"young":215.0},{"k":"amm","old":215.0,"young":205.0},{"k":"ins","old":205.0,"young":195.0},{"k":"amm","old":195.0,"young":185.0},{"k":"ins","old":185.0,"young":175.0},{"k":"amm","old":175.0,"young":170.0},{"k":"ins","old":170.0,"young":135.0},{"k":"amm","old":135.0,"young":130.0},{"k":"ins","old":130.0,"young":115.0},{"k":"amm","old":115.0,"young":105.0},{"k":"ins","old":105.0,"young":100.0},{"k":"amm","old":100.0,"young":95.0},{"k":"ins","old":95.0,"young":90.0},{"k":"amm","old":90.0,"young":85.0},{"k":"ins","old":85.0,"young":75.0},{"k":"ela","old":75.0,"young":70.0},{"k":"the","old":70.0,"young":65.0},{"k":"mam","old":65.0,"young":40.0},{"k":"ins","old":40.0,"young":35.0},{"k":"mam","old":35.0,"young":20.0},{"k":"ins","old":20.0,"young":15.0},{"k":"mam","old":15.0,"young":0.0}],"pangaea":{"peak_pct":90.2,"peak_age":180,"today_pct":54.4,"at":{"0":54.4,"66":23.8,"100":23.1,"150":50.1,"170":72.4,"180":90.2,"200":89.9,"250":88.6,"270":87.9,"280":68.9,"300":69.4,"340":62.8,"400":69.8,"500":58.9},"first_over_85":270,"last_over_85":180,"years_over_85":90,"land_mkm2_today":148.07},"dino":{"n":20231,"genera":1588,"coll":10130,"by_sub":{"the":{"n":8035,"genera":693},"sau":{"n":3842,"genera":380},"orn":{"n":6758,"genera":471},"din":{"n":1596,"genera":44}},"oldest":249.7,"na_eu_pct":62.9,"top_country":"United States of America","top_country_pct":31.6,"intervals":[{"name":"Late Triassic","old":237.0,"young":201.4,"genera":97,"multi":14,"multi_pct":14.4,"n":440,"n_cont":4,"pangaea_pct":88.3,"pangaea_age":220,"na_eu_pct":78.4},{"name":"Early Jurassic","old":201.4,"young":174.7,"genera":123,"multi":14,"multi_pct":11.4,"n":1106,"n_cont":5,"pangaea_pct":90.0,"pangaea_age":190,"na_eu_pct":68.5},{"name":"Middle Jurassic","old":174.7,"young":161.5,"genera":115,"multi":12,"multi_pct":10.4,"n":269,"n_cont":3,"pangaea_pct":72.4,"pangaea_age":170,"na_eu_pct":40.9},{"name":"Late Jurassic","old":161.5,"young":143.1,"genera":170,"multi":27,"multi_pct":15.9,"n":1313,"n_cont":5,"pangaea_pct":50.1,"pangaea_age":150,"na_eu_pct":80.8},{"name":"Early Cretaceous","old":143.1,"young":100.5,"genera":523,"multi":24,"multi_pct":4.6,"n":1642,"n_cont":6,"pangaea_pct":35.9,"pangaea_age":120,"na_eu_pct":53.7},{"name":"Late Cretaceous","old":100.5,"young":66.0,"genera":717,"multi":35,"multi_pct":4.9,"n":4248,"n_cont":6,"pangaea_pct":23.4,"pangaea_age":80,"na_eu_pct":63.3}],"multi_pangaea":{"genera":203,"multi":23,"pct":11.3,"one_in":9},"multi_cretaceous":{"genera":1180,"multi":60,"pct":5.1,"one_in":20},"peak_bin":[75.0,80.0],"peak_genera":316,"peak_na_pct":75.0,"maastrichtian_genera":278,"maastrichtian_coll":1854,"maastrichtian_na_pct":47.1,"polar_coll":245,"polar_max":85.8,"polar_place":"New Zealand","polar_place_age":146.6,"polar75_coll":53,"polar75_places":{"Alaska":23,"Victoria":17,"Australia":10,"Yukon":2,"New Zealand":1}},"lat":{"tri":19.8,"eur":21.4,"pla":18.8,"amm":32.8,"ela":38.1,"ins":42.6,"tem":16.0,"syn":48.4,"lis":42.3,"tes":41.2,"ich":37.7,"cro":36.3,"ple":42.2,"ptr":39.7,"the":37.4,"sau":35.0,"orn":43.1,"din":35.8,"mam":40.5,"ave":38.7,"mos":41.0,"pro":36.1,"cet":42.2,"hom":8.5},"lat_today_vs":{"mam_0_10":35.4},"drift":{"median_abs_dlat_old200":43.6,"uk_420":-22.8,"uk_300":-0.0,"uk_190":37.7,"uk_60":null,"uk_today":52.0,"uk_420_abs":22.8,"uk_300_age":"300 to 320","uk_300_txt":"within a degree of it","uk_n":3695},"ext_min_coll":2,"extinctions":[{"k":"eor","name":"End-Ordovician","age":445,"standing":362,"lost":223,"lost_pct":61.6,"by_group":{"tri":{"standing":357,"lost_pct":62.2}}},{"k":"lde","name":"Late Devonian","age":372,"standing":151,"lost":92,"lost_pct":60.9,"by_group":{"tri":{"standing":53,"lost_pct":66.0},"pla":{"standing":37,"lost_pct":64.9},"amm":{"standing":47,"lost_pct":70.2}}},{"k":"epe","name":"End-Permian","age":252,"standing":414,"lost":308,"lost_pct":74.4,"by_group":{"amm":{"standing":109,"lost_pct":83.5},"ela":{"standing":18,"lost_pct":27.8},"ins":{"standing":165,"lost_pct":66.1},"tem":{"standing":15,"lost_pct":66.7},"syn":{"standing":95,"lost_pct":87.4}}},{"k":"etr","name":"End-Triassic","age":201,"standing":244,"lost":81,"lost_pct":33.2,"by_group":{"amm":{"standing":42,"lost_pct":73.8},"ela":{"standing":24,"lost_pct":33.3},"ins":{"standing":109,"lost_pct":10.1},"syn":{"standing":15,"lost_pct":40.0},"the":{"standing":11,"lost_pct":18.2},"sau":{"standing":10,"lost_pct":50.0}}},{"k":"ecr","name":"End-Cretaceous","age":66,"standing":825,"lost":468,"lost_pct":56.7,"by_group":{"amm":{"standing":70,"lost_pct":97.1},"ela":{"standing":163,"lost_pct":36.2},"ins":{"standing":134,"lost_pct":1.5},"lis":{"standing":22,"lost_pct":40.9},"tes":{"standing":89,"lost_pct":36.0},"cro":{"standing":45,"lost_pct":57.8},"ple":{"standing":12,"lost_pct":100.0},"the":{"standing":81,"lost_pct":100.0},"sau":{"standing":29,"lost_pct":100.0},"orn":{"standing":58,"lost_pct":100.0},"mam":{"standing":66,"lost_pct":65.2},"ave":{"standing":21,"lost_pct":71.4},"mos":{"standing":23,"lost_pct":100.0}}}],"ext_bg_median":36.8,"ext_bg_p90":62.9,"ext_bg_n":40,"last":{"tri":265.6,"eur":279.5,"pla":352.8,"amm":69.1,"ich":97.2,"ple":69.1,"mos":66.9,"ptr":69.1,"the":69.1,"sau":69.1,"orn":69.1,"tem":120.5,"syn":117.3},"facts":{"hom_afr_asia_pct":87.8,"hom_abs_lat_tropics_pct":76.2,"ins_top50_coll_pct":25.2,"ins_coll":5580,"tyr_north_pct":100.0,"tyr_n":507,"cer_north_pct":100.0,"cer_n":752,"abe_north_pct":19.0,"abe_n":210,"tit_north_pct":54.9,"tit_n":1238,"abe_south_india_pct":88.1,"trex_mt_n":18,"trex_mt_dlat":6.9,"alaska_polar_min_lat":63.3},"frames":{"n":66,"first":540,"last":0,"max_n":89195,"cells_total":48774,"kb_total":3312}};
+const SITE = {"groups":[["tri","Trilobites","Trilobites (Trilobita)","#B5523B"],["eur","Sea scorpions","Sea scorpions (Eurypterida)","#E39BB0"],["pla","Armoured fish","Armoured fish (placoderms)","#56677A"],["amm","Ammonites","Ammonites and kin (Ammonoidea)","#A8841C"],["ela","Sharks and rays","Sharks and rays (Elasmobranchii)","#1F6FB4"],["ins","Insects","Insects (Insecta)","#7C8C2A"],["tem","Temnospondyls","Temnospondyls (early amphibians)","#3BA24A"],["syn","Early synapsids","Early synapsids (mammal forerunners)","#9B7BC4"],["lis","Frogs and salamanders","Frogs and salamanders (Lissamphibia)","#5CC98B"],["tes","Turtles","Turtles and kin (Testudinata)","#A9C23F"],["ich","Ichthyosaurs","Ichthyosaurs (Ichthyosauromorpha)","#22B5C9"],["cro","Crocodile relatives","Crocodiles and relatives (Crocodylomorpha)","#1E6B53"],["ple","Plesiosaurs","Plesiosaurs (Plesiosauria)","#123F73"],["ptr","Pterosaurs","Pterosaurs (Pterosauria)","#F08BC0"],["the","Theropods","Theropods, not birds (Theropoda)","#D7262B"],["sau","Sauropods","Sauropods and relatives (Sauropodomorpha)","#8E1F55"],["orn","Ornithischians","Ornithischians (Ornithischia)","#EF7D27"],["din","Other dinosaurs","Dinosaurs not identified further","#C9A3A0"],["mam","Mammals","Mammals, other (Mammalia)","#3E3A40"],["ave","Birds","Birds (Aves)","#F2BE00"],["mos","Mosasaurs","Mosasaurs (Mosasauridae)","#6B3FA0"],["pro","Elephants","Elephants and relatives (Proboscidea)","#8A6F5C"],["cet","Whales","Whales and dolphins (Cetacea)","#1AA39A"],["hom","Hominids","Hominids (great apes and humans)","#E8452C"]],"order":["tri","eur","pla","amm","ela","tem","ins","syn","ich","din","the","cro","sau","orn","ptr","tes","ple","lis","mam","ave","mos","pro","cet","hom"],"bins":108,"binw":5.0,"gen":{"tri":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,8,7,14,9,13,0,8,8,13,8,9,7,8,7,7,10,49,44,22,65,53,47,30,40,31,41,74,144,119,143,61,131,85,102,143,115,147,135,277,286,308,328,90,319,162,304,249,456,329,360,296,303,178,5,8,0,0],"eur":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,2,0,1,3,4,3,2,1,3,0,3,3,0,2,0,3,4,3,2,0,3,1,0,7,11,4,17,34,19,19,18,1,3,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pla":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,18,25,15,50,49,54,27,23,49,14,20,35,1,2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"amm":[0,0,0,0,0,0,0,0,0,0,0,0,2,67,28,101,80,106,127,166,143,151,116,123,138,95,107,38,145,150,101,104,174,170,67,77,67,100,58,95,72,32,60,69,68,0,130,150,207,313,143,75,29,68,62,73,2,60,37,34,45,40,37,42,60,69,35,39,29,8,54,26,63,76,56,35,48,28,30,25,17,17,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ela":[84,97,102,110,54,71,75,147,153,71,133,100,97,139,63,133,102,59,71,115,55,49,45,39,47,24,38,7,11,25,21,15,22,34,12,32,14,11,1,8,26,2,6,19,8,0,24,30,20,17,12,9,6,10,7,5,4,7,6,7,11,11,9,6,0,8,3,8,2,0,5,0,0,3,1,1,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ins":[935,242,507,1125,50,571,266,3079,339,247,537,48,161,16,0,178,134,39,202,108,170,103,71,1079,938,161,55,101,153,372,522,122,602,171,25,232,364,40,0,158,151,12,1,167,0,0,150,330,52,59,243,149,88,80,272,310,6,166,22,175,235,220,183,110,26,7,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],"tem":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,3,2,0,0,1,0,1,2,9,0,3,11,0,0,13,13,33,63,43,11,11,14,11,19,7,23,41,24,30,20,8,5,2,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"syn":[0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,1,0,3,2,0,2,0,2,5,5,5,7,13,0,4,1,2,8,23,32,0,3,22,1,0,36,24,54,30,23,152,116,47,8,22,12,18,14,13,21,2,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"lis":[74,37,43,39,10,31,18,13,11,3,20,16,14,23,8,20,7,3,14,7,0,4,7,12,16,1,1,0,6,5,3,3,4,8,1,2,0,0,1,0,0,0,0,0,0,0,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"tes":[105,68,77,60,18,40,51,62,64,25,62,36,55,100,32,83,19,25,20,40,24,14,20,28,25,9,15,8,16,25,30,5,12,7,0,3,1,0,1,5,3,0,1,7,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ich":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,5,4,2,3,4,4,3,0,7,11,8,5,3,4,2,5,7,4,3,5,9,0,4,6,2,0,7,5,18,15,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"cro":[28,36,32,26,5,17,7,21,22,11,34,26,32,41,34,32,14,7,10,31,11,7,13,17,22,10,15,6,13,34,29,14,23,16,2,5,5,2,4,14,3,0,1,7,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ple":[0,0,0,0,0,0,0,0,0,0,0,0,0,19,9,15,9,5,14,8,5,2,4,8,7,6,3,3,6,10,6,8,17,7,1,9,7,4,4,6,10,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ptr":[0,0,0,0,0,0,0,0,0,0,0,0,0,18,1,16,3,6,2,17,15,7,2,39,28,3,7,4,5,19,14,11,18,5,1,1,3,0,1,2,3,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"the":[0,0,0,0,0,0,0,0,0,0,0,0,0,141,25,135,18,24,26,44,15,38,46,106,98,25,25,11,18,24,27,25,28,28,6,4,7,11,10,18,25,0,3,19,0,0,8,0,3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"sau":[0,0,0,0,0,0,0,0,0,0,0,0,0,46,21,27,8,16,4,18,9,18,25,21,17,9,13,9,8,37,33,19,15,25,6,4,9,8,6,25,20,1,4,25,1,0,16,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"orn":[0,0,0,0,0,0,0,0,0,0,0,0,0,87,36,149,14,19,18,27,20,19,41,35,37,18,21,13,13,25,18,8,20,12,2,3,3,4,4,12,7,0,0,7,0,0,5,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"din":[0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,5,2,5,2,7,3,0,3,2,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,10,11,0,0,9,0,0,8,0,3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"mam":[1495,1072,1061,891,414,645,667,654,570,349,565,298,286,95,10,79,22,14,26,32,10,5,35,14,42,3,8,6,36,32,34,7,10,18,0,7,0,2,0,6,3,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ave":[828,133,118,108,47,66,67,92,67,11,97,29,12,31,7,16,4,6,10,6,3,6,6,24,14,2,2,4,4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"mos":[0,0,0,0,0,0,0,0,0,0,0,0,0,29,12,21,9,10,8,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pro":[27,30,32,12,3,9,5,4,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"cet":[114,151,129,87,36,58,19,36,27,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"hom":[6,11,9,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"occ":{"tri":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,46,31,25,49,112,72,2,28,16,43,96,54,26,36,24,50,71,197,154,70,352,356,402,122,175,86,111,1023,975,465,609,133,1128,607,765,1363,848,1593,783,3606,4725,3099,3826,522,3341,1753,2904,1597,4535,2755,2505,2654,2040,838,7,18,0,0],"eur":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,2,3,0,3,13,11,11,15,2,3,0,3,3,0,6,0,4,4,4,3,0,7,1,1,14,20,12,71,201,58,60,41,1,11,3,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pla":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,39,93,31,147,126,171,132,38,74,22,39,79,3,5,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"amm":[0,0,0,0,0,0,0,0,0,0,0,0,11,2598,119,2667,947,1130,2487,3268,1994,1514,1090,1310,2302,2240,3813,104,1651,1813,1031,1628,3414,2494,1159,3586,2347,4662,263,2499,1610,177,379,209,512,0,1069,1873,4382,5912,3655,552,110,412,376,987,2,714,165,207,665,125,289,325,695,1244,349,247,92,19,604,147,635,636,706,396,350,125,503,198,79,80,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ela":[1233,1497,1828,1308,208,331,695,2119,1794,298,1217,569,696,1770,311,1973,584,296,682,1428,410,232,120,104,204,56,83,107,55,48,149,36,60,114,21,134,44,55,2,50,329,2,23,188,33,0,130,403,119,133,51,42,34,99,26,12,13,20,26,13,20,46,24,15,0,15,19,18,2,0,9,0,0,8,4,10,1,3,2,1,1,5,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ins":[5841,517,1481,2849,132,1641,834,10661,990,648,1391,108,264,69,1,399,211,98,313,157,261,186,149,3122,1903,234,83,181,236,1268,1828,250,1305,325,31,592,1187,61,0,362,372,17,2,405,0,0,322,857,89,149,512,255,131,180,1035,673,9,664,54,499,950,563,362,173,35,8,0,0,0,0,0,0,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],"tem":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,7,0,0,0,3,0,4,1,7,4,0,0,2,0,1,7,24,1,5,208,0,0,75,62,115,355,155,28,43,31,19,76,34,82,164,89,52,43,19,11,2,2,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"syn":[0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,1,0,1,1,13,8,0,3,0,6,21,8,6,12,53,0,4,7,3,31,80,110,0,5,68,1,0,86,96,228,173,102,1073,410,122,11,93,50,87,88,23,39,5,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"lis":[1573,230,353,153,18,71,53,75,35,16,58,62,82,468,28,450,43,10,63,55,4,18,33,29,56,7,11,4,35,36,12,4,10,56,1,5,0,0,5,0,0,0,0,2,0,0,3,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"tes":[1679,614,722,424,99,165,186,331,514,236,529,202,492,1486,161,1345,75,68,126,228,72,48,85,116,132,25,59,22,68,193,162,20,34,43,1,8,1,0,15,18,8,0,1,20,0,0,1,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ich":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,51,30,5,8,10,16,15,0,17,47,25,12,23,13,9,16,61,11,7,37,65,0,4,12,5,0,24,18,65,38,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"cro":[583,309,289,212,28,96,51,133,169,77,267,120,206,587,134,404,35,27,37,149,58,49,80,77,147,41,51,32,106,222,154,38,88,145,5,23,41,2,16,38,21,0,2,31,0,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ple":[0,0,0,0,0,0,0,0,0,0,0,0,1,170,50,137,35,30,61,87,35,10,20,17,29,16,16,10,23,82,59,32,80,11,6,21,18,12,14,15,38,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ptr":[0,0,0,0,0,0,0,0,0,0,0,0,0,59,11,82,32,21,8,93,69,28,27,100,93,18,24,9,51,111,62,19,40,39,3,2,51,0,3,5,7,5,17,12,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"the":[0,0,0,0,0,0,0,0,0,0,0,0,0,1414,220,1532,167,111,179,336,151,142,309,367,413,108,203,89,157,424,255,107,72,206,23,16,56,57,59,266,320,0,14,196,2,0,45,0,17,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"sau":[0,0,0,0,0,0,0,0,0,0,0,0,0,659,134,180,28,57,31,149,62,83,140,120,139,77,83,34,70,716,260,53,56,146,17,16,30,28,10,192,89,2,11,137,2,0,25,1,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"orn":[0,0,0,0,0,0,0,0,0,0,0,0,0,1425,188,2100,71,106,144,215,144,183,251,191,319,140,156,86,85,352,137,19,54,74,7,15,4,17,31,134,53,0,1,31,1,0,14,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"din":[0,0,0,0,0,0,0,0,0,0,0,0,0,339,41,219,25,51,40,60,31,16,53,60,47,23,28,31,28,97,44,12,14,43,9,2,13,16,8,87,42,1,0,42,1,0,40,2,27,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"mam":[44632,9137,12788,6983,2743,3562,5000,5199,3825,2899,10475,3625,2480,1199,20,818,76,26,97,202,23,14,96,47,83,8,18,9,132,169,76,10,21,72,0,8,0,4,0,14,10,0,1,4,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"ave":[13126,548,399,374,83,146,155,239,140,26,292,80,30,135,12,165,19,10,23,26,7,24,22,49,43,3,8,6,8,1,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"mos":[0,0,0,0,0,0,0,0,0,0,0,0,1,331,90,259,43,63,31,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"pro":[2945,502,622,159,6,23,17,33,5,1,8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"cet":[2838,817,996,522,98,298,58,417,86,6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"hom":[547,27,34,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"coll":[12187,2285,3577,1993,680,1008,1252,1935,1300,840,2084,751,1053,3882,486,4193,699,900,1490,2081,903,799,784,1252,1474,956,1260,241,788,1610,841,690,1202,1426,377,1460,1233,2179,127,1312,1207,83,184,550,206,0,655,869,1758,1965,1883,628,281,263,301,567,40,333,237,213,460,311,323,255,194,345,195,187,90,37,240,142,395,336,307,253,205,716,426,204,193,86,284,258,342,341,226,480,318,1243,1646,783,1065,164,983,571,928,494,1206,695,649,727,628,388,5,10,0,0],"eras":[["Paleozoic",538.8,251.9,"#99C08D"],["Mesozoic",251.9,66.0,"#67C5CA"],["Cenozoic",66.0,0.0,"#F2F91D"]],"periods":[["Cambrian","Cm",538.8,486.9,"#7FA056"],["Ordovician","O",486.9,443.1,"#009270"],["Silurian","S",443.1,419.6,"#B3E1B6"],["Devonian","D",419.6,358.9,"#CB8C37"],["Carboniferous","C",358.9,298.9,"#67A599"],["Permian","P",298.9,251.9,"#F04028"],["Triassic","Tr",251.9,201.4,"#812B92"],["Jurassic","J",201.4,143.1,"#34B2C9"],["Cretaceous","K",143.1,66.0,"#7FC64E"],["Paleogene","Pg",66.0,23.0,"#FD9A52"],["Neogene","N",23.0,2.6,"#FFE619"],["Quaternary","Q",2.6,0.0,"#F9F97F"]],"ext":[["eor","End-Ordovician",445],["lde","Late Devonian",372],["epe","End-Permian",252],["etr","End-Triassic",201],["ecr","End-Cretaceous",66]],"ages":[0,5,10,20,23,30,34,40,50,56,60,66,70,80,90,94,100,110,120,130,140,145,150,160,170,180,190,200,201,210,220,230,240,250,252,260,270,280,290,300,310,320,330,340,350,360,370,372,380,390,400,410,420,430,440,445,450,460,470,480,490,500,510,520,530,540],"pangaea":[[0,54.4],[5,54.2],[10,31.6],[20,31.2],[23,30.5],[30,29.6],[34,24.6],[40,24.2],[50,24.6],[56,24.6],[60,24.6],[66,23.8],[70,23.4],[80,23.4],[90,23.1],[94,23.1],[100,23.1],[110,23.1],[120,35.9],[130,36.0],[140,36.4],[145,36.4],[150,50.1],[160,50.0],[170,72.4],[180,90.2],[190,90.0],[200,89.9],[201,90.0],[210,89.9],[220,88.3],[230,88.9],[240,87.4],[250,88.6],[252,88.6],[260,88.6],[270,87.9],[280,68.9],[290,69.3],[300,69.4],[310,69.5],[320,69.2],[330,56.1],[340,62.8],[350,62.8],[360,62.8],[370,62.8],[372,62.8],[380,57.3],[390,70.2],[400,69.8],[410,57.3],[420,57.3],[430,58.8],[440,58.8],[445,58.8],[450,58.8],[460,58.8],[470,58.8],[480,58.8],[490,58.8],[500,58.9],[510,59.0],[520,58.9],[530,58.9],[540,58.9]],"labels":{"0":[10.0,21.4],"5":[9.6,21.4],"10":[71.6,39.1],"20":[69.8,38.4],"23":[105.4,37.9],"30":[107.1,36.8],"34":[66.3,49.1],"40":[65.7,49.0],"50":[65.5,48.1],"56":[66.1,48.3],"60":[69.6,48.4],"66":[70.7,48.3],"70":[71.3,48.2],"80":[74.5,49.4],"90":[19.9,-13.1],"94":[19.4,-13.9],"100":[19.4,-15.2],"110":[18.6,-13.1],"120":[16.9,-14.9],"130":[19.4,-13.4],"140":[18.8,-12.6],"145":[-0.7,-12.2],"150":[4.7,9.5],"160":[9.3,9.4],"170":[0.5,14.8],"180":[10.9,6.8],"190":[9.4,9.0],"200":[7.3,10.4],"201":[7.2,10.4],"210":[7.2,9.4],"220":[-0.0,6.9],"230":[-34.2,2.7],"240":[-29.2,-3.9],"250":[3.3,-4.6],"252":[3.2,-4.8],"260":[2.6,-5.7],"270":[3.0,-6.4],"280":[9.7,-22.0],"290":[4.7,-23.9],"300":[-0.6,-25.3],"310":[-2.5,-26.3],"320":[-3.5,-27.7],"330":[1.3,-51.9],"340":[-4.4,-31.8],"350":[-0.1,-33.5],"360":[27.2,-35.6],"370":[54.7,-37.3],"372":[61.8,-37.5],"380":[56.2,-47.7],"390":[135.3,-42.6],"400":[123.5,-44.3],"410":[137.5,-41.8],"420":[142.2,-38.8],"430":[147.5,-36.0],"440":[153.1,-33.3],"445":[-166.8,-32.3],"450":[-166.5,-31.7],"460":[-165.4,-30.5],"470":[-164.2,-29.4],"480":[-162.5,-29.4],"490":[-161.5,-26.7],"500":[-164.4,-24.3],"510":[-161.2,-24.3],"520":[-167.9,-26.0],"530":[-172.2,-26.8],"540":[157.5,-26.8]},"frames":{"0":{"win":[0.0,5.0],"n":74997},"5":{"win":[0.0,10.0],"n":89195},"10":{"win":[5.0,15.0],"n":33710},"20":{"win":[15.0,25.0],"n":16405},"23":{"win":[18.0,28.0],"n":15758},"30":{"win":[25.0,35.0],"n":13382},"34":{"win":[29.0,39.0],"n":23854},"40":{"win":[35.0,45.0],"n":26765},"50":{"win":[45.0,55.0],"n":18446},"56":{"win":[51.0,61.0],"n":19570},"60":{"win":[55.0,65.0],"n":9031},"66":{"win":[66,76.0],"n":14270},"70":{"win":[65.0,75.0],"n":14230},"80":{"win":[75.0,85.0],"n":15121},"90":{"win":[85.0,95.0],"n":6428},"94":{"win":[89.0,99.0],"n":11073},"100":{"win":[95.0,105.0],"n":9864},"110":{"win":[105.0,115.0],"n":5060},"120":{"win":[115.0,125.0],"n":11665},"130":{"win":[125.0,135.0],"n":7666},"140":{"win":[135.0,145.0],"n":3455},"145":{"win":[140.0,150.0],"n":8331},"150":{"win":[145.0,155.0],"n":9871},"160":{"win":[155.0,165.0],"n":7538},"170":{"win":[165.0,175.0],"n":5130},"180":{"win":[175.0,185.0],"n":8310},"190":{"win":[185.0,195.0],"n":5393},"200":{"win":[195.0,205.0],"n":6903},"201":{"win":[201,211.0],"n":1308},"210":{"win":[205.0,215.0],"n":671},"220":{"win":[215.0,225.0],"n":2124},"230":{"win":[225.0,235.0],"n":1856},"240":{"win":[235.0,245.0],"n":8370},"250":{"win":[245.0,255.0],"n":11296},"252":{"win":[252,262.0],"n":4196},"260":{"win":[255.0,265.0],"n":2734},"270":{"win":[265.0,275.0],"n":2472},"280":{"win":[275.0,285.0],"n":2026},"290":{"win":[285.0,295.0],"n":2111},"300":{"win":[295.0,305.0],"n":2712},"310":{"win":[305.0,315.0],"n":1583},"320":{"win":[315.0,325.0],"n":1335},"330":{"win":[325.0,335.0],"n":1765},"340":{"win":[335.0,345.0],"n":717},"350":{"win":[345.0,355.0],"n":1062},"360":{"win":[355.0,365.0],"n":1584},"370":{"win":[365.0,375.0],"n":1783},"372":{"win":[372,382.0],"n":1582},"380":{"win":[375.0,385.0],"n":1230},"390":{"win":[385.0,395.0],"n":2944},"400":{"win":[395.0,405.0],"n":1480},"410":{"win":[405.0,415.0],"n":1448},"420":{"win":[415.0,425.0],"n":1727},"430":{"win":[425.0,435.0],"n":2334},"440":{"win":[435.0,445.0],"n":2419},"445":{"win":[445,455.0],"n":8345},"450":{"win":[445.0,455.0],"n":8345},"460":{"win":[455.0,465.0],"n":6927},"470":{"win":[465.0,475.0],"n":3864},"480":{"win":[475.0,485.0],"n":4657},"490":{"win":[485.0,495.0],"n":6132},"500":{"win":[495.0,505.0],"n":5260},"510":{"win":[505.0,515.0],"n":4694},"520":{"win":[515.0,525.0],"n":845},"530":{"win":[525.0,535.0],"n":18},"540":{"win":[535.0,545.0],"n":0}},"dino_bins":[60.0,65.0,70.0,75.0,80.0,85.0,90.0,95.0,100.0,105.0,110.0,115.0,120.0,125.0,130.0,135.0,140.0,145.0,150.0,155.0,160.0,165.0,170.0,175.0,180.0,185.0,190.0,195.0,200.0,205.0,210.0,215.0,220.0,225.0,230.0,235.0],"dino":{"the":[0,141,25,135,18,24,26,44,15,38,46,106,98,25,25,11,18,24,27,25,28,28,6,4,7,11,10,18,25,0,3,19,0,0,8,0],"sau":[0,46,21,27,8,16,4,18,9,18,25,21,17,9,13,9,8,37,33,19,15,25,6,4,9,8,6,25,20,1,4,25,1,0,16,1],"orn":[0,87,36,149,14,19,18,27,20,19,41,35,37,18,21,13,13,25,18,8,20,12,2,3,3,4,4,12,7,0,0,7,0,0,5,3],"din":[0,4,2,5,2,5,2,7,3,0,3,2,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,10,11,0,0,9,0,0,8,0],"ave":[12,31,7,16,4,6,10,6,3,6,6,24,14,2,2,4,4,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"lat":{"tri":[[525.0,-61.3,-11.6,15.8,15],[515.0,-51.4,1.6,29.9,1016],[505.0,-42.3,0.1,24.4,1376],[495.0,-30.6,-11.2,23.5,1901],[485.0,-46.2,-15.6,14.6,1422],[475.0,-42.1,-17.3,15.0,1554],[465.0,-66.8,-27.0,8.1,1228],[455.0,-58.0,-26.3,-3.0,2427],[445.0,-31.3,-21.7,2.2,1557],[435.0,-32.2,-21.5,7.3,680],[425.0,-51.7,-21.2,4.3,589],[415.0,-59.1,-26.4,-2.6,453],[405.0,-62.4,-28.3,3.2,167],[395.0,-51.5,-39.0,-5.0,370],[385.0,-39.3,-36.7,-22.5,638],[375.0,-32.3,-21.2,-18.6,137],[365.0,-28.4,-16.8,-0.2,195],[355.0,-25.2,-12.8,-5.6,229],[345.0,-20.7,-16.5,-8.3,108],[335.0,-43.9,-15.3,-3.5,154],[325.0,-11.8,2.4,7.2,69],[315.0,-24.1,-9.1,5.7,49],[305.0,-9.2,-6.5,-0.4,117],[295.0,-39.0,-3.3,30.0,48],[285.0,-40.8,-1.1,13.5,24],[275.0,-36.0,3.3,13.3,125],[265.0,-27.4,-5.0,4.5,52],[255.0,-17.3,5.9,18.9,64]],"eur":[[445.0,-27.0,-25.4,-24.9,11],[435.0,-32.1,-18.7,6.0,30],[425.0,-43.4,-25.1,1.8,105],[415.0,-44.8,-21.0,12.0,56],[405.0,-55.4,-27.8,-7.2,15],[385.0,-56.2,5.6,37.1,6],[375.0,-34.0,-32.7,-19.2,7],[365.0,-31.0,-19.6,-13.8,7],[355.0,-27.3,-14.8,13.1,6],[325.0,-5.9,-0.7,0.8,5],[315.0,-8.0,-2.1,0.7,26],[305.0,-7.5,-0.4,3.4,23],[285.0,-27.9,3.4,19.8,5]],"pla":[[425.0,3.5,8.0,9.9,7],[415.0,-26.0,-18.6,6.5,58],[405.0,-37.0,-17.2,1.4,47],[395.0,-24.7,-19.8,0.5,96],[385.0,-37.4,-17.8,3.6,113],[375.0,-35.3,-18.0,7.1,82],[365.0,-31.7,-18.6,-3.7,69]],"amm":[[405.0,-54.3,-38.2,3.2,80],[395.0,-49.3,-32.9,1.3,218],[385.0,-45.0,-36.6,5.0,198],[375.0,-35.5,-19.1,6.3,347],[365.0,-34.7,-19.7,-0.3,492],[355.0,-35.1,-18.9,10.4,164],[345.0,-23.3,-9.4,-7.0,33],[335.0,-21.2,-10.3,1.4,201],[325.0,-10.8,-0.9,19.3,443],[315.0,-9.2,-1.1,26.8,200],[305.0,-6.4,-5.5,20.0,258],[295.0,-52.6,20.8,56.1,134],[285.0,-10.8,24.7,56.5,201],[275.0,-25.2,3.4,40.4,495],[265.0,-20.3,2.9,5.1,195],[255.0,-43.3,5.6,40.3,1823],[245.0,-39.7,9.8,60.3,3047],[235.0,-1.0,13.6,48.2,976],[225.0,-31.0,32.9,36.2,189],[215.0,-5.4,33.5,34.5,206],[205.0,-30.2,17.3,37.3,838],[195.0,3.6,29.6,38.0,960],[185.0,9.0,30.6,39.1,3030],[175.0,15.2,32.3,39.2,1598],[165.0,-25.6,31.6,41.9,1884],[155.0,-29.1,37.4,58.7,720],[145.0,-38.1,30.9,58.1,1064],[135.0,-27.1,35.0,71.1,1018],[125.0,-37.0,28.8,39.8,1264],[115.0,-46.0,31.4,50.1,755],[105.0,-48.6,30.3,55.3,914],[95.0,-10.2,35.8,49.2,2270],[85.0,-45.6,35.1,50.4,861],[75.0,-45.9,42.6,57.5,1341],[65.0,-62.4,36.3,51.2,1100]],"ela":[[405.0,-37.7,30.7,30.7,6],[375.0,-29.8,-18.6,6.6,9],[365.0,-6.1,4.1,13.7,6],[355.0,-14.6,-0.0,16.1,8],[335.0,-5.0,-1.8,-1.8,34],[325.0,-10.2,2.2,10.6,10],[315.0,-5.6,1.3,14.9,28],[305.0,-5.8,-2.6,-0.2,31],[295.0,-4.6,-0.1,25.2,32],[285.0,-0.1,1.5,28.0,20],[275.0,3.4,5.3,27.4,21],[265.0,-37.2,4.4,29.4,56],[255.0,-40.1,16.3,33.3,62],[245.0,-37.0,7.3,42.1,123],[235.0,4.5,16.8,28.6,140],[225.0,32.0,32.4,33.1,12],[215.0,10.5,33.0,33.6,71],[205.0,32.1,36.9,40.2,110],[195.0,34.7,38.0,38.3,25],[185.0,37.5,38.0,41.7,41],[175.0,34.4,37.8,41.3,37],[165.0,33.0,41.4,44.9,65],[155.0,32.2,43.4,44.3,55],[145.0,-29.2,35.4,42.1,53],[135.0,5.4,41.7,43.1,44],[125.0,15.1,38.1,44.2,94],[115.0,14.7,33.7,43.6,77],[105.0,13.7,40.3,42.8,155],[95.0,8.2,38.1,44.7,511],[85.0,-17.0,40.6,49.4,221],[75.0,8.0,41.2,58.0,470],[65.0,-20.4,40.2,52.8,586],[55.0,-4.5,39.2,48.3,274],[45.0,-21.4,40.6,49.2,259],[35.0,-60.2,39.7,50.4,475],[25.0,-52.6,8.3,50.7,123],[15.0,-38.9,38.4,49.1,558],[5.0,-33.1,33.4,43.6,595]],"ins":[[325.0,-29.3,-0.7,0.1,16],[315.0,-9.5,-1.7,0.8,278],[305.0,-8.0,-4.0,3.9,328],[295.0,0.8,4.6,17.5,89],[285.0,-0.4,1.6,29.2,63],[275.0,4.0,32.4,42.7,175],[265.0,6.1,29.4,45.1,39],[255.0,-67.2,-56.7,53.3,105],[245.0,-62.7,16.0,45.0,53],[235.0,-61.9,15.2,40.0,129],[215.0,-58.3,-58.2,59.2,52],[205.0,30.4,37.9,43.2,85],[195.0,24.6,37.7,52.5,55],[185.0,38.4,41.7,44.5,91],[175.0,27.9,42.1,62.1,104],[165.0,36.6,43.0,51.0,168],[155.0,33.5,41.7,56.3,115],[145.0,40.8,42.1,56.6,223],[135.0,23.7,41.7,46.4,55],[125.0,14.6,42.9,53.8,335],[115.0,-8.2,45.2,56.2,378],[105.0,-68.0,42.5,54.7,52],[95.0,9.2,35.6,58.2,70],[85.0,49.5,65.6,67.4,45],[75.0,32.5,58.2,64.6,46],[65.0,-26.0,40.3,62.4,58],[55.0,37.3,52.4,55.6,271],[45.0,42.4,45.3,47.4,272],[35.0,40.4,50.9,53.8,576],[25.0,27.6,43.9,50.5,126],[15.0,17.8,35.9,47.9,519],[5.0,-6.9,42.6,69.2,605]],"tem":[[315.0,-12.3,-7.9,0.1,13],[305.0,-7.3,-2.4,3.4,40],[295.0,-3.7,3.2,8.2,138],[285.0,-0.4,1.4,4.7,58],[275.0,-8.8,3.6,28.7,47],[265.0,-58.5,28.3,31.9,61],[255.0,-64.9,-44.4,31.5,116],[245.0,-65.2,30.9,36.4,288],[235.0,3.9,16.1,24.5,87],[215.0,9.8,10.5,14.9,165],[205.0,13.1,40.1,41.0,15],[195.0,-43.8,-42.5,25.3,7],[165.0,26.9,41.0,45.7,10],[125.0,-76.8,-76.1,-76.1,6]],"syn":[[305.0,-6.7,-4.5,2.2,18],[295.0,-4.3,4.8,10.4,61],[285.0,-0.2,1.4,4.3,56],[275.0,3.4,3.7,28.1,53],[265.0,-59.5,-57.0,32.2,201],[255.0,-62.7,-60.4,26.4,381],[245.0,-66.7,-53.5,36.7,202],[235.0,-51.9,-49.9,11.0,112],[215.0,-39.1,9.9,11.6,48],[205.0,15.9,36.7,41.0,32],[195.0,-43.2,-42.4,33.1,76],[185.0,-40.3,25.5,31.3,9],[165.0,40.1,41.2,46.7,19],[155.0,34.7,46.3,46.8,12],[145.0,34.7,37.8,41.7,17],[125.0,30.8,42.3,45.0,8],[115.0,-30.3,53.9,55.2,11]],"lis":[[175.0,-44.8,-41.2,-34.9,5],[165.0,-31.7,41.2,47.0,27],[155.0,34.0,39.7,42.4,10],[145.0,25.6,36.9,42.5,33],[135.0,21.8,41.7,52.9,7],[125.0,30.7,41.0,45.0,39],[115.0,-31.7,43.3,54.3,33],[105.0,1.2,31.2,43.9,12],[95.0,19.3,37.0,41.0,44],[85.0,39.7,46.7,54.2,19],[75.0,31.2,54.1,59.1,171],[65.0,-30.0,52.1,56.0,233],[55.0,-4.3,46.6,54.2,70],[45.0,-42.0,33.2,45.3,35],[35.0,-8.8,43.8,49.1,70],[25.0,-11.4,43.8,50.1,39],[15.0,2.6,43.1,49.1,169],[5.0,9.3,38.9,50.1,630]],"tes":[[215.0,5.2,31.2,45.5,20],[205.0,26.6,32.4,39.6,5],[195.0,18.7,20.1,24.6,24],[175.0,-41.3,-31.1,43.2,8],[165.0,9.5,32.4,45.9,42],[155.0,33.8,38.9,45.8,99],[145.0,14.8,37.0,42.0,172],[135.0,-4.5,41.6,45.0,60],[125.0,13.7,31.2,43.2,117],[115.0,-45.8,31.7,47.8,135],[105.0,-51.5,36.3,45.5,83],[95.0,-60.3,36.1,46.5,209],[85.0,-43.9,36.8,51.7,94],[75.0,31.2,44.6,57.4,809],[65.0,-45.2,43.3,53.0,1051],[55.0,36.6,46.7,49.8,454],[45.0,-9.9,42.9,47.7,392],[35.0,16.5,43.3,49.1,323],[25.0,-8.9,43.2,48.6,156],[15.0,-28.0,38.9,48.6,660],[5.0,-26.3,29.9,43.6,1412]],"ich":[[245.0,7.2,11.6,42.1,76],[235.0,2.8,16.8,42.0,33],[215.0,-22.7,33.0,34.3,13],[205.0,31.8,36.8,38.7,45],[195.0,-22.2,37.7,39.7,33],[185.0,33.3,38.0,42.1,42],[175.0,-21.8,37.8,42.5,20],[165.0,-26.0,38.4,45.0,34],[155.0,-21.3,38.2,49.4,36],[145.0,-37.3,41.2,60.7,54],[135.0,-5.8,35.2,44.5,9],[125.0,4.4,42.5,47.7,23],[115.0,-49.7,36.8,41.9,13],[105.0,-51.9,38.0,45.0,58],[95.0,-49.9,41.3,44.1,23]],"cro":[[235.0,-46.3,36.7,37.0,17],[215.0,-39.1,10.2,12.5,27],[205.0,13.5,27.4,36.7,18],[195.0,-43.3,20.1,35.7,45],[185.0,34.0,38.0,39.3,36],[175.0,-25.6,37.8,42.5,17],[165.0,-23.0,38.5,42.9,152],[155.0,4.0,39.6,43.6,127],[145.0,-12.3,36.9,42.3,213],[135.0,1.1,41.4,43.4,64],[125.0,14.0,30.9,41.3,109],[115.0,-23.0,30.8,47.5,107],[105.0,2.0,37.4,44.7,79],[95.0,-60.3,31.3,44.6,144],[85.0,-44.3,-42.0,48.1,47],[75.0,-24.3,40.3,58.8,394],[65.0,-25.6,44.9,53.8,547],[55.0,8.9,49.4,49.8,322],[45.0,5.9,39.8,47.4,169],[35.0,-8.7,39.4,48.5,137],[25.0,-34.0,23.0,46.8,90],[15.0,-2.7,25.0,47.5,375],[5.0,-19.2,5.0,34.9,618]],"ple":[[205.0,36.3,37.5,40.1,29],[195.0,18.4,37.7,38.6,19],[185.0,37.2,38.4,43.5,22],[175.0,31.1,38.1,42.3,18],[165.0,30.0,41.7,42.9,52],[155.0,4.1,41.8,43.6,60],[145.0,-28.2,42.3,70.1,73],[135.0,-39.5,41.7,42.0,17],[125.0,-76.3,17.4,45.8,38],[115.0,-71.3,3.3,57.5,28],[105.0,-53.4,38.1,51.5,30],[95.0,-56.5,39.6,45.1,126],[85.0,13.8,44.1,53.5,60],[75.0,-59.1,44.9,59.0,140],[65.0,-62.6,-41.3,43.2,145]],"ptr":[[215.0,4.9,27.0,31.1,20],[205.0,30.9,36.6,37.8,12],[195.0,-46.9,22.4,38.0,8],[185.0,37.8,38.0,41.7,50],[175.0,-41.2,-41.0,18.2,5],[165.0,-23.0,41.0,45.7,45],[155.0,32.8,39.7,43.6,58],[145.0,-29.9,35.7,41.6,98],[135.0,19.3,41.7,45.0,28],[125.0,15.1,40.9,44.4,82],[115.0,-45.4,37.2,48.2,64],[105.0,-52.0,40.7,43.8,57],[95.0,-53.2,35.1,45.0,77],[85.0,20.4,41.9,45.1,41],[75.0,23.2,42.1,57.1,86],[65.0,-21.8,35.6,49.9,50]],"the":[[245.0,9.4,11.8,14.6,16],[235.0,-46.0,7.6,22.7,37],[215.0,8.0,13.1,32.1,146],[205.0,14.9,22.6,37.5,161],[195.0,-42.8,21.5,33.3,129],[185.0,-41.1,25.3,28.4,83],[175.0,-41.0,30.8,42.8,26],[165.0,-23.0,33.8,46.4,210],[155.0,27.8,36.0,43.6,255],[145.0,24.6,34.7,41.7,390],[135.0,-4.5,33.4,44.9,181],[125.0,-37.1,32.3,43.2,341],[115.0,-43.1,31.8,45.6,432],[105.0,-10.5,38.4,56.0,197],[95.0,-52.0,35.7,45.3,286],[85.0,-44.2,33.2,54.2,136],[75.0,9.2,44.4,59.1,941],[65.0,-30.0,41.0,54.9,704]],"sau":[[245.0,-67.1,-51.3,15.9,5],[235.0,-50.4,-46.5,36.9,25],[215.0,-40.6,29.3,33.3,112],[205.0,15.6,34.7,41.9,67],[195.0,-43.7,-42.4,33.1,151],[185.0,-41.4,25.1,29.8,53],[175.0,-0.6,32.0,42.8,29],[165.0,-23.0,29.6,43.7,172],[155.0,7.9,35.9,43.1,233],[145.0,-29.9,34.5,40.5,514],[135.0,-8.7,32.0,42.1,95],[125.0,-52.0,30.8,41.2,185],[115.0,-41.2,32.4,44.8,231],[105.0,-46.3,38.8,44.4,120],[95.0,-60.3,7.4,41.4,152],[85.0,-44.8,-41.9,37.5,72],[75.0,-41.1,0.7,39.4,260],[65.0,-40.7,-14.3,36.3,474]],"orn":[[245.0,-53.6,-53.4,-53.3,5],[235.0,-50.2,-42.0,17.6,18],[215.0,7.9,10.5,14.2,27],[205.0,15.6,27.4,43.2,36],[195.0,-43.9,20.0,36.9,94],[185.0,-40.2,24.6,28.6,21],[175.0,-35.0,30.7,42.8,17],[165.0,-1.0,40.1,46.8,88],[155.0,33.8,36.0,43.6,120],[145.0,-27.5,34.5,41.5,304],[135.0,-4.5,41.7,43.8,169],[125.0,-15.8,32.6,42.8,329],[115.0,12.4,39.4,48.4,320],[105.0,29.4,43.6,56.0,285],[95.0,-52.8,38.2,52.6,248],[85.0,22.9,36.5,49.3,126],[75.0,35.4,44.9,59.1,1546],[65.0,33.8,49.2,56.7,983]],"din":[[245.0,-29.1,11.8,16.0,25],[235.0,-46.7,-45.4,16.9,39],[215.0,7.8,10.7,15.8,37],[205.0,14.0,27.7,43.3,24],[195.0,-41.5,24.0,32.3,32],[185.0,24.0,26.4,27.0,29],[175.0,11.6,42.8,42.9,7],[165.0,-6.6,38.2,46.6,54],[155.0,15.1,36.1,43.5,56],[145.0,-29.9,33.3,40.5,121],[135.0,-6.2,33.3,42.4,59],[125.0,-54.8,30.8,41.5,70],[115.0,-72.7,31.8,44.7,112],[105.0,18.4,37.6,51.7,47],[95.0,-29.7,36.8,46.5,97],[85.0,21.3,36.1,49.1,75],[75.0,29.0,40.8,50.4,257],[65.0,-27.1,34.1,52.8,325]],"mam":[[205.0,30.6,37.5,46.3,7],[195.0,-43.8,-43.2,38.0,8],[165.0,-27.2,41.2,44.5,29],[155.0,34.0,38.8,44.3,13],[145.0,25.6,37.4,41.7,62],[135.0,37.7,41.8,52.2,13],[125.0,30.8,41.0,43.2,35],[115.0,-22.5,45.1,55.2,41],[105.0,4.2,43.9,44.8,22],[95.0,-60.3,38.9,41.3,67],[85.0,36.4,54.1,54.2,19],[75.0,36.7,51.9,59.1,253],[65.0,27.0,48.3,54.6,773],[55.0,37.8,48.7,50.3,1960],[45.0,17.2,43.9,46.7,1313],[35.0,23.8,43.6,47.8,1672],[25.0,-18.3,43.3,47.1,1180],[15.0,-1.5,38.0,47.5,3605],[5.0,-32.4,33.8,48.0,8554]],"ave":[[155.0,28.3,36.1,38.8,6],[145.0,33.5,38.6,47.8,8],[135.0,40.3,44.9,46.6,10],[125.0,33.7,42.8,43.3,42],[115.0,33.6,44.2,54.0,45],[105.0,35.6,43.8,56.3,23],[95.0,14.7,36.9,47.6,27],[85.0,33.9,41.9,47.3,27],[75.0,36.0,54.5,64.8,144],[65.0,-49.9,42.4,54.6,103],[55.0,-50.4,46.7,51.2,167],[45.0,-39.4,44.7,47.7,83],[35.0,-63.9,42.8,48.9,185],[25.0,-51.1,33.1,47.8,131],[15.0,-49.7,34.0,47.9,310],[5.0,-37.0,26.2,51.4,2402]],"mos":[[95.0,-9.4,33.2,43.9,40],[85.0,1.5,40.8,46.3,88],[75.0,-23.1,40.9,55.2,217],[65.0,-50.2,39.8,46.7,173]],"pro":[[55.0,11.0,26.1,28.3,6],[45.0,5.3,11.4,32.4,5],[35.0,10.0,24.8,24.9,33],[25.0,-1.2,12.7,30.1,17],[15.0,17.1,39.4,47.4,601],[5.0,-16.0,34.4,45.7,2728]],"cet":[[45.0,7.4,14.9,47.1,67],[35.0,1.3,31.7,47.8,344],[25.0,-51.2,32.9,48.2,220],[15.0,-30.8,38.8,49.0,689],[5.0,-29.8,43.4,72.8,2430]],"hom":[[15.0,-1.1,0.2,41.6,28],[5.0,-14.3,5.0,36.2,446]]},"dint":[{"name":"Late Triassic","old":237.0,"young":201.4,"genera":97,"multi":14,"multi_pct":14.4,"n":440,"n_cont":4,"pangaea_pct":88.3,"pangaea_age":220,"na_eu_pct":78.4},{"name":"Early Jurassic","old":201.4,"young":174.7,"genera":123,"multi":14,"multi_pct":11.4,"n":1106,"n_cont":5,"pangaea_pct":90.0,"pangaea_age":190,"na_eu_pct":68.5},{"name":"Middle Jurassic","old":174.7,"young":161.5,"genera":115,"multi":12,"multi_pct":10.4,"n":269,"n_cont":3,"pangaea_pct":72.4,"pangaea_age":170,"na_eu_pct":40.9},{"name":"Late Jurassic","old":161.5,"young":143.1,"genera":170,"multi":27,"multi_pct":15.9,"n":1313,"n_cont":5,"pangaea_pct":50.1,"pangaea_age":150,"na_eu_pct":80.8},{"name":"Early Cretaceous","old":143.1,"young":100.5,"genera":523,"multi":24,"multi_pct":4.6,"n":1642,"n_cont":6,"pangaea_pct":35.9,"pangaea_age":120,"na_eu_pct":53.7},{"name":"Late Cretaceous","old":100.5,"young":66.0,"genera":717,"multi":35,"multi_pct":4.9,"n":4248,"n_cont":6,"pangaea_pct":23.4,"pangaea_age":80,"na_eu_pct":63.3}],"na_eu_bin":[56.2,59.4,78.2,56.4,86.9,60.0,70.1,83.3,74.3,86.1,87.3,85.2,80.0,66.3,46.1,82.5,55.9,53.1,54.3,65.8,59.7,57.4,56.9,24.4,52.6,70.8,74.2,72.7,67.7,68.1,42.5,57.9,44.7,53.0,70.3,80.9,90.1,72.9,79.8,62.1,85.0,78.2,90.3,61.6,78.5,null,62.8,59.3,70.5,39.4,21.7,13.2,44.0,56.1,72.3,52.3,93.8,74.4,78.9,76.1,84.6,99.3,90.5,75.4,91.3,51.5,61.6,82.4,92.0,98.9,44.2,75.1,57.8,39.3,70.1,78.5,46.8,85.8,61.4,44.2,50.6,87.3,48.6,67.7,87.9,89.8,94.1,89.5,79.5,83.7,87.8,77.9,84.3,96.2,58.4,95.2,44.4,66.2,70.2,42.6,74.2,63.2,52.1,33.7,14.3,94.4,null,null]};
+/* Life on the moving map: page script. R (results.json) and SITE (site.json) are embedded by 05_build_site.py;
+   coastlines (data/coast/<age>.json), fossil frames (data/frames/<age>.json), names and places are loaded as needed. */
+const fmt = n => n == null || n === "" ? "n/a" : Math.round(n).toLocaleString("en-GB");
+const f1 = n => (Math.round(n * 10) / 10).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tip = document.getElementById("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+document.addEventListener("scroll", hideTip, { passive: true });
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const lbl = (svg, x, y, s, cls = "lab", anchor = "start") => { const t = el("text", { x, y, class: cls, "text-anchor": anchor }, svg); t.textContent = s; return t; };
+const redraws = [];
+function resp(box, render) { let last = 0; const go = force => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+const isDark = () => { const r = document.documentElement; return r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const ma = a => a === 0 ? "Today" : `${fmt(a)} million years ago`;
+const maShort = a => a === 0 ? "Today" : `${fmt(a)} Ma`;
+
+/* ---------- groups, periods ---------- */
+const GROUPS = SITE.groups.map(([k, short, name, c], i) => ({ k, short, name, c, i }));
+const GI = {}; GROUPS.forEach(g => GI[g.k] = g);
+const ORDER = SITE.order.map(k => GI[k]);
+const PERIODS = SITE.periods.map(([name, ab, old, young, c]) => ({ name, ab, old, young, c }));
+const ERAS = SITE.eras.map(([name, old, young, c]) => ({ name, old, young, c }));
+const EXT = SITE.ext.map(([k, name, age]) => ({ k, name, age }));
+const EXTAGE = new Set(EXT.map(e => e.age));
+const periodOf = a => PERIODS.find(p => a <= p.old && a >= p.young) || (a > 538.8 ? { name: "Ediacaran", ab: "E" } : PERIODS[PERIODS.length - 1]);
+const eraOf = a => ERAS.find(p => a <= p.old && a >= p.young) || { name: "Proterozoic" };
+const AGES = SITE.ages.slice().sort((a, b) => a - b);
+const AGESD = AGES.slice().reverse();
+const nearestAge = a => AGES.reduce((b, x) => Math.abs(x - a) < Math.abs(b - a) || (Math.abs(x - a) === Math.abs(b - a) && x % 10 === 0) ? x : b, AGES[0]);
+const PAN = {}; SITE.pangaea.forEach(([a, p]) => PAN[a] = p);
+const EXTNOTE = { eor: "Ice sheets spread over Gondwana, sea levels fell and the warm shallow seas emptied.", lde: "A long series of crises in the seas; the armoured fish dwindled and were gone soon after.",
+  epe: "The Great Dying: vast eruptions in Siberia heated the planet and stripped the seas of oxygen. The last trilobites vanish.", etr: "Volcanism as Pangaea began to split; it cleared the way for the dinosaurs.",
+  ecr: "An asteroid struck Chicxulub in Mexico: the non-bird dinosaurs, pterosaurs, plesiosaurs, mosasaurs and ammonites all vanish." };
+
+/* hero mark: a tiny globe with dots */
+(function () {
+  const g = document.getElementById("heroMark");
+  el("circle", { cx: 60, cy: 60, r: 52, fill: "var(--sea)", stroke: "currentColor", "stroke-width": 3 }, g);
+  el("path", { d: "M34 30 C48 20 70 22 82 34 C92 44 96 62 88 76 C80 90 60 96 46 88 C36 82 40 70 34 62 C28 54 22 40 34 30Z", fill: "var(--land)", stroke: "var(--landedge)", "stroke-width": 2 }, g);
+  [["the", 52, 46, 6], ["sau", 66, 60, 5], ["orn", 58, 72, 5], ["amm", 86, 30, 4], ["tri", 26, 70, 4], ["mam", 74, 80, 4]].forEach(([k, x, y, r]) => el("circle", { cx: x, cy: y, r, fill: GI[k].c, stroke: "#fff", "stroke-width": 1.2 }, g));
+})();
+
+/* ---------- state ---------- */
+const LYDEF = { pos: "ancient", land: true, grat: true, lat: true, labels: true, size: 1, on: GROUPS.map(g => g.k) };
+const LY = JSON.parse(JSON.stringify(LYDEF));
+try { const s = JSON.parse(localStorage.getItem("dtl_layers") || "{}"); Object.assign(LY, s); if (!Array.isArray(LY.on)) LY.on = LYDEF.on.slice(); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("dtl_layers", JSON.stringify(LY)); } catch (e) {} };
+const ON = () => new Set(LY.on);
+const S = { age: 66, sel: null, nid: null, playing: false, morph: 0 };
+const cache = { coast: {}, frame: {} };
+let NAMES = null, PLACES = null, namesP = null;
+function loadNames() { if (!namesP) namesP = Promise.all([fetch("data/names.json").then(r => r.json()), fetch("data/places.json").then(r => r.json())]).then(([n, p]) => { NAMES = n; PLACES = p; }); return namesP; }
+function getCoast(a) { if (!cache.coast[a]) cache.coast[a] = fetch(`data/coast/${a}.json`).then(r => r.json()).then(f => { rewind(f); return f; }); return cache.coast[a]; }
+function getFrame(a) { if (!cache.frame[a]) cache.frame[a] = fetch(`data/frames/${a}.json`).then(r => r.json()); return cache.frame[a]; }
+/* d3-geo wants clockwise outer rings; if a ring covers more than half the sphere it is the wrong way round */
+function rewind(f) { const g = f.geometry; g.coordinates = g.coordinates.map(poly => { const t = { type: "Polygon", coordinates: poly }; if (d3.geoArea(t) > 2 * Math.PI) return poly.map(r => r.slice().reverse()); return poly; }); }
+
+/* ---------- the map ---------- */
+const box = document.getElementById("mapbox"), cv = document.getElementById("mapc"), ctx = cv.getContext("2d");
+const proj = d3.geoEqualEarth(); const gpath = d3.geoPath(proj);
+let W = 0, H = 0, DPR = 1, T = d3.zoomIdentity;
+const P2 = new Map();   // cached Path2D per coast age (cleared on resize)
+const GRAT = d3.geoGraticule().step([30, 30])();
+let gratP = null, sphereP = null, latP = null;
+const LATLINES = { type: "MultiLineString", coordinates: [0, 23.44, -23.44, 66.56, -66.56].map(l => d3.range(-180, 181, 2).map(x => [x, l])) };
+let CUR = { age: null, coast: null, frame: null }, PREV = null, NOW = null;   // NOW: coast for 'today' positions
+let fade = 1, fadeT = null;
+function resize() {
+  const r = box.getBoundingClientRect(); W = Math.max(200, r.width); H = Math.max(150, r.height); DPR = Math.min(2, devicePixelRatio || 1);
+  cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+  const padTop = W < 600 ? 50 : 70, padBot = W < 600 ? 50 : 56;
+  proj.fitExtent([[8, padTop], [W - 8, H - padBot]], { type: "Sphere" });
+  P2.clear(); gratP = new Path2D(gpath(GRAT)); sphereP = new Path2D(gpath({ type: "Sphere" })); latP = new Path2D(gpath(LATLINES));
+  zoom.translateExtent([[-W * .1, -H * .1], [W * 1.1, H * 1.1]]).extent([[0, 0], [W, H]]);
+  if (CUR.frame) project(CUR.frame); if (PREV && PREV.frame) project(PREV.frame);
+  draw();
+}
+function landPath(a, coast) { if (!P2.has(a)) P2.set(a, new Path2D(gpath(coast))); return P2.get(a); }
+const pkey = () => proj.scale() + "," + proj.translate().join(",");
+function project(fr) { fr.px = fr.cells.map(c => proj([c[1], c[2]])); fr.pt = fr.cells.map(c => proj([c[5], c[6]])); fr.proj = pkey(); }
+const rad = n => LY.size * (1.9 + 1.25 * Math.log10(1 + n)) * (W < 600 ? .8 : 1) * Math.pow(T.k, .3);
+function drawLand(coast, a, alpha) {
+  if (!coast || !LY.land) return;
+  ctx.globalAlpha = alpha; const p = landPath(a, coast);
+  ctx.fillStyle = css("--land"); ctx.fill(p); ctx.strokeStyle = css("--landedge"); ctx.lineWidth = .8 / T.k; ctx.stroke(p); ctx.globalAlpha = 1;
+}
+function dotsOf(fr, alpha, morph) {
+  if (!fr || !fr.px) return [];
+  const on = ON(), out = [];
+  for (let i = 0; i < fr.cells.length; i++) {
+    const c = fr.cells[i]; if (!on.has(GROUPS[c[0]].k)) continue;
+    const a = fr.px[i], b = fr.pt[i]; if (!a || !b) continue;
+    const x0 = a[0] + (b[0] - a[0]) * morph, y0 = a[1] + (b[1] - a[1]) * morph;
+    out.push({ i, c, x: T.applyX(x0), y: T.applyY(y0), r: rad(c[3]), alpha });
+  }
+  return out;
+}
+let DRAWN = [];
+function draw() {
+  if (!W) return;
+  const dark = isDark();
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = css("--bg"); ctx.fillRect(0, 0, W, H);
+  ctx.setTransform(DPR * T.k, 0, 0, DPR * T.k, DPR * T.x, DPR * T.y);
+  ctx.fillStyle = css("--sea"); ctx.fill(sphereP);
+  if (LY.grat) { ctx.strokeStyle = css("--grat"); ctx.lineWidth = .6 / T.k; ctx.stroke(gratP); }
+  const m = S.morph;   // 0 = ancient positions, 1 = today's positions
+  if (m > 0) {
+    if (CUR.coast) drawLand(CUR.coast, CUR.age, 1 - m);
+    if (NOW) drawLand(NOW, 0, m);
+  } else {
+    if (PREV && PREV.coast && fade < 1) drawLand(PREV.coast, PREV.age, 1 - fade);
+    if (CUR.coast) drawLand(CUR.coast, CUR.age, PREV && fade < 1 ? fade : 1);
+  }
+  if (LY.lat) { ctx.setLineDash([4 / T.k, 4 / T.k]); ctx.strokeStyle = dark ? "rgba(140,170,185,.55)" : "rgba(70,110,130,.45)"; ctx.lineWidth = .8 / T.k; ctx.stroke(latP); ctx.setLineDash([]); }
+  ctx.strokeStyle = css("--seaedge"); ctx.lineWidth = 1 / T.k; ctx.stroke(sphereP);
+  // dots, in screen space
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  const mp = m;
+  let ds = [];
+  if (PREV && PREV.frame && fade < 1) ds = ds.concat(dotsOf(PREV.frame, 1 - fade, mp));
+  ds = ds.concat(dotsOf(CUR.frame, PREV && fade < 1 ? fade : 1, mp));
+  const hl = S.nid;
+  const edge = dark ? "rgba(20,22,25,.85)" : "rgba(255,255,255,.9)";
+  for (const d of ds) {
+    ctx.globalAlpha = d.alpha * (hl != null && !d.c[10].includes(hl) ? .28 : .92);
+    ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 2 * Math.PI); ctx.fillStyle = GROUPS[d.c[0]].c; ctx.fill();
+    ctx.lineWidth = .7; ctx.strokeStyle = edge; ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  if (hl != null) for (const d of ds) if (d.c[10].includes(hl)) { ctx.beginPath(); ctx.arc(d.x, d.y, d.r + 3.5, 0, 2 * Math.PI); ctx.lineWidth = 2; ctx.strokeStyle = css("--fg"); ctx.stroke(); }
+  if (S.sel && CUR.frame) { const d = ds.find(d => d.c === S.sel); if (d) { ctx.beginPath(); ctx.arc(d.x, d.y, d.r + 4, 0, 2 * Math.PI); ctx.lineWidth = 2.5; ctx.strokeStyle = css("--hot"); ctx.stroke(); } }
+  DRAWN = ds.filter(d => d.alpha > .5);
+  // Pangaea label, on the sea when possible
+  if (LY.labels && m === 0 && CUR.age != null && PAN[CUR.age] >= 80 && fade >= 1) {
+    const lp = proj(SITE.labels[CUR.age]);
+    if (lp) { const x = T.applyX(lp[0]), y = T.applyY(lp[1]); ctx.font = `800 ${W < 600 ? 15 : 22}px Fraunces, Georgia, serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.lineWidth = 5; ctx.strokeStyle = dark ? "rgba(20,22,25,.8)" : "rgba(255,253,248,.85)"; ctx.strokeText("PANGAEA", x, y); ctx.fillStyle = css("--fg"); ctx.globalAlpha = .82; ctx.fillText("PANGAEA", x, y); ctx.globalAlpha = 1; }
+  }
+}
+const zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", e => { T = e.transform; closePop(false); draw(); });
+d3.select(cv).call(zoom).on("dblclick.zoom", null);
+document.getElementById("zin").onclick = () => d3.select(cv).transition().duration(250).call(zoom.scaleBy, 1.6);
+document.getElementById("zout").onclick = () => d3.select(cv).transition().duration(250).call(zoom.scaleBy, 1 / 1.6);
+new ResizeObserver(() => resize()).observe(box);
+
+/* ---------- loading frames, crossfade ---------- */
+let reqId = 0;
+async function setAge(a, opts = {}) {
+  a = nearestAge(a); const id = ++reqId;
+  S.age = a; updateControls();
+  const [coast, frame] = await Promise.all([getCoast(a), getFrame(a)]);
+  if (id !== reqId) return;
+  if (!frame.px || frame.proj !== pkey()) project(frame);
+  if (CUR.age !== a) { PREV = CUR.age != null ? { ...CUR } : null; CUR = { age: a, coast, frame }; startFade(opts.instant ? 0 : (S.playing ? 380 : 300)); }
+  if (S.sel && !frame.cells.includes(S.sel)) { S.sel = null; closePop(false); }
+  side(); legend(); draw();
+  // prefetch neighbours
+  const k = AGESD.indexOf(a); [k + 1, k + 2, k - 1].forEach(j => { if (AGESD[j] != null) { getCoast(AGESD[j]); getFrame(AGESD[j]); } });
+}
+function startFade(ms) {
+  if (fadeT) cancelAnimationFrame(fadeT);
+  if (!ms || !PREV) { fade = 1; PREV = null; draw(); return; }
+  const t0 = performance.now(); fade = 0;
+  const step = t => { fade = Math.min(1, (t - t0) / ms); draw(); if (fade < 1) fadeT = requestAnimationFrame(step); else { PREV = null; draw(); } };
+  fadeT = requestAnimationFrame(step);
+}
+function morphTo(today) {
+  LY.pos = today ? "today" : "ancient"; saveLY(); syncPanel();
+  const go = () => { const from = S.morph, to = today ? 1 : 0, t0 = performance.now(), ms = 900;
+    const step = t => { const p = Math.min(1, (t - t0) / ms); S.morph = from + (to - from) * d3.easeCubicInOut(p); draw(); if (p < 1) requestAnimationFrame(step); else side(); };
+    requestAnimationFrame(step); };
+  if (today && !NOW) getCoast(0).then(c => { NOW = c; go(); }); else go();
+}
+
+/* ---------- controls: slider, play, jump, timeline ---------- */
+const slider = document.getElementById("slider"), ageLab = document.getElementById("ageLab"), playB = document.getElementById("play");
+slider.addEventListener("input", () => { stop(); setAge(540 - +slider.value); });
+function updateControls() {
+  slider.value = 540 - S.age; ageLab.textContent = maShort(S.age);
+  const p = periodOf(S.age), e = EXT.find(x => x.age === S.age), fr = SITE.frames[S.age];
+  document.getElementById("mapnote").innerHTML = `<b>${S.age === 0 ? "Today" : fmt(S.age) + " million years ago"}</b>${esc(S.age === 0 ? "Quaternary" : p.name)} · ${esc(eraOf(S.age).name)}${e ? `<br><span class="x">${esc(e.name)} mass extinction</span>` : ""}${LY.pos === "today" ? "<br>Dots at today's positions" : ""}`;
+  tlCursor();
+}
+let playT = null;
+function stop() { S.playing = false; clearTimeout(playT); playB.innerHTML = "&#9654; Play"; playB.setAttribute("aria-label", "Play through time"); }
+function play() {
+  S.playing = true; playB.innerHTML = "&#10074;&#10074; Pause"; playB.setAttribute("aria-label", "Pause");
+  if (LY.pos === "today") morphTo(false);
+  let k = AGESD.indexOf(S.age); if (k >= AGESD.length - 1) k = -1;
+  const tick = async () => { if (!S.playing) return; k++; if (k >= AGESD.length) { stop(); return; }
+    await setAge(AGESD[k]); const dwell = EXTAGE.has(AGESD[k]) ? 1700 : AGESD[k] % 10 ? 700 : 900; playT = setTimeout(tick, dwell); };
+  tick();
+}
+playB.onclick = () => S.playing ? stop() : play();
+const JUMPS = [[540, "Cambrian start"], [500, "Trilobite seas"], [445, "End-Ordovician", 1], [372, "Late Devonian", 1], [300, "Coal swamps"], [252, "End-Permian", 1], [220, "Pangaea"], [201, "End-Triassic", 1], [150, "Jurassic giants"], [70, "Last dinosaurs"], [66, "End-Cretaceous", 1], [0, "Today"]];
+const jr = document.getElementById("jumpRow");
+JUMPS.forEach(([a, t, x]) => { const b = document.createElement("button"); b.className = "btn" + (x ? " ex" : ""); b.textContent = `${t} · ${a ? a : "0"}`; b.onclick = () => { stop(); setAge(a); }; jr.appendChild(b); });
+
+/* timeline under the map */
+const tlBox = document.getElementById("timeline"); let tlX = null, tlCur = null;
+function tlCursor() { if (tlCur && tlX) { const x = tlX(S.age); tlCur.setAttribute("transform", `translate(${x},0)`); } }
+resp(tlBox, (w, sm) => {
+  const h = 108, m = { l: 6, r: 6 }; const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Geological time scale with the five mass extinctions" }, tlBox);
+  const x = d3.scaleLinear().domain([540, 0]).range([m.l, w - m.r]); tlX = x;
+  // collections per 5 Myr, as a small area
+  const cb = SITE.coll, mx = d3.max(cb), yA = d3.scaleSqrt().domain([0, mx]).range([0, 26]);
+  const area = d3.area().x((d, i) => x(i * SITE.binw + SITE.binw / 2)).y0(30).y1(d => 30 - yA(d)).curve(d3.curveStepAfter);
+  el("path", { d: area(cb.slice(0, 108)), fill: "var(--muted)", opacity: .35 }, svg);
+  lbl(svg, m.l + 2, 9, sm ? "collections" : "fossil collections per 5 million years", "lab s m");
+  // eras and periods
+  ERAS.forEach(e => { el("rect", { x: x(Math.min(540, e.old)), y: 33, width: x(e.young) - x(Math.min(540, e.old)), height: 15, fill: e.c, stroke: "var(--bg)", "stroke-width": 1 }, svg);
+    const t = lbl(svg, (x(Math.min(540, e.old)) + x(e.young)) / 2, 44.5, e.name, "lab s", "middle"); t.style.fill = ("#222"); });
+  PERIODS.forEach(p => { const x0 = x(Math.min(540, p.old)), x1 = x(p.young); el("rect", { x: x0, y: 49, width: x1 - x0, height: 20, fill: p.c, stroke: "var(--bg)", "stroke-width": 1 }, svg);
+    const wd = x1 - x0, nm = wd > p.name.length * 6.6 + 6 ? p.name : wd > 14 ? p.ab : "";
+    if (nm) { const t = lbl(svg, (x0 + x1) / 2, 63, nm, "lab s", "middle"); t.style.fill = (["Triassic", "Ordovician", "Permian"].includes(p.name) ? "#fff" : "#222"); } });
+  // extinctions
+  EXT.forEach((e, i) => { const xx = x(e.age); el("line", { x1: xx, x2: xx, y1: 2, y2: 70, stroke: "var(--hot)", "stroke-width": 1.4, "stroke-dasharray": "3 2" }, svg);
+    el("path", { d: `M${xx - 4},72 L${xx + 4},72 L${xx},79 Z`, fill: "var(--hot)" }, svg); });
+  // extinction labels, alternating rows to avoid overlap
+  EXT.forEach((e, i) => { const xx = x(e.age); const t = lbl(svg, xx, 90 + (i % 2) * 13, sm ? String(e.age) : `${e.name.replace("End-", "End ")} ${e.age}`, "lab s", "middle"); t.style.fill = "var(--hot)"; });
+  // axis ticks
+  [500, 400, 300, 200, 100, 0].forEach(a => { if (!sm || a % 200 === 0 || a === 500) { } });
+  tlCur = el("g", {}, svg); el("line", { x1: 0, x2: 0, y1: 0, y2: 72, stroke: "var(--fg)", "stroke-width": 2.5 }, tlCur); el("circle", { cx: 0, cy: 30, r: 5, fill: "var(--fg)" }, tlCur);
+  tlCursor();
+  const setFrom = ev => { const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) * w / r.width; stop(); setAge(Math.max(0, Math.min(540, x.invert(px)))); };
+  let drag = false;
+  svg.addEventListener("pointerdown", ev => { drag = true; svg.setPointerCapture(ev.pointerId); setFrom(ev); });
+  svg.addEventListener("pointermove", ev => { if (drag) setFrom(ev); else { const r = svg.getBoundingClientRect(); const a = x.invert((ev.clientX - r.left) * w / r.width); const p = periodOf(a); showTip(`<b>${fmt(Math.max(0, a))} Ma</b> · ${esc(p.name)}`, ev.clientX, r.top + 4); } });
+  svg.addEventListener("pointerup", () => { drag = false; }); svg.addEventListener("pointerleave", hideTip);
+});
+
+/* ---------- layers panel ---------- */
+const lyrBtn = document.getElementById("lyrBtn"), lyrPanel = document.getElementById("lyrPanel");
+lyrBtn.onclick = () => { const o = lyrPanel.hidden; lyrPanel.hidden = !o; lyrBtn.setAttribute("aria-expanded", o); };
+["click", "dblclick", "mousedown", "touchstart", "wheel", "pointerdown"].forEach(t => document.getElementById("mapctl").addEventListener(t, e => e.stopPropagation(), { passive: true }));
+function buildPanel() {
+  const cnt = CUR.frame ? CUR.frame.byg : GROUPS.map(() => 0);
+  lyrPanel.innerHTML = `
+  <div class="row"><label class="b">Positions</label><div class="seg" id="posSeg"><button data-p="ancient">Where they lived</button><button data-p="today">Where found today</button></div></div>
+  <div class="hd">Background</div>
+  <div class="row"><label><input type="checkbox" data-k="land"> Continents of the time</label></div>
+  <div class="row"><label><input type="checkbox" data-k="grat"> Grid, every 30 degrees</label></div>
+  <div class="row"><label><input type="checkbox" data-k="lat"> Equator, tropics, polar circles</label></div>
+  <div class="row"><label><input type="checkbox" data-k="labels"> Pangaea label</label></div>
+  <div class="row"><label class="b">Dot size</label><div class="sub"><input type="range" data-k="size" min="0.5" max="2.2" step="0.1" aria-label="Dot size"></div></div>
+  <div class="hd">Animal groups <span style="text-transform:none;letter-spacing:0">(finds in this frame)</span></div>
+  <div class="row"><button class="mini" id="gAll">All</button><button class="mini" id="gNone">None</button><button class="mini" id="gDino">Dinosaurs only</button><button class="mini" id="gSea">Sea reptiles</button></div>
+  <div class="gl">${ORDER.map(g => `<label><input type="checkbox" data-g="${g.k}"><span class="sw" style="background:${g.c}"></span>${esc(g.short)}<small>${fmt(cnt[g.i])}</small></label>`).join("")}</div>
+  <button class="mini" id="lyReset">Reset layers</button>`;
+  lyrPanel.querySelectorAll("[data-k]").forEach(i => i.addEventListener(i.type === "range" ? "input" : "change", () => { LY[i.dataset.k] = i.type === "checkbox" ? i.checked : +i.value; saveLY(); draw(); }));
+  lyrPanel.querySelectorAll("[data-g]").forEach(i => i.addEventListener("change", () => { const s = ON(); i.checked ? s.add(i.dataset.g) : s.delete(i.dataset.g); LY.on = [...s]; saveLY(); draw(); side(); legend(); }));
+  lyrPanel.querySelectorAll("#posSeg button").forEach(b => b.onclick = () => { const t = b.dataset.p === "today"; if ((LY.pos === "today") !== t) morphTo(t); });
+  const setOn = a => { LY.on = a; saveLY(); syncPanel(); draw(); side(); legend(); };
+  lyrPanel.querySelector("#gAll").onclick = () => setOn(GROUPS.map(g => g.k));
+  lyrPanel.querySelector("#gNone").onclick = () => setOn([]);
+  lyrPanel.querySelector("#gDino").onclick = () => setOn(["the", "sau", "orn", "din"]);
+  lyrPanel.querySelector("#gSea").onclick = () => setOn(["ich", "ple", "mos"]);
+  lyrPanel.querySelector("#lyReset").onclick = () => { Object.assign(LY, JSON.parse(JSON.stringify(LYDEF))); saveLY(); S.morph = 0; syncPanel(); draw(); side(); legend(); };
+  syncPanel();
+}
+function syncPanel() {
+  if (!lyrPanel.firstElementChild) return;
+  lyrPanel.querySelectorAll("[data-k]").forEach(i => { if (i.type === "checkbox") i.checked = !!LY[i.dataset.k]; else i.value = LY[i.dataset.k]; });
+  const on = ON(); lyrPanel.querySelectorAll("[data-g]").forEach(i => i.checked = on.has(i.dataset.g));
+  lyrPanel.querySelectorAll("#posSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.p === LY.pos)));
+  const cnt = CUR.frame ? CUR.frame.byg : null; if (cnt) lyrPanel.querySelectorAll(".gl label").forEach((l, j) => { l.querySelector("small").textContent = fmt(cnt[ORDER[j].i]); });
+  updateControls();
+}
+
+/* ---------- legend under the map: groups present in this frame ---------- */
+function legend() {
+  const lg = document.getElementById("legend"); if (!CUR.frame) return; const on = ON();
+  lg.innerHTML = ORDER.filter(g => CUR.frame.byg[g.i] > 0).map(g => `<span style="opacity:${on.has(g.k) ? 1 : .4}"><i style="background:${g.c}"></i>${esc(g.short)}</span>`).join("") || "<span>No finds of these groups in this frame.</span>";
+  syncPanel();
+}
+
+/* ---------- side panel ---------- */
+function side() {
+  const sd = document.getElementById("side"); if (!CUR.frame) return; const fr = CUR.frame, on = ON(), a = CUR.age;
+  const e = EXT.find(x => x.age === a), p = periodOf(a), win = fr.win;
+  const rows = ORDER.filter(g => fr.byg[g.i] > 0).sort((x, y) => fr.byg[y.i] - fr.byg[x.i]); const mx = d3.max(rows, g => fr.byg[g.i]) || 1;
+  let h = `<h4>This frame</h4><div class="big">${a === 0 ? "Today" : fmt(a) + " million years ago"}</div><p class="sub">${esc(a === 0 ? "Quaternary" : p.name)}, ${esc(eraOf(a).name)} era. Fossils dated ${a === 0 ? "within the last 5 million years" : `${fmt(win[1])} to ${fmt(win[0])} million years ago`}: <b>${fmt(fr.n)}</b> occurrences in ${fmt(fr.nc)} collections.</p>`;
+  if (e) h += `<p class="sub" style="color:var(--hot)"><b>${esc(e.name)} mass extinction.</b> ${esc(EXTNOTE[e.k])} The frame shows the 10 million years before it.</p>`;
+  h += `<p class="sub">Largest land mass: <b>${f1(PAN[a])}%</b> of all land${PAN[a] >= 80 ? " (Pangaea)" : ""}.</p>`;
+  if (S.nid != null && NAMES) { const n = NAMES[S.nid]; const here = fr.cells.filter(c => c[10].includes(S.nid)).length;
+    h += `<h4>Highlighted</h4><p><span class="sw" style="background:${GROUPS[n[1]].c}"></span><b>${esc(n[0])}</b>, ${esc(GROUPS[n[1]].short.toLowerCase())}. ${fmt(n[2])} occurrences, ${n[3] === n[4] ? `dated about ${f1(n[3])}` : `dated ${f1(n[3])} to ${f1(n[4])}`} million years ago (midpoints). ${here ? `Ringed in ${here} square${here > 1 ? "s" : ""} in this frame.` : "None in this frame."} <button class="go" id="clrHl">Clear</button></p>`; }
+  h += `<h4>Finds by group (click to show or hide)</h4><table>${rows.map(g => `<tr class="gr${on.has(g.k) ? "" : " off"}" data-g="${g.k}"><td><span class="sw" style="background:${g.c}"></span>${esc(g.short)}</td><td class="bar"><i style="width:${Math.max(2, 100 * fr.byg[g.i] / mx)}%;background:${g.c}"></i></td><td class="num">${fmt(fr.byg[g.i])}</td></tr>`).join("")}</table>`;
+  if (!rows.length) h += `<p class="sub">No finds of these groups in this frame: the first trilobites appear around 520 million years ago.</p>`;
+  h += `<p class="sub">Counts are fossil occurrences in the Paleobiology Database, not numbers of animals; they follow where rock of this age is exposed and who has looked.</p>`;
+  sd.innerHTML = h;
+  sd.querySelectorAll("tr.gr").forEach(tr => tr.onclick = () => { const s = ON(), k = tr.dataset.g; s.has(k) ? s.delete(k) : s.add(k); LY.on = [...s]; saveLY(); draw(); side(); legend(); });
+  const c = sd.querySelector("#clrHl"); if (c) c.onclick = () => { S.nid = null; draw(); side(); };
+}
+
+/* ---------- clicking dots ---------- */
+const pop = document.getElementById("pop");
+function hit(ev) { const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top; let best = null, bd = 1e9;
+  for (const d of DRAWN) { const dd = Math.hypot(d.x - x, d.y - y); if (dd <= d.r + 4 && dd / (d.r + 2) < bd) { bd = dd / (d.r + 2); best = d; } } return best; }
+cv.addEventListener("mousemove", ev => { const d = hit(ev); cv.classList.toggle("hand", !!d); });
+cv.addEventListener("click", async ev => { const d = hit(ev); if (!d) { closePop(true); return; } await loadNames(); openPop(d); });
+const ll = (lat, lng) => `${f1(Math.abs(lat))}&deg;&nbsp;${lat >= 0 ? "N" : "S"}, ${f1(Math.abs(lng))}&deg;&nbsp;${lng >= 0 ? "E" : "W"}`;
+function openPop(d) {
+  const c = d.c, g = GROUPS[c[0]]; S.sel = c;
+  const names = c[10].map(i => NAMES[i]), gen = names.filter(n => n[5] === 1), oth = names.filter(n => n[5] !== 1);
+  const link = n => `<a href="https://paleobiodb.org/classic/checkTaxonInfo?taxon_name=${encodeURIComponent(n[0])}" target="_blank" rel="noopener">${esc(n[0])}</a>`;
+  const nshow = W < 600 ? 5 : 10;
+  const show = gen.slice(0, nshow).map(link).join(", ") + (gen.length > nshow ? ` and ${gen.length - nshow} more` : "");
+  pop.innerHTML = `<button class="cl" aria-label="Close">&times;</button><h5><span class="sw" style="background:${g.c}"></span>${esc(g.name)}</h5>
+  <p>${fmt(c[3])} occurrence${c[3] > 1 ? "s" : ""} in ${fmt(c[4])} collection${c[4] > 1 ? "s" : ""}, dated ${c[8] === c[9] ? `about ${f1(c[8])}` : `${f1(c[9])} to ${f1(c[8])}`} million years ago <span class="m">(collection midpoints)</span>.</p>
+  <p><b>Then:</b> ${ll(c[2], c[1])} <span class="m">(palaeo-position)</span><br><b>Today:</b> ${esc(PLACES[c[7]])} <span class="m">(${ll(c[6], c[5])})</span></p>
+  ${gen.length ? `<p class="tx"><b>Genera:</b> ${show}</p>` : ""}${oth.length ? `<p class="tx m">Also identified only as: ${oth.slice(0, 5).map(n => esc(n[0])).join(", ")}${oth.length > 5 ? "..." : ""}</p>` : ""}
+  <p><button class="btn" id="popWhere">${LY.pos === "today" ? "Back to where it lived" : "Where is this today?"}</button></p>`;
+  const r = box.getBoundingClientRect(); pop.style.display = "block";
+  const pw = pop.offsetWidth, ph = pop.offsetHeight; let x = d.x + 14, y = d.y - ph / 2;
+  if (x + pw > r.width - 8) x = d.x - pw - 14; if (x < 8) x = Math.max(8, (r.width - pw) / 2);
+  y = Math.max(6, Math.min(r.height - ph - 56, y));
+  pop.style.left = x + "px"; pop.style.top = y + "px";
+  pop.querySelector(".cl").onclick = () => closePop(true);
+  pop.querySelector("#popWhere").onclick = () => { closePop(false); morphTo(LY.pos !== "today"); };
+  draw();
+}
+function closePop(clear) { pop.style.display = "none"; if (clear) { S.sel = null; draw(); } }
+["click", "mousedown", "wheel", "pointerdown", "touchstart", "dblclick"].forEach(t => pop.addEventListener(t, e => e.stopPropagation(), { passive: true }));
+
+/* ---------- search ---------- */
+const q = document.getElementById("q"), sug = document.getElementById("sug"); let sugI = -1, sugL = [];
+q.addEventListener("focus", loadNames, { once: true });
+q.addEventListener("input", async () => { await loadNames(); const v = q.value.trim().toLowerCase(); if (v.length < 2) { sug.style.display = "none"; return; }
+  sugL = []; for (let i = 0; i < NAMES.length && sugL.length < 12; i++) { const n = NAMES[i]; if (n[5] === 1 && n[0].toLowerCase().startsWith(v)) sugL.push(i); }
+  if (sugL.length < 12) for (let i = 0; i < NAMES.length && sugL.length < 12; i++) { const n = NAMES[i]; if (n[5] === 1 && !sugL.includes(i) && n[0].toLowerCase().includes(v)) sugL.push(i); }
+  sugI = -1; sug.innerHTML = sugL.map((i, j) => { const n = NAMES[i]; return `<li role="option" data-i="${i}"><span class="sw" style="background:${GROUPS[n[1]].c}"></span>${esc(n[0])} <span>${esc(GROUPS[n[1]].short.toLowerCase())}, ${fmt(n[2])} finds, ${f1(n[3])} Ma${n[4] !== n[3] ? " to " + f1(n[4]) : ""}</span></li>`; }).join("") || "<li><span>No genus of that name in these groups</span></li>";
+  sug.style.display = "block"; sug.querySelectorAll("li[data-i]").forEach(li => li.onclick = () => pick(+li.dataset.i)); });
+q.addEventListener("keydown", e => { const lis = sug.querySelectorAll("li[data-i]"); if (!lis.length) return;
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); sugI = (sugI + (e.key === "ArrowDown" ? 1 : -1) + lis.length) % lis.length; lis.forEach((l, j) => l.setAttribute("aria-selected", j === sugI)); }
+  else if (e.key === "Enter") { e.preventDefault(); pick(+lis[Math.max(0, sugI)].dataset.i); } else if (e.key === "Escape") sug.style.display = "none"; });
+document.addEventListener("click", e => { if (!e.target.closest(".searchbox")) sug.style.display = "none"; });
+async function pick(i) { await loadNames(); const n = NAMES[i]; q.value = n[0]; sug.style.display = "none"; S.nid = i; stop();
+  const g = GROUPS[n[1]]; if (!ON().has(g.k)) { LY.on.push(g.k); saveLY(); }
+  // the frame (of those whose window covers the genus) with the most squares holding it
+  const cand = AGES.filter(a => { const w = SITE.frames[a].win; return w[0] <= n[3] && w[1] > n[4]; });
+  let best = nearestAge((n[3] + n[4]) / 2), bn = -1;
+  for (const a of cand.slice(0, 8)) { const fr = await getFrame(a); const k = fr.cells.filter(c => c[10].includes(i)).length; if (k > bn) { bn = k; best = a; } }
+  await setAge(best); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); }
+window.searchFor = async s => { await loadNames(); q.value = s; q.dispatchEvent(new Event("input")); };
+window.pickName = async s => { await loadNames(); const i = NAMES.findIndex(n => n[0] === s); if (i >= 0) await pick(i); };
+
+/* ---------- charts ---------- */
+const BW = SITE.binw, NB = SITE.bins;
+function timeAxis(svg, x, y0, w, sm, opts = {}) {
+  // period band and ticks
+  PERIODS.forEach(p => { const x0 = x(Math.min(x.domain()[0], p.old)), x1 = x(Math.max(x.domain()[1], p.young)); if (x1 <= x0) return;
+    el("rect", { x: x0, y: y0, width: x1 - x0, height: 14, fill: p.c, stroke: "var(--bg)", "stroke-width": 1 }, svg);
+    const wd = x1 - x0, nm = wd > p.name.length * 6.3 + 4 ? p.name : wd > 13 ? p.ab : ""; if (nm) { const t = lbl(svg, (x0 + x1) / 2, y0 + 10.5, nm, "lab s", "middle"); t.style.fill = (["Triassic", "Ordovician", "Permian"].includes(p.name) ? "#fff" : "#222"); t.style.fontSize = "10px"; } });
+  const ticks = opts.ticks || (sm ? [500, 400, 300, 200, 100, 0] : [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 0]);
+  ticks.filter(a => a <= x.domain()[0] && a >= x.domain()[1]).forEach(a => { el("line", { x1: x(a), x2: x(a), y1: y0 + 14, y2: y0 + 18, stroke: "var(--muted)" }, svg); lbl(svg, x(a), y0 + 29, a ? String(a) : "0 Ma", "lab s m", "middle"); });
+}
+function extLines(svg, x, y0, y1) { EXT.forEach(e => { if (e.age > x.domain()[0] || e.age < x.domain()[1]) return; el("line", { x1: x(e.age), x2: x(e.age), y1: y0, y2: y1, stroke: "var(--hot)", "stroke-width": 1.2, "stroke-dasharray": "3 3", opacity: .8 }, svg); }); }
+const jumpMap = a => { stop(); setAge(a); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); };
+
+/* Pangaea index */
+resp(document.getElementById("panChart"), (w, sm) => {
+  const h = sm ? 250 : 290, m = { l: 40, r: 12, t: 16, b: 46 }; const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Line chart of the share of land in the largest land mass from 540 million years ago to today, above 85 per cent from 270 to 180 million years ago" }, document.getElementById("panChart"));
+  const x = d3.scaleLinear().domain([540, 0]).range([m.l, w - m.r]), y = d3.scaleLinear().domain([0, 100]).range([h - m.b, m.t]);
+  [0, 25, 50, 75, 100].forEach(v => { el("line", { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); lbl(svg, m.l - 6, y(v) + 4, v + "%", "lab s m", "end"); });
+  el("rect", { x: x(R.pangaea.first_over_85), y: m.t, width: x(R.pangaea.last_over_85) - x(R.pangaea.first_over_85), height: h - m.b - m.t, fill: "var(--gold)", opacity: .13 }, svg);
+  lbl(svg, (x(R.pangaea.first_over_85) + x(R.pangaea.last_over_85)) / 2, m.t + 12, "Pangaea", "lab b", "middle");
+  extLines(svg, x, m.t, h - m.b);
+  const data = SITE.pangaea.slice().sort((a, b) => b[0] - a[0]);
+  el("path", { d: d3.area().x(d => x(d[0])).y0(y(0)).y1(d => y(d[1]))(data), fill: "var(--cool)", opacity: .14 }, svg);
+  el("path", { d: d3.line().x(d => x(d[0])).y(d => y(d[1]))(data), fill: "none", stroke: "var(--cool)", "stroke-width": 2.4 }, svg);
+  const pk = data.find(d => d[0] === R.pangaea.peak_age); el("circle", { cx: x(pk[0]), cy: y(pk[1]), r: 4, fill: "var(--cool)" }, svg);
+  lbl(svg, x(pk[0]) + 8, y(pk[1]) + 16, `${f1(pk[1])}% at ${pk[0]} Ma`, "lab s b", "start");
+  const td = data[data.length - 1]; el("circle", { cx: x(0), cy: y(td[1]), r: 4, fill: "var(--cool)" }, svg); lbl(svg, x(0) - 6, y(td[1]) - 9, `today ${f1(td[1])}%`, "lab s b", "end");
+  timeAxis(svg, x, h - m.b + 2, w, sm);
+  const hov = el("line", { y1: m.t, y2: h - m.b, stroke: "var(--fg)", opacity: 0 }, svg);
+  el("rect", { x: m.l, y: m.t, width: w - m.l - m.r, height: h - m.b - m.t, fill: "transparent", style: "cursor:pointer" }, svg).addEventListener("pointermove", ev => {
+    const r = svg.getBoundingClientRect(); const a = nearestAge(x.invert((ev.clientX - r.left) * w / r.width)); hov.setAttribute("x1", x(a)); hov.setAttribute("x2", x(a)); hov.setAttribute("opacity", .4);
+    showTip(`<b>${maShort(a)}</b> · ${esc(periodOf(a).name)}<br>Largest land mass: ${f1(PAN[a])}% of land`, ev.clientX, r.top + y(PAN[a]) * r.height / h); });
+  svg.lastChild.addEventListener("pointerleave", () => { hideTip(); hov.setAttribute("opacity", 0); });
+  svg.lastChild.addEventListener("click", ev => { const r = svg.getBoundingClientRect(); jumpMap(nearestAge(x.invert((ev.clientX - r.left) * w / r.width))); });
+});
+
+/* swim lanes */
+let laneMode = "own";
+document.querySelectorAll("#laneMode .btn").forEach(b => b.onclick = () => { laneMode = b.dataset.m; document.querySelectorAll("#laneMode .btn").forEach(x => x.setAttribute("aria-pressed", String(x === b))); redraws[laneIdx](); });
+const laneIdx = redraws.length;
+resp(document.getElementById("laneChart"), (w, sm) => {
+  const box = document.getElementById("laneChart");
+  const lh = sm ? 17 : 20, lw = sm ? 128 : 168, m = { l: lw, r: 10, t: 6, b: 40 };
+  const tot = d3.range(NB).map(b => d3.sum(GROUPS, g => SITE.gen[g.k][b]));
+  const x = d3.scaleLinear().domain([540, 0]).range([m.l, w - m.r]);
+  let h;
+  if (laneMode === "own") {
+    h = m.t + ORDER.length * lh + m.b; const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Swim-lane chart of genera per group through time, each scaled to its own peak" }, box);
+    extLines(svg, x, m.t, h - m.b);
+    ORDER.forEach((g, j) => { const y0 = m.t + j * lh, s = SITE.gen[g.k], mx = d3.max(s) || 1;
+      el("line", { x1: m.l, x2: w - m.r, y1: y0 + lh - 1, y2: y0 + lh - 1, stroke: "var(--rule)" }, svg);
+      const pts = d3.range(NB).map(b => [b * BW + BW / 2, s[b] / mx]);
+      el("path", { d: d3.area().x(d => x(d[0])).y0(y0 + lh - 1).y1(d => y0 + lh - 1 - d[1] * (lh - 3)).curve(d3.curveMonotoneX)(pts), fill: g.c, opacity: .9 }, svg);
+      const t = lbl(svg, m.l - 6, y0 + lh - 5, sm ? g.short : g.short, "lab s", "end"); t.style.fontSize = sm ? "10px" : "11.5px"; });
+    timeAxis(svg, x, h - m.b + 4, w, sm);
+    const ov = el("rect", { x: m.l, y: m.t, width: w - m.l - m.r, height: ORDER.length * lh, fill: "transparent" }, svg);
+    ov.addEventListener("pointermove", ev => { const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) * w / r.width, py = (ev.clientY - r.top) * h / r.height;
+      const j = Math.floor((py - m.t) / lh), g = ORDER[j]; if (!g) return; const b = Math.min(NB - 1, Math.max(0, Math.floor(x.invert(px) / BW)));
+      showTip(`<b>${esc(g.name)}</b><br>${b * BW + BW} to ${b * BW} Ma: ${fmt(SITE.gen[g.k][b])} genera, ${fmt(SITE.occ[g.k][b])} occurrences`, ev.clientX, ev.clientY - 6); });
+    ov.addEventListener("pointerleave", hideTip);
+  } else {
+    h = sm ? 330 : 400; const mm = { l: 40, r: 10, t: 8, b: 40 }; const xx = d3.scaleLinear().domain([540, 0]).range([mm.l, w - mm.r]); const y = d3.scaleLinear().domain([0, 1]).range([h - mm.b, mm.t]);
+    const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Stacked area chart of each group's share of all genera through time" }, box);
+    const keys = ORDER.map(g => g.k); const rows = d3.range(NB).map(b => { const o = { a: b * BW + BW / 2 }; keys.forEach(k => o[k] = tot[b] >= 5 ? SITE.gen[k][b] / tot[b] : 0); return o; });
+    const st = d3.stack().keys(keys)(rows);
+    st.forEach((s, j) => el("path", { d: d3.area().x(d => xx(d.data.a)).y0(d => y(d[0])).y1(d => y(d[1])).curve(d3.curveStepAfter)(s), fill: GI[keys[j]].c }, svg));
+    [0, .25, .5, .75, 1].forEach(v => lbl(svg, mm.l - 6, y(v) + 4, Math.round(v * 100) + "%", "lab s m", "end"));
+    extLines(svg, xx, mm.t, h - mm.b); timeAxis(svg, xx, h - mm.b + 4, w, sm);
+    const ov = el("rect", { x: mm.l, y: mm.t, width: w - mm.l - mm.r, height: h - mm.b - mm.t, fill: "transparent" }, svg);
+    ov.addEventListener("pointermove", ev => { const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) * w / r.width, py = (ev.clientY - r.top) * h / r.height; const b = Math.min(NB - 1, Math.max(0, Math.floor(xx.invert(px) / BW)));
+      const v = y.invert(py); let acc = 0, g = null; for (const k of keys) { acc += rows[b][k]; if (v <= acc) { g = GI[k]; break; } } if (!g || !tot[b]) return;
+      showTip(`<b>${esc(g.name)}</b><br>${b * BW + BW} to ${b * BW} Ma: ${fmt(SITE.gen[g.k][b])} of ${fmt(tot[b])} genera (${f1(100 * SITE.gen[g.k][b] / tot[b])}%)`, ev.clientX, ev.clientY - 6); });
+    ov.addEventListener("pointerleave", hideTip);
+  }
+});
+
+/* dinosaur genera */
+resp(document.getElementById("dinoChart"), (w, sm) => {
+  const h = sm ? 260 : 300, m = { l: 40, r: sm ? 10 : 110, t: 10, b: 46 }; const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Stacked area chart of dinosaur genera per 5 million years by group from the Triassic to the end of the Cretaceous, with birds as a line" }, document.getElementById("dinoChart"));
+  const A = SITE.dino_bins; const keys = ["the", "sau", "orn", "din"];
+  const rows = A.map((a, i) => { const o = { a: a + BW / 2 }; keys.forEach(k => o[k] = SITE.dino[k][i]); o.ave = SITE.dino.ave[i]; return o; });
+  const x = d3.scaleLinear().domain([240, 60]).range([m.l, w - m.r]); const st = d3.stack().keys(keys)(rows);
+  const y = d3.scaleLinear().domain([0, d3.max(rows, r => keys.reduce((s, k) => s + r[k], 0)) * 1.08]).nice().range([h - m.b, m.t]);
+  y.ticks(5).forEach(v => { el("line", { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); lbl(svg, m.l - 6, y(v) + 4, v, "lab s m", "end"); });
+  extLines(svg, x, m.t, h - m.b);
+  st.forEach((s, j) => el("path", { d: d3.area().x(d => x(d.data.a)).y0(d => y(d[0])).y1(d => y(d[1])).curve(d3.curveMonotoneX)(s), fill: GI[keys[j]].c, opacity: .92 }, svg));
+  el("path", { d: d3.line().x(d => x(d.a)).y(d => y(d.ave)).curve(d3.curveMonotoneX)(rows), fill: "none", stroke: GI.ave.c, "stroke-width": 2.5, "stroke-dasharray": "5 3" }, svg);
+  timeAxis(svg, x, h - m.b + 2, w, sm, { ticks: [240, 200, 160, 120, 80, 60].filter(a => !sm || a % 40 === 0 || a === 60) });
+  if (!sm) { // labels at the right of the last full bin
+    const i = rows.findIndex(r => r.a === 67.5) >= 0 ? rows.findIndex(r => r.a === 67.5) : 1; let last = -1e9;
+    [...keys.map((k, j) => [k, (st[j][i][0] + st[j][i][1]) / 2]), ["ave", rows[i].ave]].sort((p, q) => q[1] - p[1]).forEach(([k, v]) => { let yy = y(v) + 4; if (yy < last + 13) yy = last + 13; last = yy; const t = lbl(svg, w - m.r + 6, yy, GI[k].short, "lab s b"); t.style.fill = (GI[k].c); });
+  } else { const lg = document.createElement("div"); lg.className = "legend"; lg.innerHTML = [...keys, "ave"].map(k => `<span><i style="background:${GI[k].c}"></i>${esc(GI[k].short)}</span>`).join(""); document.getElementById("dinoChart").appendChild(lg); }
+  const ov = el("rect", { x: m.l, y: m.t, width: w - m.l - m.r, height: h - m.b - m.t, fill: "transparent" }, svg);
+  ov.addEventListener("pointermove", ev => { const r = svg.getBoundingClientRect(); const a = x.invert((ev.clientX - r.left) * w / r.width); const i = rows.findIndex(o => Math.abs(o.a - a) <= BW / 2); if (i < 0) return; const o = rows[i];
+    showTip(`<b>${o.a + BW / 2} to ${o.a - BW / 2} Ma</b><br>${[...keys, "ave"].map(k => `${esc(GI[k].short)}: ${fmt(o[k])}`).join("<br>")}`, ev.clientX, ev.clientY - 6); });
+  ov.addEventListener("pointerleave", hideTip);
+});
+
+/* three small dinosaur maps */
+(function () {
+  const MM = [[210, "Late Triassic", "Pangaea whole"], [150, "Late Jurassic", "the central Atlantic opening"], [70, "Late Cretaceous", "continents apart"]];
+  const host = document.getElementById("miniMaps");
+  host.innerHTML = MM.map(([a, n, s]) => `<figure><canvas data-a="${a}" width="600" height="320" aria-label="Map of dinosaur finds ${a} million years ago"></canvas><figcaption><b>${a} million years ago</b>, ${n}: ${s}. Largest land mass ${f1(PAN[a])}% of land.</figcaption></figure>`).join("");
+  const draw1 = async c => { const a = +c.dataset.a; const [coast, fr] = await Promise.all([getCoast(a), getFrame(a)]); const w = c.clientWidth || 300, hh = Math.round(w * .53), dpr = Math.min(2, devicePixelRatio || 1);
+    c.width = w * dpr; c.height = hh * dpr; c.style.height = hh + "px"; const x = c.getContext("2d"); x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const pj = d3.geoEqualEarth().fitExtent([[4, 4], [w - 4, hh - 4]], { type: "Sphere" }), pt = d3.geoPath(pj, x);
+    x.fillStyle = css("--bg"); x.fillRect(0, 0, w, hh); x.beginPath(); pt({ type: "Sphere" }); x.fillStyle = css("--sea"); x.fill();
+    x.beginPath(); pt(coast); x.fillStyle = css("--land"); x.fill(); x.strokeStyle = css("--landedge"); x.lineWidth = .6; x.stroke();
+    const dk = new Set([0, 1, 2, 3].map(i => GI[["the", "sau", "orn", "din"][i]].i));
+    fr.cells.filter(cc => dk.has(cc[0])).forEach(cc => { const p = pj([cc[1], cc[2]]); if (!p) return; x.beginPath(); x.arc(p[0], p[1], (1.5 + 1.1 * Math.log10(1 + cc[3])) * Math.max(.8, w / 380), 0, 2 * Math.PI); x.fillStyle = GROUPS[cc[0]].c; x.globalAlpha = .9; x.fill(); x.globalAlpha = 1; x.lineWidth = .5; x.strokeStyle = "#fff"; x.stroke(); });
+    c.onclick = () => { LY.on = ["the", "sau", "orn", "din"]; saveLY(); syncPanel(); jumpMap(a); }; c.style.cursor = "pointer"; };
+  const all = () => host.querySelectorAll("canvas").forEach(draw1);
+  new ResizeObserver(() => all()).observe(host); redraws.push(all);
+  const lg = document.createElement("div"); lg.className = "legend"; lg.innerHTML = ["the", "sau", "orn", "din"].map(k => `<span><i style="background:${GI[k].c}"></i>${esc(GI[k].short)}</span>`).join("") + "<span>Click a map to open it above.</span>"; host.after(lg);
+})();
+
+/* genera on several continents */
+resp(document.getElementById("cosmoChart"), (w, sm) => {
+  const D = SITE.dint, h = sm ? 250 : 260, m = { l: 40, r: 40, t: 18, b: sm ? 58 : 44 }; const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Bar chart of the share of dinosaur genera found on more than one present-day continent, by interval from the Late Triassic to the Late Cretaceous, with the share of land in the largest land mass as a line" }, document.getElementById("cosmoChart"));
+  const x = d3.scaleBand().domain(D.map(d => d.name)).range([m.l, w - m.r]).padding(.28), y = d3.scaleLinear().domain([0, 20]).range([h - m.b, m.t]), y2 = d3.scaleLinear().domain([0, 100]).range([h - m.b, m.t]);
+  [0, 5, 10, 15, 20].forEach(v => { el("line", { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); lbl(svg, m.l - 6, y(v) + 4, v + "%", "lab s m", "end"); });
+  [0, 50, 100].forEach(v => { lbl(svg, w - m.r + 6, y2(v) + 4, v + "%", "lab s", "start").style.fill = "var(--gold)"; });
+  D.forEach(d => { const b = el("rect", { x: x(d.name), y: y(d.multi_pct), width: x.bandwidth(), height: y(0) - y(d.multi_pct), fill: GI.sau.c, opacity: .85 }, svg);
+    lbl(svg, x(d.name) + x.bandwidth() / 2, y(d.multi_pct) - 5, f1(d.multi_pct) + "%", "lab s b", "middle");
+    const parts = d.name.split(" "); lbl(svg, x(d.name) + x.bandwidth() / 2, h - m.b + 15, parts[0], "lab s", "middle"); lbl(svg, x(d.name) + x.bandwidth() / 2, h - m.b + 28, parts[1], "lab s", "middle");
+    b.addEventListener("pointermove", ev => showTip(`<b>${esc(d.name)}</b>, ${d.old} to ${d.young} Ma<br>${fmt(d.multi)} of ${fmt(d.genera)} genera on 2 or more continents (${f1(d.multi_pct)}%)<br>Largest land mass at ${d.pangaea_age} Ma: ${f1(d.pangaea_pct)}%<br>${f1(d.na_eu_pct)}% of finds from North America and Europe`, ev.clientX, ev.clientY - 6)); b.addEventListener("pointerleave", hideTip); });
+  el("path", { d: d3.line().x(d => x(d.name) + x.bandwidth() / 2).y(d => y2(d.pangaea_pct))(D), fill: "none", stroke: "var(--gold)", "stroke-width": 2.4 }, svg);
+  D.forEach(d => el("circle", { cx: x(d.name) + x.bandwidth() / 2, cy: y2(d.pangaea_pct), r: 3.5, fill: "var(--gold)" }, svg));
+  const t = lbl(svg, w - m.r - 2, y2(D[0].pangaea_pct) - 2 < m.t + 4 ? m.t + 4 : m.t + 4, "largest land mass", "lab s", "end"); t.style.fill = ("var(--gold)");
+});
+
+/* latitude bands */
+let latG = "the";
+(function () { const row = document.getElementById("latRow"); ORDER.forEach(g => { const b = document.createElement("button"); b.className = "btn"; b.innerHTML = `<span class="dot" style="background:${g.c}"></span>${esc(g.short)}`; b.setAttribute("aria-pressed", String(g.k === latG)); b.onclick = () => { latG = g.k; row.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", String(x === b))); redraws[latIdx](); }; row.appendChild(b); }); })();
+const latIdx = redraws.length;
+resp(document.getElementById("latChart"), (w, sm) => {
+  const h = sm ? 280 : 320, m = { l: 44, r: 12, t: 10, b: 46 }; const g = GI[latG], D = SITE.lat[latG] || [];
+  const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": `Palaeo-latitude of ${g.short} collections through time` }, document.getElementById("latChart"));
+  const x = d3.scaleLinear().domain([540, 0]).range([m.l, w - m.r]), y = d3.scaleLinear().domain([-90, 90]).range([h - m.b, m.t]);
+  [[-66.56, "Antarctic Circle"], [-23.44, "Tropic of Capricorn"], [0, "Equator"], [23.44, "Tropic of Cancer"], [66.56, "Arctic Circle"]].forEach(([v, n]) => { el("line", { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), stroke: v ? "var(--rule)" : "var(--muted)", "stroke-dasharray": v ? "3 3" : "" }, svg); });
+  [-90, -60, -30, 0, 30, 60, 90].forEach(v => lbl(svg, m.l - 6, y(v) + 4, v === 0 ? "0" : `${Math.abs(v)}${v > 0 ? "N" : "S"}`, "lab s m", "end"));
+  el("rect", { x: m.l, y: y(23.44), width: w - m.l - m.r, height: y(-23.44) - y(23.44), fill: "var(--gold)", opacity: .08 }, svg);
+  lbl(svg, w - m.r - 4, y(23.44) + 13, "tropics", "lab s m", "end");
+  extLines(svg, x, m.t, h - m.b);
+  // continuous segments only (gaps where fewer than 5 collections)
+  const segs = []; let cur = []; D.slice().sort((a, b) => b[0] - a[0]).forEach(d => { if (cur.length && Math.abs(cur[cur.length - 1][0] - d[0]) > 10.5) { segs.push(cur); cur = []; } cur.push(d); }); if (cur.length) segs.push(cur);
+  segs.forEach(s => { if (s.length === 1) { const d = s[0]; el("line", { x1: x(d[0]), x2: x(d[0]), y1: y(d[1]), y2: y(d[3]), stroke: g.c, "stroke-width": 6, opacity: .3 }, svg); el("circle", { cx: x(d[0]), cy: y(d[2]), r: 3, fill: g.c }, svg); return; }
+    el("path", { d: d3.area().x(d => x(d[0])).y0(d => y(d[1])).y1(d => y(d[3])).curve(d3.curveMonotoneX)(s), fill: g.c, opacity: .25 }, svg);
+    el("path", { d: d3.line().x(d => x(d[0])).y(d => y(d[2])).curve(d3.curveMonotoneX)(s), fill: "none", stroke: g.c, "stroke-width": 2.4 }, svg); });
+  timeAxis(svg, x, h - m.b + 2, w, sm);
+  lbl(svg, m.l + 6, m.t + 12, `${g.name}: median ${f1(R.lat[latG])} degrees from the equator`, "lab s b");
+  const ov = el("rect", { x: m.l, y: m.t, width: w - m.l - m.r, height: h - m.b - m.t, fill: "transparent" }, svg);
+  ov.addEventListener("pointermove", ev => { const r = svg.getBoundingClientRect(); const a = x.invert((ev.clientX - r.left) * w / r.width); const d = D.find(d => Math.abs(d[0] - a) <= 5); if (!d) { hideTip(); return; }
+    const L = v => `${Math.abs(v).toFixed(0)}&deg;${v >= 0 ? "N" : "S"}`; showTip(`<b>${esc(g.short)}, ${d[0] + 5} to ${d[0] - 5} Ma</b><br>${fmt(d[4])} collections<br>median ${L(d[2])}, middle 80% ${L(d[1])} to ${L(d[3])}`, ev.clientX, ev.clientY - 6); });
+  ov.addEventListener("pointerleave", hideTip);
+});
+
+/* extinction cards */
+(function () {
+  const host = document.getElementById("extCards");
+  host.innerHTML = R.extinctions.map(e => { const rows = Object.entries(e.by_group).sort((a, b) => b[1].lost_pct - a[1].lost_pct).slice(0, 6);
+    return `<div class="card"><b>${esc(e.name)}</b><span style="color:var(--muted)">${e.age} million years ago</span><div class="big">${Math.round(e.lost_pct)}%<span> of ${fmt(e.standing)} genera last seen</span></div>
+    <div class="rows">${rows.map(([k, v]) => `<div class="r"><div><em>${esc(GI[k].short)} <span style="color:var(--muted)">(${v.standing})</span></em><i style="width:${Math.max(2, v.lost_pct)}%;background:${GI[k].c}"></i></div><span>${Math.round(v.lost_pct)}%</span></div>`).join("")}</div>
+    <button class="btn" data-a="${e.age}">See it on the map</button></div>`; }).join("");
+  host.querySelectorAll("button").forEach(b => b.onclick = () => jumpMap(+b.dataset.a));
+})();
+
+/* sampling */
+resp(document.getElementById("contChart"), (w, sm) => {
+  const D = R.sampling.by_continent.filter(d => d.name !== "Ocean"), bh = 24, m = { l: 112, r: 50, t: 4, b: 4 }, h = m.t + D.length * bh + m.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Bar chart of the share of fossil occurrences by present-day continent" }, document.getElementById("contChart"));
+  const x = d3.scaleLinear().domain([0, d3.max(D, d => d.pct)]).range([m.l, w - m.r]);
+  D.forEach((d, i) => { const y0 = m.t + i * bh; lbl(svg, m.l - 6, y0 + 16, d.name, "lab", "end"); el("rect", { x: m.l, y: y0 + 4, width: x(d.pct) - m.l, height: bh - 8, fill: ["North America", "Europe"].includes(d.name) ? "var(--hot)" : "var(--muted)", opacity: .85 }, svg); lbl(svg, x(d.pct) + 5, y0 + 16, f1(d.pct) + "%", "lab s"); });
+});
+resp(document.getElementById("naeuChart"), (w, sm) => {
+  const h = 230, m = { l: 40, r: 10, t: 10, b: 46 }; const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, role: "img", "aria-label": "Line chart of the share of occurrences from North America and Europe through time" }, document.getElementById("naeuChart"));
+  const x = d3.scaleLinear().domain([540, 0]).range([m.l, w - m.r]), y = d3.scaleLinear().domain([0, 100]).range([h - m.b, m.t]);
+  [0, 50, 100].forEach(v => { el("line", { x1: m.l, x2: w - m.r, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); lbl(svg, m.l - 6, y(v) + 4, v + "%", "lab s m", "end"); });
+  el("line", { x1: m.l, x2: w - m.r, y1: y(R.sampling.na_eu_land_pct), y2: y(R.sampling.na_eu_land_pct), stroke: "var(--muted)", "stroke-dasharray": "4 3" }, svg);
+  lbl(svg, w - m.r - 2, y(R.sampling.na_eu_land_pct) + 14, "their share of land", "lab s m", "end");
+  const pts = SITE.na_eu_bin.map((v, b) => [b * BW + BW / 2, v]).filter(d => d[1] != null && SITE.coll[(d[0] - BW / 2) / BW] >= 20);
+  el("path", { d: d3.line().x(d => x(d[0])).y(d => y(d[1])).curve(d3.curveMonotoneX)(pts), fill: "none", stroke: "var(--hot)", "stroke-width": 2 }, svg);
+  timeAxis(svg, x, h - m.b + 2, w, true, { ticks: [500, 300, 100, 0] });
+});
+
+/* ---------- theme ---------- */
+document.getElementById("theme").onclick = () => { const r = document.documentElement; r.dataset.theme = isDark() ? "light" : "dark"; draw(); redraws.forEach(f => f()); };
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { draw(); redraws.forEach(f => f()); });
+
+/* ---------- start ---------- */
+LY.pos = "ancient";
+buildPanel(); resize();
+getCoast(0).then(c => { NOW = c; });
+setAge(250, { instant: true }).then(() => { buildPanel(); });
+loadNames();
+
+</script>
+<!-- map-fullscreen v1 -->
+<style id="mfs-style">
+.mfs-btn{position:absolute;top:10px;right:10px;z-index:1001;width:34px;height:34px;border:2px solid rgba(0,0,0,.25);border-radius:4px;background:#fff;color:#222;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.mfs-btn:hover{background:#f2f2f2}
+.mfs-btn svg{width:18px;height:18px}
+.mfs-host.mfs-btn-left .mfs-btn{right:auto;left:54px}
+.mfs-fake{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;z-index:100000!important;border-radius:0!important}
+html.mfs-lock,html.mfs-lock body{overflow:hidden!important}
+:fullscreen.mfs-host{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;margin:0!important;border-radius:0!important}
+</style>
+<script id="mfs-script">
+(function(){
+  var ICON_OPEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+  var ICON_CLOSE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+  function poke(){setTimeout(function(){window.dispatchEvent(new Event('resize'));},60);setTimeout(function(){window.dispatchEvent(new Event('resize'));},400);}
+  function realFS(){return document.fullscreenElement||document.webkitFullscreenElement;}
+  function add(el){
+    if(el.__mfs)return; el.__mfs=1;
+    var cs=getComputedStyle(el); if(cs.position==='static')el.style.position='relative';
+    el.classList.add('mfs-host');
+    // avoid clashing with a top-right Leaflet control (e.g. "Map layers")
+    var tr=el.querySelector('.leaflet-top.leaflet-right');
+    if(tr&&tr.children.length){ el.classList.add('mfs-btn-left'); }
+    var b=document.createElement('button'); b.type='button'; b.className='mfs-btn';
+    b.title='Full screen map'; b.setAttribute('aria-label','Full screen map'); b.innerHTML=ICON_OPEN;
+    ['click','dblclick','mousedown','touchstart','wheel'].forEach(function(t){b.addEventListener(t,function(e){e.stopPropagation();},{passive:t!=='click'});});
+    function setIcon(on){b.innerHTML=on?ICON_CLOSE:ICON_OPEN;b.title=on?'Exit full screen':'Full screen map';b.setAttribute('aria-label',b.title);}
+    function exitFake(){el.classList.remove('mfs-fake');document.documentElement.classList.remove('mfs-lock');setIcon(false);poke();}
+    b.addEventListener('click',function(e){
+      e.preventDefault();
+      if(el.classList.contains('mfs-fake')){exitFake();return;}
+      if(realFS()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return;}
+      var req=el.requestFullscreen||el.webkitRequestFullscreen;
+      if(req){ try{ var p=req.call(el); if(p&&p.catch)p.catch(function(){el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke();}); }catch(err){el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke();} }
+      else { el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke(); }
+    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&el.classList.contains('mfs-fake'))exitFake();});
+    ['fullscreenchange','webkitfullscreenchange'].forEach(function(t){document.addEventListener(t,function(){setIcon(realFS()===el);poke();});});
+    el.appendChild(b);
+  }
+  function scan(){
+    var els=document.querySelectorAll('[data-fullscreen-map], .leaflet-container, .maplibregl-map, .mapboxgl-map');
+    els.forEach(function(el){
+      if(el.closest('.mfs-host')&&!el.classList.contains('mfs-host'))return;
+      var r=el.getBoundingClientRect(); if(r.width<200||r.height<150)return;
+      add(el);
+    });
+  }
+  function start(){scan(); var n=0; var t=setInterval(function(){scan(); if(++n>20)clearInterval(t);},500);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start); else start();
+})();
+</script>
+<!-- /map-fullscreen -->
+
+</body>
+</html>

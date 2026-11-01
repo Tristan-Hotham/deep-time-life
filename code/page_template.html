@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Life on the Moving Map</title>
+<meta name="description" content="An interactive map of the Earth through 540 million years: the continents drifting, Pangaea gathering and breaking up, and {{records.n|int}} fossil finds of {{records.n_groups|int}} animal groups, from trilobites to dinosaurs, whales and hominids, put back where they lived.">
+<meta property="og:title" content="Life on the moving map: 540 million years of animals on the drifting continents">
+<meta property="og:description" content="{{records.n|int}} fossil occurrences from the Paleobiology Database, from trilobites to hominids, plotted at their ancient positions on the PALEOMAP continents. Watch Pangaea form and split.">
+<meta property="og:image" content="https://maps.tristanhotham.com/deep-time-life/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/deep-time-life/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Deep time: chalk paper, old-sea blue, sandstone land, Permian red. Group colours are set in the script. */
+:root{
+  --bg:#F7F4EE; --panel:#EDE8DE; --fg:#1F1D22; --muted:#6A6570; --rule:#E0D9CC; --card:#FFFDF8; --border:#D0C7B6;
+  --hot:#B0352B; --cool:#2D6A8E; --gold:#C98A12; --land:#E6D8BC; --landedge:#BFA982; --sea:#DCE7EB; --seaedge:#B9CBD3; --grat:#C3D3DA;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141619; --panel:#1E2125; --fg:#ECE8E1; --muted:#A39FA8; --rule:#33373D; --card:#1A1D21; --border:#454A52;
+  --hot:#E57466; --cool:#7FB3D3; --gold:#E9B24A; --land:#4A4336; --landedge:#6E6450; --sea:#18242B; --seaedge:#2A3A44; --grat:#24343D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141619; --panel:#1E2125; --fg:#ECE8E1; --muted:#A39FA8; --rule:#33373D; --card:#1A1D21; --border:#454A52;
+  --hot:#E57466; --cool:#7FB3D3; --gold:#E9B24A; --land:#4A4336; --landedge:#6E6450; --sea:#18242B; --seaedge:#2A3A44; --grat:#24343D; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:700px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1180px,calc(100vw - 32px));margin-left:calc((100% - min(1180px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--hot);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--hot);color:#fff;padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(44px,11vw,96px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 .a{color:var(--hot)} h1 .b{color:var(--cool)}
+.mark{width:clamp(78px,16vw,128px);height:auto;display:block}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:56ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:54px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--hot);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--hot)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(22px,4.4vw,32px)/1 var(--display);letter-spacing:-.01em}
+.stats b.h{color:var(--hot)} .stats b.c{color:var(--cool)} .stats b.g{color:var(--gold)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:10.5px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:290px;z-index:100001;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.scrollrow{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px;max-width:100%}
+.scrollrow .btn{flex:0 0 auto;white-space:nowrap}
+.ctl-l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex:0 0 auto;align-self:center}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.btn.ex{border-color:var(--hot);color:var(--hot)}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.searchbox{position:relative;flex:1 1 260px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.side{background:var(--card);border:1px solid var(--border);padding:12px 12px 10px;font:400 13px/1.45 var(--mono);max-height:640px;overflow:auto}
+@media (max-width:900px){.side{max-height:none}}
+.side h4{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.side h4:first-child{margin-top:2px}
+.side .big{font:800 26px/1.1 var(--display);margin:2px 0 4px}
+.side .sub{color:var(--muted);font-size:12px;margin:0 0 8px}
+.side table{width:100%;border-collapse:collapse;margin:4px 0 6px}
+.side td{padding:3px 4px 3px 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+.side td.num{text-align:right;white-space:nowrap;width:1%}
+.side td.bar{width:38%}
+.side td.bar i{display:block;height:8px;border-radius:1px}
+.side tr.off{opacity:.35}
+.side tr.gr{cursor:pointer}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.18)}
+.go{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px;background:none;border:0;padding:0;font:inherit;color:inherit}
+/* the map */
+.mapbox{position:relative;height:min(64vh,600px);min-height:340px;border:1px solid var(--border);background:var(--bg);border-radius:2px;overflow:hidden;touch-action:none}
+@media (max-width:600px){.mapbox{height:calc(49vw + 128px);min-height:300px}.zbtn{display:none}}
+.mapbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+.mapbox canvas.hand{cursor:pointer}
+.mapnote{position:absolute;left:10px;top:10px;z-index:5;background:color-mix(in srgb,var(--card) 90%,transparent);border:1px solid var(--border);border-radius:3px;padding:7px 10px;font:400 12px/1.35 var(--mono);max-width:min(330px,58%);box-shadow:0 1px 4px rgba(0,0,0,.12);pointer-events:none}
+.mapnote b{font:800 22px/1 var(--display);display:block;margin-bottom:3px}
+.mapnote .x{color:var(--hot);font-weight:500}
+@media (max-width:600px){.mapnote{font-size:10.5px;padding:5px 7px;max-width:62%;left:6px;top:6px}.mapnote b{font-size:15px}.mapctl{right:6px;top:6px}.mapbar{left:6px;right:6px;bottom:6px;padding:4px 6px;gap:6px}.play{padding:7px 9px}}
+.mapbar{position:absolute;left:10px;right:10px;bottom:10px;z-index:6;display:flex;gap:10px;align-items:center;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--border);border-radius:3px;padding:6px 10px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.mapbar input[type=range]{flex:1 1 auto;min-width:0;accent-color:var(--hot);direction:ltr}
+.mapbar .age{font:500 13px/1 var(--mono);white-space:nowrap;min-width:64px;text-align:right}
+.play{font:600 13px/1 var(--mono);background:var(--hot);color:#fff;border:0;border-radius:3px;padding:8px 12px;min-height:34px;cursor:pointer;white-space:nowrap}
+.mapctl{position:absolute;right:10px;top:10px;z-index:7;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.mapctl .row1{display:flex;gap:6px;align-items:center}
+.zbtn{width:34px;height:34px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--fg);font:600 18px/1 var(--mono);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:10px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12);min-height:34px}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;width:270px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono);max-height:calc(100% - 120px);overflow:auto}
+.mapbox:fullscreen .lyrPanel,.mapbox.mfs-fake .lyrPanel{max-height:70vh}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{margin:0 0 8px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.lyrPanel label.b{font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel .sub{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px;margin-top:3px}
+.lyrPanel .hd{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 7px;border-top:1px solid var(--rule);padding-top:9px}
+.lyrPanel .seg{display:flex;gap:0;margin:2px 0 4px}
+.lyrPanel .seg button{flex:1;font:500 11px/1 var(--mono);padding:7px 4px;border:1px solid var(--border);background:var(--bg);color:var(--fg);cursor:pointer}
+.lyrPanel .seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.lyrPanel .gl label{font-weight:400;margin:0 0 5px}
+.lyrPanel .gl small{color:var(--muted);margin-left:auto}
+.lyrPanel .mini{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;margin-right:10px}
+.mfs-host.mapbox .mfs-btn{top:auto;bottom:62px;left:10px;right:auto}
+@media (max-width:600px){.mfs-host.mapbox .mfs-btn{bottom:54px;left:6px;width:30px;height:30px}}
+.pop{position:absolute;z-index:8;background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:4px;box-shadow:0 3px 14px rgba(0,0,0,.22);padding:10px 12px 10px;font:400 12px/1.45 var(--mono);width:min(300px,calc(100% - 24px));display:none}
+@media (max-width:600px){.pop{max-height:calc(100% - 64px);overflow:auto;font-size:11.5px;padding:8px 10px}.pop h5{font-size:14px}}
+.pop .cl{position:absolute;right:6px;top:4px;border:0;background:none;color:var(--muted);font:500 18px/1 var(--mono);cursor:pointer;padding:2px 4px}
+.pop h5{font:600 16px/1.2 var(--display);margin:0 22px 4px 0}
+.pop p{margin:0 0 5px}
+.pop .m{color:var(--muted)}
+.pop .tx{margin-top:4px}
+.pop .tx a{white-space:nowrap}
+.timeline{margin-top:10px;user-select:none;touch-action:pan-y}
+.timeline svg{display:block;width:100%;height:auto;cursor:pointer}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:6px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--hot);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:20px 0}
+@media (max-width:1000px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-top:6px solid var(--hot);padding:12px 12px;font:400 12px/1.45 var(--mono)}
+.card b{font:600 17px/1.2 var(--display);display:block;margin-bottom:2px}
+.card .big{font:900 30px/1.05 var(--display);margin:6px 0 2px;color:var(--hot)}
+.card .big span{color:var(--muted);font:400 12px/1.3 var(--mono);display:block;margin-top:4px}
+.card .rows{margin-top:8px}
+.card .r{display:grid;grid-template-columns:1fr 34px;gap:4px;align-items:center;margin:3px 0}
+.card .r em{font-style:normal;display:block;font-size:11px}
+.card .r i{display:block;height:6px;border-radius:1px;margin-top:2px}
+.card .r span{text-align:right;font-size:11px}
+.card button{margin-top:10px}
+.mini-maps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.mini-maps{grid-template-columns:1fr}}
+.mini-maps figure{margin:0}
+.mini-maps canvas{width:100%;height:auto;display:block;border:1px solid var(--border);background:var(--bg)}
+.mini-maps figcaption{font:400 12px/1.4 var(--mono);color:var(--muted);margin-top:4px}
+.mini-maps figcaption b{color:var(--fg);font-weight:500}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--hot);border-color:var(--hot);color:#fff}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+@media print{.theme,.controls,.mapbar{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>Deep time</span><span>540 million years, 2026</span></div>
+<header class="hero">
+  <h1>Life on the <span class="a">moving</span> <span class="b">map</span></h1>
+  <svg class="mark" viewBox="0 0 120 120" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">Half a billion years of animals, from trilobites to us, put back where they lived. {{records.n|int}} fossil finds from the Paleobiology Database, each carried to its ancient latitude and longitude on the drifting continents of the PALEOMAP plate model, so you can watch Pangaea gather and break apart and see who lived on it.</p>
+</header>
+<div class="byline">Dr Tristan Hotham · Independent researcher · 2026 · Data: The Paleobiology Database; PALEOMAP (C. R. Scotese) via the GPlates Web Service; Natural Earth</div>
+
+<div class="stats">
+  <div><b class="h">{{records.n|int}}</b><span>fossil occurrences in {{records.collections|int}} collections, placed at their ancient positions</span></div>
+  <div><b class="c">{{records.genera|int}}</b><span>genera in {{records.n_groups|int}} animal groups, from trilobites to hominids</span></div>
+  <div><b class="g">{{pangaea.peak_pct|pc}}</b><span>of the land joined in one block at the height of Pangaea, {{pangaea.peak_age|int}} million years ago (today: {{pangaea.today_pct|pc}})</span></div>
+  <div><b>{{sampling.na_eu_pct|pc}}</b><span>of the finds come from North America and Europe, which hold {{sampling.na_eu_land_pct|pc}} of the land</span></div>
+</div>
+
+<p class="lede">Every fossil has two addresses. One is where it was dug up: a quarry in Montana, a sea cliff in Dorset, a dry riverbed in Kenya. The other is where the animal actually lived, and for anything more than a few million years old that was somewhere else. Continents creep a few centimetres a year, and over hundreds of millions of years that adds up to thousands of kilometres. The fossils found in Britain tell the story: its Silurian sea creatures lived around {{drift.uk_420_abs|f0}} degrees south of the equator, its coal-swamp animals of {{drift.uk_300_age|raw}} million years ago lived on it (the median collection lies {{drift.uk_300_txt|raw}}), and its early dinosaurs and ichthyosaurs at about {{drift.uk_190|f0}} degrees north, the latitude of the Mediterranean today.</p>
+<p>The Paleobiology Database, a huge shared catalogue built over decades by hundreds of palaeontologists, records both addresses. For each collection of fossils it gives the present-day place and, using the PALEOMAP plate model of Christopher Scotese, the position on the ancient Earth. I took the records of {{records.n_groups|int}} animal groups that people ask about, from trilobites and sea scorpions through the dinosaurs to whales, elephants and our own family, and put them on a map of the moving continents.</p>
+
+<h2><span class="n">01 · The map</span>Earth through time</h2>
+<div class="bleed" id="atlas">
+<div class="controls">
+  <div class="scrollrow" id="jumpRow"><span class="ctl-l">Jump to</span></div>
+</div>
+<div class="controls">
+  <div class="searchbox"><input type="search" id="q" placeholder="Find a genus: Tyrannosaurus, Diplodocus, Homo, Mammuthus..." aria-label="Find a genus" autocomplete="off"><ul class="suggest" id="sug" role="listbox"></ul></div>
+</div>
+<div class="mapgrid">
+  <div>
+    <div class="mapbox" id="mapbox" data-fullscreen-map role="application" aria-label="Map of the Earth through time with fossil finds">
+      <canvas id="mapc"></canvas>
+      <div class="mapnote" id="mapnote"></div>
+      <div class="mapctl" id="mapctl">
+        <div class="row1"><button class="zbtn" id="zin" aria-label="Zoom in">+</button><button class="zbtn" id="zout" aria-label="Zoom out">&#8722;</button><button class="lyrBtn" id="lyrBtn" aria-expanded="false" aria-controls="lyrPanel">Layers</button></div>
+        <div class="lyrPanel" id="lyrPanel" hidden></div>
+      </div>
+      <div class="pop" id="pop" role="dialog" aria-live="polite"></div>
+      <div class="mapbar"><button class="play" id="play" aria-label="Play through time">&#9654; Play</button><input type="range" id="slider" min="0" max="540" step="1" aria-label="Millions of years ago"><span class="age" id="ageLab"></span></div>
+    </div>
+    <div class="timeline" id="timeline" aria-label="Geological timeline: click to move the map"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="side" id="side" aria-live="polite"></div>
+</div>
+<p class="src" id="mapsrc">Fossils: The Paleobiology Database (paleobiodb.org, CC BY 4.0), data accessed 2026, palaeo-positions from the PALEOMAP model. Continents: PALEOMAP coastlines and blocks (C. R. Scotese, PALEOMAP Project), reconstructed with the GPlates Web Service (EarthByte, University of Sydney). Equal Earth projection. Each dot is a 1 degree square with finds of one group, sized by number of occurrences.</p>
+</div>
+<p>Press play to run from 540 million years ago to today, drag the slider or the timeline, or jump to a key moment. Each frame shows the fossils dated within 5 million years of the moment shown (by the midpoint of each collection's age range); at the five mass extinctions it shows the 10 million years before. Click a dot to see what was found there, when, and where that patch of ancient ground is today. The layers panel switches every dot between its ancient position and today's, turns groups on and off, and changes the background.</p>
+
+<h2><span class="n">02 · Pangaea</span>When nearly all the land was one</h2>
+<p>For about the first half of this story the continents were scattered: Gondwana, a giant made of today's South America, Africa, Antarctica, Australia and India, lay across the south, with smaller continents such as Laurentia (North America) and Baltica (northern Europe) around the tropics. From about 335 million years ago they began to collide, and Pangaea came together in stages through the Carboniferous and Permian. To put a number on it I merged the PALEOMAP blocks at each age into joined land masses (closing gaps narrower than about a third of a degree) and measured the largest land mass as a share of all the land.</p>
+<div class="figure"><p class="fig-h">How much of the land was joined in one block</p><p class="fig-sub">Largest connected land mass as a share of all land in the PALEOMAP outlines, {{frames.n|int}} ages from 540 Ma to today. Hover for values; click to move the map there.</p><div class="chart" id="panChart"></div></div>
+<p>By {{pangaea.first_over_85|int}} million years ago {{pangaea.at.270|f0}}% of the land was one block, and it stayed above 85% for {{pangaea.years_over_85|int}} million years, peaking at {{pangaea.peak_pct|f1}}% around {{pangaea.peak_age|int}} million years ago, in the Early Jurassic. Then it came apart: {{pangaea.at.170|f0}}% at 170 million years ago, {{pangaea.at.150|f0}}% at 150 as the central Atlantic opened, and {{pangaea.at.100|f0}}% by 100 million years ago, with the South Atlantic open between South America and Africa. Today the biggest block, Africa joined to Eurasia, holds {{pangaea.today_pct|f0}}%.</p>
+<p>One caution about the outlines. They are today's coastlines and continental blocks carried back in time by the plate model, not ancient shorelines. Sea level rose and fell by hundreds of metres, and at times shallow seas flooded much of the continents (a seaway split North America in two for much of the Cretaceous), so some dots that sit on 'land' here were in fact on a sea floor. Many of the oldest fossils, trilobites and ammonites above all, are sea creatures for exactly that reason.</p>
+
+<h2><span class="n">03 · Who ruled when</span>The record, group by group</h2>
+<p>Counting fossils is not counting animals. A group with hard shells that lived in shallow seas, like ammonites, fossilises far more readily than one that lived in forests. So the chart below asks a simpler question for each group: when is it most diverse in the record? It counts the distinct genera found in each 5 million years and scales each group to its own peak, so a pale lane is a quiet time for that group, not necessarily a rare animal.</p>
+<div class="figure"><p class="fig-h">When each group was at its most diverse</p><p class="fig-sub">Distinct genera per 5 million years, each lane scaled to its own peak (or switch to each group's share of all genera). Dashed lines: the five mass extinctions. Hover for numbers.</p>
+<div class="controls"><div class="scrollrow" id="laneMode"><span class="ctl-l">Scale</span><button class="btn" data-m="own" aria-pressed="true">Each to its own peak</button><button class="btn" data-m="share" aria-pressed="false">Share of all genera</button></div></div>
+<div class="chart" id="laneChart"></div></div>
+<p>By that measure trilobites were the dominant group of the early seas: they make up {{leaders.Paleozoic.pct|pc}} of all genera from the Paleozoic era in these groups, peaking between {{groups.tri.peak_bin.1|int}} and {{groups.tri.peak_bin.0|int}} million years ago. In the Mesozoic the largest share is not the dinosaurs but the insects ({{leaders.Mesozoic.pct|pc}}), and in the Cenozoic the mammals ({{leaders.Cenozoic.pct|pc}}). Insects are absurdly diverse ({{groups.ins.genera|int}} genera in this data), and their record is lumpy: a quarter of all insect finds ({{facts.ins_top50_coll_pct|f0}}%) come from just 50 of {{facts.ins_coll|int}} collections, rare deposits where delicate bodies were preserved. Ammonites, with {{groups.amm.genera|int}} genera, are the other great presence of the Mesozoic seas, until the very end of the Cretaceous.</p>
+
+<h2><span class="n">04 · Dinosaurs</span>From one continent to many</h2>
+<p>The data hold {{dino.n|int}} occurrences of dinosaurs other than birds, in {{dino.genera|int}} genera: {{dino.by_sub.the.genera|int}} genera of theropods (the meat-eaters and their kin), {{dino.by_sub.sau.genera|int}} of sauropods and their relatives (the long-necked plant-eaters) and {{dino.by_sub.orn.genera|int}} of ornithischians (the horned, armoured and duck-billed plant-eaters), plus {{dino.by_sub.din.n|int}} finds identified only as 'dinosaur'. The oldest records are from the Triassic, and the busiest 5 million years in the record is {{dino.peak_bin.1|int}} to {{dino.peak_bin.0|int}} million years ago, with {{dino.peak_genera|int}} genera, {{dino.peak_na_pct|pc}} of their finds from North America, where rock of that age is unusually well exposed and well searched.</p>
+<div class="figure"><p class="fig-h">Dinosaur genera through time</p><p class="fig-sub">Distinct genera per 5 million years, stacked by group; birds as a line. Ages are collection midpoints. Hover for numbers.</p><div class="chart" id="dinoChart"></div></div>
+<p>Dinosaurs appeared on Pangaea and spent their first 50 million years or so on one connected land mass, then watched it break apart. That shows in where their genera turn up. Of the {{dino.multi_pangaea.genera|int}} genera from the Late Triassic to the Early Jurassic, {{dino.multi_pangaea.pct|f1}}% (about 1 in {{dino.multi_pangaea.one_in|int}}) are found on more than one of today's continents. Of the {{dino.multi_cretaceous.genera|int}} Cretaceous genera only {{dino.multi_cretaceous.pct|f1}}% are (1 in {{dino.multi_cretaceous.one_in|int}}): the separating continents grew their own faunas. Every tyrannosaur and horned dinosaur (ceratopsid) in the data is from North America, Asia or Europe, while {{facts.abe_south_india_pct|f0}}% of abelisaur finds are from the southern continents and India.</p>
+<div class="figure"><p class="fig-h">Dinosaurs on Pangaea, and after it</p><p class="fig-sub">Non-bird dinosaur finds at three moments, coloured by group, on the continents of that time.</p><div class="mini-maps" id="miniMaps"></div></div>
+<div class="figure"><p class="fig-h">Genera found on more than one of today's continents</p><p class="fig-sub">Share of dinosaur genera (not birds) in each interval found on two or more present-day continents (bars), against the share of land in the largest land mass (line).</p><div class="chart" id="cosmoChart"></div></div>
+<p>Caution is needed. More genera are named from the Cretaceous, palaeontologists in different countries sometimes give similar animals different names, and a genus 'on two continents' may be two closely related animals. But the drop from about 1 in {{dino.multi_pangaea.one_in|int}} to 1 in {{dino.multi_cretaceous.one_in|int}} is the direction you would expect as an ocean opens between populations. Dinosaurs also lived much nearer the poles than the word 'reptile' suggests: {{dino.polar_coll|int}} dinosaur collections lay more than 60 degrees from the equator, and {{dino.polar75_coll|int}} more than 75 degrees, most of them in Alaska ({{dino.polar75_places.Alaska|int}}) and in Victoria, Australia ({{dino.polar75_places.Victoria|int}}), places that had weeks or months of winter darkness.</p>
+
+<h2><span class="n">05 · Latitude</span>Tropics, poles and drifting ground</h2>
+<p>Because the palaeo-positions are known, we can ask how far from the equator each group lived. The chart shows the middle 80% of each group's collections by palaeo-latitude, every 10 million years. Trilobite collections lay a median of {{lat.tri|f0}} degrees from the equator; turtles {{lat.tes|f0}}; insects {{lat.ins|f0}}. Hominids sit at {{lat.hom|f0}} degrees: {{facts.hom_afr_asia_pct|f0}}% of their record is from Africa and Asia, most of it in the tropics. Much of this is the shape of the record rather than of life: most of today's fossil hunting is in the northern mid-latitudes, so recent groups look northern too.</p>
+<div class="figure"><p class="fig-h">How far from the equator each group lived</p><p class="fig-sub">Palaeo-latitude of collections per 10 million years: median (line) and the middle 80% (band). Only time steps with at least 5 collections. Pick a group.</p>
+<div class="controls"><div class="scrollrow" id="latRow"><span class="ctl-l">Group</span></div></div>
+<div class="chart" id="latChart"></div></div>
+
+<h2><span class="n">06 · Five extinctions</span>What was lost, in these groups</h2>
+<p>Five times in the last half-billion years a large part of life vanished in a geological moment. A crude way to see them in this data: take the genera known from at least two collections that were around in the 10 million years before each extinction, and ask how many are never found again. At an ordinary 10 million year step the median is {{ext_bg_median|f0}}% (genera come and go, and many are rarely found), with 1 step in 10 above {{ext_bg_p90|f0}}%. The end-Permian, the 'Great Dying', stands out at {{extinctions.2.lost_pct|f0}}%. At the end of the Cretaceous every genus of non-bird dinosaur, plesiosaur and mosasaur in the data is last seen before the line, and {{extinctions.4.by_group.amm.lost_pct|f0}}% of ammonites, while insects ({{extinctions.4.by_group.ins.lost_pct|f1}}%) sail through.</p>
+<div class="bleed"><div class="cards" id="extCards"></div></div>
+<p>The end-Triassic extinction barely registers here ({{extinctions.3.lost_pct|f0}}%), even though it is one of the five: much of what it killed (reef animals, many marine reptiles and the crocodile-line archosaurs that rivalled early dinosaurs) is outside these groups or thinly recorded. The groups chosen and the patchy record shape every number on this page.</p>
+
+<h2><span class="n">07 · The gaps</span>A map of where palaeontologists dig</h2>
+<p>The fossil record is not a random sample of ancient life. It depends on which rocks of each age survive at the surface, and on where people have looked. North America and Europe hold {{sampling.na_eu_land_pct|pc}} of the world's land but {{sampling.na_eu_pct|pc}} of the finds here; the United States alone has {{sampling.usa_pct|pc}}. Africa has {{sampling.africa_pct|f1}}% and South America {{sampling.sam_pct|f1}}%. The ancient continents look busiest where the modern ones have the most universities, museums and roads cut through rock. Dots are records, not abundance: an empty ocean or continent on the map usually means no rock, or no one looking, rather than no life.</p>
+<div class="two">
+<div class="figure"><p class="fig-h">Where the finds are today</p><p class="fig-sub">Share of {{records.n|int}} occurrences by present-day continent.</p><div class="chart" id="contChart"></div></div>
+<div class="figure"><p class="fig-h">North America and Europe through time</p><p class="fig-sub">Their share of the occurrences in each 5 million years.</p><div class="chart" id="naeuChart"></div></div>
+</div>
+<p class="pull">A dot on this map is a place where rock of the right age reached the surface and someone went to look.</p>
+
+<h2><span class="n">08 · How I did this</span>Methods and caveats</h2>
+<p><b>Fossils.</b> I downloaded every occurrence in the Paleobiology Database for {{records.n_queries|int}} named groups through its data service ({{records.rows_raw|int}} rows), asking for palaeo-coordinates from the PALEOMAP model at each collection's midpoint age. The groups overlap (the dinosaurs include the birds, the mammals include the whales), so every occurrence is kept once, in its most specific group ({{records.dupes|int}} repeats removed). Three names reach further than meant and were corrected: 'Proboscidea' also matches an insect name ({{records.pro_not_mammal|int}} insect records dropped from the elephants, which the insect group already holds); the database places frogs, salamanders and caecilians inside Temnospondyli, so I split these {{records.tem_to_lis|int}} records off as their own group; and {{records.the_to_ave|int}} records of Mesozoic and living birds that came back under 'theropods, not birds' were moved to the birds. {{records.dino_late|int}} non-bird dinosaur records dated after the end-Cretaceous extinction were left out.</p>
+<p><b>Ages and positions.</b> Each occurrence takes the midpoint of its collection's age range. Collections dated only to within more than {{records.max_range|int}} million years ({{records.wide_age|int}} occurrences) are left out of the analysis. PALEOMAP cannot place some collections; for the {{records.paleo_filled|int}} occurrences younger than 1 million years I used the present position (plates move a few tens of kilometres at most in that time), and {{records.dropped_no_paleo|int}} older occurrences without a palaeo-position are left out. That leaves {{records.n|int}} occurrences in {{records.collections|int}} collections from {{records.countries|int}} present-day countries. On the map the fossils of each frame are binned by group into 1 degree squares of palaeo-latitude and longitude. The positions are for each collection's own age, which can differ from the frame's age by up to 5 million years, so dots can sit a little off the outline of that frame. Present-day places come from Natural Earth countries and provinces.</p>
+<p><b>Diversity.</b> Because ages are the midpoints of ranges that often span a whole geological stage, the 5 million year bins fill unevenly, and one, {{empty_bins.0|int}} to 230 million years ago, holds no midpoints at all; it shows as a gap in the charts. Genera are counted as distinct genus names found in each 5 million years, with no correction for how much rock or effort each interval has. For the extinctions, a genus is 'last seen' before a boundary if no collection younger than the boundary has it; one-off finds are left out. These are simple counts, chosen to be transparent rather than to give the best estimate of true diversity, which needs methods that correct for sampling.</p>
+<p><b>What this is not.</b> It is not a census of ancient life. The record is dominated by animals with hard parts, by marine sediments, and by the places and ages where rock is exposed and has been studied. The coastlines are present-day outlines moved by a plate model, which is itself a reconstruction with uncertainty that grows with age. The time scale follows the International Commission on Stratigraphy, rounded.</p>
+<details><summary>Sources and licences</summary>
+<ul>
+<li>The Paleobiology Database (paleobiodb.org), data accessed 2026, via the data service, version 1.2 (Peters and McClennen 2016). CC BY 4.0. Palaeo-coordinates computed by the database with the PALEOMAP model. The derived tables in this study's data folder are shared under CC BY 4.0 with this credit.</li>
+<li>PALEOMAP plate model and coastlines: C. R. Scotese, PALEOMAP Project (Scotese 2016; Scotese and Wright 2018), reconstructed with the GPlates Web Service (gws.gplates.org), EarthByte group, University of Sydney (Müller et al. 2018). The outlines are simplified here for the web. I could not check PALEOMAP's own reuse terms from the build environment; they are credited in full here, and anyone reusing the outlines should check the PALEOMAP Project's terms.</li>
+<li>Natural Earth countries and states and provinces (public domain), for present-day places.</li>
+<li>Geological time scale: International Commission on Stratigraphy, International Chronostratigraphic Chart (2023 and later versions), rounded.</li>
+<li>Code: MIT. Text, figures and derived data: CC BY 4.0.</li>
+</ul></details>
+
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23856870">Read the paper</a><a href="https://github.com/Tristan-Hotham/deep-time-life">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/31/deep-time-life/">Blog post</a><a href="https://blog.tristanhotham.com/">Blog home</a></div>
+
+<footer>
+<p>Dr Tristan Hotham, Independent researcher. ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a>.</p>
+<p>Cite as: Hotham, T. (2026) Life on the moving map: 540 million years of animal fossils on the drifting continents, from the Paleobiology Database and the PALEOMAP plate model. Zenodo. <a href="https://doi.org/10.5281/zenodo.23856870">10.5281/zenodo.23856870</a></p>
+<p>Fossil data: The Paleobiology Database (paleobiodb.org), data accessed 2026, CC BY 4.0. Continents: PALEOMAP (C. R. Scotese) via the GPlates Web Service (EarthByte, University of Sydney). Licence: code MIT; text, figures and derived data CC BY 4.0.</p>
+<p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">&#9680;</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const R = /*RESULTS*/;
+const SITE = /*SITE*/;
+/*APPJS*/
+</script>
+/*FULLSCREEN*/
+</body>
+</html>

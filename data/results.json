@@ -1,0 +1,1290 @@
+{
+ "meta": {
+  "accessed": "2026",
+  "page": "https://maps.tristanhotham.com/deep-time-life/",
+  "repo": "https://github.com/Tristan-Hotham/deep-time-life",
+  "slug": "deep-time-life"
+ },
+ "records": {
+  "rows_raw": 480977,
+  "occ_unique": 427944,
+  "dupes": 47354,
+  "pro_not_mammal": 5679,
+  "tem_to_lis": 4301,
+  "the_to_ave": 1138,
+  "dino_late": 5,
+  "paleo_missing": 52670,
+  "paleo_filled": 37781,
+  "dropped_no_paleo": 14889,
+  "with_paleo": 413050,
+  "wide_age": 3155,
+  "n": 409895,
+  "collections": 98147,
+  "genera": 30959,
+  "with_genus_pct": 87.5,
+  "countries": 211,
+  "n_groups": 24,
+  "n_queries": 23,
+  "max_range": 25.0,
+  "collections_rows": 121840
+ },
+ "sampling": {
+  "by_continent": [
+   {
+    "name": "North America",
+    "n": 146437,
+    "pct": 35.7
+   },
+   {
+    "name": "Europe",
+    "n": 122635,
+    "pct": 29.9
+   },
+   {
+    "name": "Asia",
+    "n": 64917,
+    "pct": 15.8
+   },
+   {
+    "name": "Africa",
+    "n": 34651,
+    "pct": 8.5
+   },
+   {
+    "name": "South America",
+    "n": 26787,
+    "pct": 6.5
+   },
+   {
+    "name": "Oceania",
+    "n": 12358,
+    "pct": 3.0
+   },
+   {
+    "name": "Antarctica",
+    "n": 1617,
+    "pct": 0.4
+   },
+   {
+    "name": "Ocean",
+    "n": 493,
+    "pct": 0.1
+   }
+  ],
+  "na_eu_pct": 65.6,
+  "africa_pct": 8.5,
+  "sam_pct": 6.5,
+  "top_countries": [
+   {
+    "name": "United States of America",
+    "n": 113692,
+    "pct": 27.7
+   },
+   {
+    "name": "France",
+    "n": 23172,
+    "pct": 5.7
+   },
+   {
+    "name": "Russia",
+    "n": 22989,
+    "pct": 5.6
+   },
+   {
+    "name": "Canada",
+    "n": 21977,
+    "pct": 5.4
+   },
+   {
+    "name": "China",
+    "n": 21438,
+    "pct": 5.2
+   },
+   {
+    "name": "Germany",
+    "n": 15372,
+    "pct": 3.8
+   },
+   {
+    "name": "United Kingdom",
+    "n": 15045,
+    "pct": 3.7
+   },
+   {
+    "name": "Argentina",
+    "n": 13360,
+    "pct": 3.3
+   },
+   {
+    "name": "Spain",
+    "n": 12730,
+    "pct": 3.1
+   },
+   {
+    "name": "Australia",
+    "n": 8112,
+    "pct": 2.0
+   }
+  ],
+  "usa_pct": 27.7,
+  "na_eu_by_era": {
+   "Paleozoic": 67.0,
+   "Mesozoic": 62.4,
+   "Cenozoic": 67.4
+  },
+  "na_eu_land_pct": 32.2
+ },
+ "groups": {
+  "tri": {
+   "k": "tri",
+   "short": "Trilobites",
+   "name": "Trilobites (Trilobita)",
+   "c": "#B5523B",
+   "n": 53823,
+   "coll": 16764,
+   "genera": 2674,
+   "oldest": 529.4,
+   "youngest": 253.0,
+   "first": 518.5,
+   "last": 265.6,
+   "peak_bin": [
+    490.0,
+    495.0
+   ],
+   "peak_genera": 456,
+   "top_country": "United States of America",
+   "top_country_pct": 28.7,
+   "na_eu_pct": 71.9
+  },
+  "eur": {
+   "k": "eur",
+   "short": "Sea scorpions",
+   "name": "Sea scorpions (Eurypterida)",
+   "c": "#E39BB0",
+   "n": 595,
+   "coll": 319,
+   "genera": 70,
+   "oldest": 463.8,
+   "youngest": 253.0,
+   "first": 455.2,
+   "last": 279.5,
+   "peak_bin": [
+    420.0,
+    425.0
+   ],
+   "peak_genera": 34,
+   "top_country": "United States of America",
+   "top_country_pct": 33.9,
+   "na_eu_pct": 88.9
+  },
+  "pla": {
+   "k": "pla",
+   "short": "Armoured fish",
+   "name": "Armoured fish (placoderms)",
+   "c": "#56677A",
+   "n": 1004,
+   "coll": 477,
+   "genera": 272,
+   "oldest": 435.8,
+   "youngest": 203.6,
+   "first": 428.6,
+   "last": 352.8,
+   "peak_bin": [
+    385.0,
+    390.0
+   ],
+   "peak_genera": 54,
+   "top_country": "Australia",
+   "top_country_pct": 14.5,
+   "na_eu_pct": 62.6
+  },
+  "amm": {
+   "k": "amm",
+   "short": "Ammonites",
+   "name": "Ammonites and kin (Ammonoidea)",
+   "c": "#A8841C",
+   "n": 85962,
+   "coll": 29520,
+   "genera": 2790,
+   "oldest": 411.8,
+   "youngest": 61.0,
+   "first": 399.3,
+   "last": 69.1,
+   "peak_bin": [
+    245.0,
+    250.0
+   ],
+   "peak_genera": 313,
+   "top_country": "United States of America",
+   "top_country_pct": 14.9,
+   "na_eu_pct": 63.4
+  },
+  "ela": {
+   "k": "ela",
+   "short": "Sharks and rays",
+   "name": "Sharks and rays (Elasmobranchii)",
+   "c": "#1F6FB4",
+   "n": 24821,
+   "coll": 5506,
+   "genera": 632,
+   "oldest": 416.3,
+   "youngest": 0.0,
+   "first": 338.5,
+   "last": 0.1,
+   "peak_bin": [
+    40.0,
+    45.0
+   ],
+   "peak_genera": 153,
+   "top_country": "United States of America",
+   "top_country_pct": 22.7,
+   "na_eu_pct": 68.3
+  },
+  "ins": {
+   "k": "ins",
+   "short": "Insects",
+   "name": "Insects (Insecta)",
+   "c": "#7C8C2A",
+   "n": 50489,
+   "coll": 5580,
+   "genera": 12832,
+   "oldest": 470.2,
+   "youngest": 0.0,
+   "first": 317.8,
+   "last": 0.0,
+   "peak_bin": [
+    35.0,
+    40.0
+   ],
+   "peak_genera": 3079,
+   "top_country": "Russia",
+   "top_country_pct": 22.8,
+   "na_eu_pct": 65.0
+  },
+  "tem": {
+   "k": "tem",
+   "short": "Temnospondyls",
+   "name": "Temnospondyls (early amphibians)",
+   "c": "#3BA24A",
+   "n": 1738,
+   "coll": 1068,
+   "genera": 280,
+   "oldest": 338.5,
+   "youngest": 91.8,
+   "first": 333.1,
+   "last": 120.5,
+   "peak_bin": [
+    245.0,
+    250.0
+   ],
+   "peak_genera": 63,
+   "top_country": "United States of America",
+   "top_country_pct": 35.0,
+   "na_eu_pct": 80.4
+  },
+  "syn": {
+   "k": "syn",
+   "short": "Early synapsids",
+   "name": "Early synapsids (mammal forerunners)",
+   "c": "#9B7BC4",
+   "n": 3137,
+   "coll": 1329,
+   "genera": 564,
+   "oldest": 317.8,
+   "youngest": 59.2,
+   "first": 308.6,
+   "last": 117.3,
+   "peak_bin": [
+    255.0,
+    260.0
+   ],
+   "peak_genera": 152,
+   "top_country": "South Africa",
+   "top_country_pct": 46.0,
+   "na_eu_pct": 31.2
+  },
+  "lis": {
+   "k": "lis",
+   "short": "Frogs and salamanders",
+   "name": "Frogs and salamanders (Lissamphibia)",
+   "c": "#5CC98B",
+   "n": 4229,
+   "coll": 1654,
+   "genera": 239,
+   "oldest": 250.3,
+   "youngest": 0.0,
+   "first": 191.8,
+   "last": 0.0,
+   "peak_bin": [
+    0.0,
+    5.0
+   ],
+   "peak_genera": 74,
+   "top_country": "United States of America",
+   "top_country_pct": 36.7,
+   "na_eu_pct": 84.3
+  },
+  "tes": {
+   "k": "tes",
+   "short": "Turtles",
+   "name": "Turtles and kin (Testudinata)",
+   "c": "#A9C23F",
+   "n": 10839,
+   "coll": 6331,
+   "genera": 572,
+   "oldest": 247.8,
+   "youngest": 0.0,
+   "first": 216.5,
+   "last": 0.0,
+   "peak_bin": [
+    0.0,
+    5.0
+   ],
+   "peak_genera": 105,
+   "top_country": "United States of America",
+   "top_country_pct": 41.0,
+   "na_eu_pct": 69.9
+  },
+  "ich": {
+   "k": "ich",
+   "short": "Ichthyosaurs",
+   "name": "Ichthyosaurs (Ichthyosauromorpha)",
+   "c": "#22B5C9",
+   "n": 669,
+   "coll": 516,
+   "genera": 87,
+   "oldest": 250.3,
+   "youngest": 97.2,
+   "first": 249.7,
+   "last": 97.2,
+   "peak_bin": [
+    240.0,
+    245.0
+   ],
+   "peak_genera": 18,
+   "top_country": "United Kingdom",
+   "top_country_pct": 21.1,
+   "na_eu_pct": 77.0
+  },
+  "cro": {
+   "k": "cro",
+   "short": "Crocodile relatives",
+   "name": "Crocodiles and relatives (Crocodylomorpha)",
+   "c": "#1E6B53",
+   "n": 5397,
+   "coll": 3854,
+   "genera": 401,
+   "oldest": 232.2,
+   "youngest": 0.0,
+   "first": 232.2,
+   "last": 0.0,
+   "peak_bin": [
+    65.0,
+    70.0
+   ],
+   "peak_genera": 41,
+   "top_country": "United States of America",
+   "top_country_pct": 28.7,
+   "na_eu_pct": 59.1
+  },
+  "ple": {
+   "k": "ple",
+   "short": "Plesiosaurs",
+   "name": "Plesiosaurs (Plesiosauria)",
+   "c": "#123F73",
+   "n": 1138,
+   "coll": 859,
+   "genera": 130,
+   "oldest": 224.2,
+   "youngest": 64.1,
+   "first": 207.1,
+   "last": 69.1,
+   "peak_bin": [
+    65.0,
+    70.0
+   ],
+   "peak_genera": 19,
+   "top_country": "United Kingdom",
+   "top_country_pct": 25.4,
+   "na_eu_pct": 67.8
+  },
+  "ptr": {
+   "k": "ptr",
+   "short": "Pterosaurs",
+   "name": "Pterosaurs (Pterosauria)",
+   "c": "#F08BC0",
+   "n": 1105,
+   "coll": 785,
+   "genera": 202,
+   "oldest": 232.2,
+   "youngest": 69.1,
+   "first": 231.8,
+   "last": 69.1,
+   "peak_bin": [
+    115.0,
+    120.0
+   ],
+   "peak_genera": 39,
+   "top_country": "United States of America",
+   "top_country_pct": 14.5,
+   "na_eu_pct": 60.9
+  },
+  "the": {
+   "k": "the",
+   "short": "Theropods",
+   "name": "Theropods, not birds (Theropoda)",
+   "c": "#D7262B",
+   "n": 8035,
+   "coll": 4673,
+   "genera": 693,
+   "oldest": 249.7,
+   "youngest": 66.9,
+   "first": 242.0,
+   "last": 69.1,
+   "peak_bin": [
+    65.0,
+    70.0
+   ],
+   "peak_genera": 141,
+   "top_country": "United States of America",
+   "top_country_pct": 31.3,
+   "na_eu_pct": 60.5
+  },
+  "sau": {
+   "k": "sau",
+   "short": "Sauropods",
+   "name": "Sauropods and relatives (Sauropodomorpha)",
+   "c": "#8E1F55",
+   "n": 3842,
+   "coll": 2952,
+   "genera": 380,
+   "oldest": 244.2,
+   "youngest": 69.1,
+   "first": 232.2,
+   "last": 69.1,
+   "peak_bin": [
+    65.0,
+    70.0
+   ],
+   "peak_genera": 46,
+   "top_country": "United States of America",
+   "top_country_pct": 19.1,
+   "na_eu_pct": 46.5
+  },
+  "orn": {
+   "k": "orn",
+   "short": "Ornithischians",
+   "name": "Ornithischians (Ornithischia)",
+   "c": "#EF7D27",
+   "n": 6758,
+   "coll": 4737,
+   "genera": 471,
+   "oldest": 244.2,
+   "youngest": 66.9,
+   "first": 232.2,
+   "last": 69.1,
+   "peak_bin": [
+    75.0,
+    80.0
+   ],
+   "peak_genera": 149,
+   "top_country": "United States of America",
+   "top_country_pct": 39.7,
+   "na_eu_pct": 76.1
+  },
+  "din": {
+   "k": "din",
+   "short": "Other dinosaurs",
+   "name": "Dinosaurs not identified further",
+   "c": "#C9A3A0",
+   "n": 1596,
+   "coll": 1467,
+   "genera": 44,
+   "oldest": 249.5,
+   "youngest": 66.9,
+   "first": 248.0,
+   "last": 69.1,
+   "peak_bin": [
+    200.0,
+    205.0
+   ],
+   "peak_genera": 11,
+   "top_country": "United States of America",
+   "top_country_pct": 29.1,
+   "na_eu_pct": 58.0
+  },
+  "mam": {
+   "k": "mam",
+   "short": "Mammals",
+   "name": "Mammals, other (Mammalia)",
+   "c": "#3E3A40",
+   "n": 116607,
+   "coll": 19636,
+   "genera": 5648,
+   "oldest": 238.2,
+   "youngest": 0.0,
+   "first": 148.9,
+   "last": 0.0,
+   "peak_bin": [
+    0.0,
+    5.0
+   ],
+   "peak_genera": 1495,
+   "top_country": "United States of America",
+   "top_country_pct": 42.6,
+   "na_eu_pct": 65.9
+  },
+  "ave": {
+   "k": "ave",
+   "short": "Birds",
+   "name": "Birds (Aves)",
+   "c": "#F2BE00",
+   "n": 16205,
+   "coll": 3713,
+   "genera": 1421,
+   "oldest": 158.2,
+   "youngest": 0.0,
+   "first": 123.6,
+   "last": 0.0,
+   "peak_bin": [
+    0.0,
+    5.0
+   ],
+   "peak_genera": 828,
+   "top_country": "United States of America",
+   "top_country_pct": 29.7,
+   "na_eu_pct": 58.5
+  },
+  "mos": {
+   "k": "mos",
+   "short": "Mosasaurs",
+   "name": "Mosasaurs (Mosasauridae)",
+   "c": "#6B3FA0",
+   "n": 832,
+   "coll": 518,
+   "genera": 44,
+   "oldest": 97.2,
+   "youngest": 64.1,
+   "first": 97.2,
+   "last": 66.9,
+   "peak_bin": [
+    65.0,
+    70.0
+   ],
+   "peak_genera": 29,
+   "top_country": "United States of America",
+   "top_country_pct": 36.7,
+   "na_eu_pct": 63.6
+  },
+  "pro": {
+   "k": "pro",
+   "short": "Elephants",
+   "name": "Elephants and relatives (Proboscidea)",
+   "c": "#8A6F5C",
+   "n": 4322,
+   "coll": 3390,
+   "genera": 61,
+   "oldest": 57.6,
+   "youngest": 0.0,
+   "first": 49.8,
+   "last": 0.0,
+   "peak_bin": [
+    10.0,
+    15.0
+   ],
+   "peak_genera": 32,
+   "top_country": "United States of America",
+   "top_country_pct": 31.5,
+   "na_eu_pct": 56.9
+  },
+  "cet": {
+   "k": "cet",
+   "short": "Whales",
+   "name": "Whales and dolphins (Cetacea)",
+   "c": "#1AA39A",
+   "n": 6138,
+   "coll": 3752,
+   "genera": 440,
+   "oldest": 52.0,
+   "youngest": 0.0,
+   "first": 45.0,
+   "last": 0.0,
+   "peak_bin": [
+    5.0,
+    10.0
+   ],
+   "peak_genera": 151,
+   "top_country": "United States of America",
+   "top_country_pct": 21.5,
+   "na_eu_pct": 68.2
+  },
+  "hom": {
+   "k": "hom",
+   "short": "Hominids",
+   "name": "Hominids (great apes and humans)",
+   "c": "#E8452C",
+   "n": 614,
+   "coll": 474,
+   "genera": 21,
+   "oldest": 19.5,
+   "youngest": 0.0,
+   "first": 18.2,
+   "last": 0.0,
+   "peak_bin": [
+    5.0,
+    10.0
+   ],
+   "peak_genera": 11,
+   "top_country": "Kenya",
+   "top_country_pct": 29.5,
+   "na_eu_pct": 9.4
+  }
+ },
+ "group_order": [
+  "tri",
+  "eur",
+  "pla",
+  "amm",
+  "ela",
+  "tem",
+  "ins",
+  "syn",
+  "ich",
+  "din",
+  "the",
+  "cro",
+  "sau",
+  "orn",
+  "ptr",
+  "tes",
+  "ple",
+  "lis",
+  "mam",
+  "ave",
+  "mos",
+  "pro",
+  "cet",
+  "hom"
+ ],
+ "largest_group": "mam",
+ "smallest_group": "eur",
+ "empty_bins": [
+  225
+ ],
+ "leaders": {
+  "Paleozoic": {
+   "k": "tri",
+   "pct": 56.8
+  },
+  "Mesozoic": {
+   "k": "ins",
+   "pct": 41.7
+  },
+  "Cenozoic": {
+   "k": "mam",
+   "pct": 39.3
+  }
+ },
+ "lead_runs": [
+  {
+   "k": "tri",
+   "old": 520.0,
+   "young": 385.0
+  },
+  {
+   "k": "pla",
+   "old": 385.0,
+   "young": 375.0
+  },
+  {
+   "k": "amm",
+   "old": 375.0,
+   "young": 360.0
+  },
+  {
+   "k": "tri",
+   "old": 360.0,
+   "young": 335.0
+  },
+  {
+   "k": "amm",
+   "old": 335.0,
+   "young": 320.0
+  },
+  {
+   "k": "ins",
+   "old": 320.0,
+   "young": 295.0
+  },
+  {
+   "k": "tem",
+   "old": 295.0,
+   "young": 290.0
+  },
+  {
+   "k": "ins",
+   "old": 290.0,
+   "young": 285.0
+  },
+  {
+   "k": "syn",
+   "old": 285.0,
+   "young": 280.0
+  },
+  {
+   "k": "ins",
+   "old": 280.0,
+   "young": 265.0
+  },
+  {
+   "k": "syn",
+   "old": 265.0,
+   "young": 255.0
+  },
+  {
+   "k": "ins",
+   "old": 255.0,
+   "young": 250.0
+  },
+  {
+   "k": "amm",
+   "old": 250.0,
+   "young": 240.0
+  },
+  {
+   "k": "ins",
+   "old": 240.0,
+   "young": 230.0
+  },
+  {
+   "k": "amm",
+   "old": 225.0,
+   "young": 220.0
+  },
+  {
+   "k": "ins",
+   "old": 220.0,
+   "young": 215.0
+  },
+  {
+   "k": "amm",
+   "old": 215.0,
+   "young": 205.0
+  },
+  {
+   "k": "ins",
+   "old": 205.0,
+   "young": 195.0
+  },
+  {
+   "k": "amm",
+   "old": 195.0,
+   "young": 185.0
+  },
+  {
+   "k": "ins",
+   "old": 185.0,
+   "young": 175.0
+  },
+  {
+   "k": "amm",
+   "old": 175.0,
+   "young": 170.0
+  },
+  {
+   "k": "ins",
+   "old": 170.0,
+   "young": 135.0
+  },
+  {
+   "k": "amm",
+   "old": 135.0,
+   "young": 130.0
+  },
+  {
+   "k": "ins",
+   "old": 130.0,
+   "young": 115.0
+  },
+  {
+   "k": "amm",
+   "old": 115.0,
+   "young": 105.0
+  },
+  {
+   "k": "ins",
+   "old": 105.0,
+   "young": 100.0
+  },
+  {
+   "k": "amm",
+   "old": 100.0,
+   "young": 95.0
+  },
+  {
+   "k": "ins",
+   "old": 95.0,
+   "young": 90.0
+  },
+  {
+   "k": "amm",
+   "old": 90.0,
+   "young": 85.0
+  },
+  {
+   "k": "ins",
+   "old": 85.0,
+   "young": 75.0
+  },
+  {
+   "k": "ela",
+   "old": 75.0,
+   "young": 70.0
+  },
+  {
+   "k": "the",
+   "old": 70.0,
+   "young": 65.0
+  },
+  {
+   "k": "mam",
+   "old": 65.0,
+   "young": 40.0
+  },
+  {
+   "k": "ins",
+   "old": 40.0,
+   "young": 35.0
+  },
+  {
+   "k": "mam",
+   "old": 35.0,
+   "young": 20.0
+  },
+  {
+   "k": "ins",
+   "old": 20.0,
+   "young": 15.0
+  },
+  {
+   "k": "mam",
+   "old": 15.0,
+   "young": 0.0
+  }
+ ],
+ "pangaea": {
+  "peak_pct": 90.2,
+  "peak_age": 180,
+  "today_pct": 54.4,
+  "at": {
+   "0": 54.4,
+   "66": 23.8,
+   "100": 23.1,
+   "150": 50.1,
+   "170": 72.4,
+   "180": 90.2,
+   "200": 89.9,
+   "250": 88.6,
+   "270": 87.9,
+   "280": 68.9,
+   "300": 69.4,
+   "340": 62.8,
+   "400": 69.8,
+   "500": 58.9
+  },
+  "first_over_85": 270,
+  "last_over_85": 180,
+  "years_over_85": 90,
+  "land_mkm2_today": 148.07
+ },
+ "dino": {
+  "n": 20231,
+  "genera": 1588,
+  "coll": 10130,
+  "by_sub": {
+   "the": {
+    "n": 8035,
+    "genera": 693
+   },
+   "sau": {
+    "n": 3842,
+    "genera": 380
+   },
+   "orn": {
+    "n": 6758,
+    "genera": 471
+   },
+   "din": {
+    "n": 1596,
+    "genera": 44
+   }
+  },
+  "oldest": 249.7,
+  "na_eu_pct": 62.9,
+  "top_country": "United States of America",
+  "top_country_pct": 31.6,
+  "intervals": [
+   {
+    "name": "Late Triassic",
+    "old": 237.0,
+    "young": 201.4,
+    "genera": 97,
+    "multi": 14,
+    "multi_pct": 14.4,
+    "n": 440,
+    "n_cont": 4,
+    "pangaea_pct": 88.3,
+    "pangaea_age": 220,
+    "na_eu_pct": 78.4
+   },
+   {
+    "name": "Early Jurassic",
+    "old": 201.4,
+    "young": 174.7,
+    "genera": 123,
+    "multi": 14,
+    "multi_pct": 11.4,
+    "n": 1106,
+    "n_cont": 5,
+    "pangaea_pct": 90.0,
+    "pangaea_age": 190,
+    "na_eu_pct": 68.5
+   },
+   {
+    "name": "Middle Jurassic",
+    "old": 174.7,
+    "young": 161.5,
+    "genera": 115,
+    "multi": 12,
+    "multi_pct": 10.4,
+    "n": 269,
+    "n_cont": 3,
+    "pangaea_pct": 72.4,
+    "pangaea_age": 170,
+    "na_eu_pct": 40.9
+   },
+   {
+    "name": "Late Jurassic",
+    "old": 161.5,
+    "young": 143.1,
+    "genera": 170,
+    "multi": 27,
+    "multi_pct": 15.9,
+    "n": 1313,
+    "n_cont": 5,
+    "pangaea_pct": 50.1,
+    "pangaea_age": 150,
+    "na_eu_pct": 80.8
+   },
+   {
+    "name": "Early Cretaceous",
+    "old": 143.1,
+    "young": 100.5,
+    "genera": 523,
+    "multi": 24,
+    "multi_pct": 4.6,
+    "n": 1642,
+    "n_cont": 6,
+    "pangaea_pct": 35.9,
+    "pangaea_age": 120,
+    "na_eu_pct": 53.7
+   },
+   {
+    "name": "Late Cretaceous",
+    "old": 100.5,
+    "young": 66.0,
+    "genera": 717,
+    "multi": 35,
+    "multi_pct": 4.9,
+    "n": 4248,
+    "n_cont": 6,
+    "pangaea_pct": 23.4,
+    "pangaea_age": 80,
+    "na_eu_pct": 63.3
+   }
+  ],
+  "multi_pangaea": {
+   "genera": 203,
+   "multi": 23,
+   "pct": 11.3,
+   "one_in": 9
+  },
+  "multi_cretaceous": {
+   "genera": 1180,
+   "multi": 60,
+   "pct": 5.1,
+   "one_in": 20
+  },
+  "peak_bin": [
+   75.0,
+   80.0
+  ],
+  "peak_genera": 316,
+  "peak_na_pct": 75.0,
+  "maastrichtian_genera": 278,
+  "maastrichtian_coll": 1854,
+  "maastrichtian_na_pct": 47.1,
+  "polar_coll": 245,
+  "polar_max": 85.8,
+  "polar_place": "New Zealand",
+  "polar_place_age": 146.6,
+  "polar75_coll": 53,
+  "polar75_places": {
+   "Alaska": 23,
+   "Victoria": 17,
+   "Australia": 10,
+   "Yukon": 2,
+   "New Zealand": 1
+  }
+ },
+ "lat": {
+  "tri": 19.8,
+  "eur": 21.4,
+  "pla": 18.8,
+  "amm": 32.8,
+  "ela": 38.1,
+  "ins": 42.6,
+  "tem": 16.0,
+  "syn": 48.4,
+  "lis": 42.3,
+  "tes": 41.2,
+  "ich": 37.7,
+  "cro": 36.3,
+  "ple": 42.2,
+  "ptr": 39.7,
+  "the": 37.4,
+  "sau": 35.0,
+  "orn": 43.1,
+  "din": 35.8,
+  "mam": 40.5,
+  "ave": 38.7,
+  "mos": 41.0,
+  "pro": 36.1,
+  "cet": 42.2,
+  "hom": 8.5
+ },
+ "lat_today_vs": {
+  "mam_0_10": 35.4
+ },
+ "drift": {
+  "median_abs_dlat_old200": 43.6,
+  "uk_420": -22.8,
+  "uk_300": -0.0,
+  "uk_190": 37.7,
+  "uk_60": null,
+  "uk_today": 52.0,
+  "uk_420_abs": 22.8,
+  "uk_300_age": "300 to 320",
+  "uk_300_txt": "within a degree of it",
+  "uk_n": 3695
+ },
+ "ext_min_coll": 2,
+ "extinctions": [
+  {
+   "k": "eor",
+   "name": "End-Ordovician",
+   "age": 445,
+   "standing": 362,
+   "lost": 223,
+   "lost_pct": 61.6,
+   "by_group": {
+    "tri": {
+     "standing": 357,
+     "lost_pct": 62.2
+    }
+   }
+  },
+  {
+   "k": "lde",
+   "name": "Late Devonian",
+   "age": 372,
+   "standing": 151,
+   "lost": 92,
+   "lost_pct": 60.9,
+   "by_group": {
+    "tri": {
+     "standing": 53,
+     "lost_pct": 66.0
+    },
+    "pla": {
+     "standing": 37,
+     "lost_pct": 64.9
+    },
+    "amm": {
+     "standing": 47,
+     "lost_pct": 70.2
+    }
+   }
+  },
+  {
+   "k": "epe",
+   "name": "End-Permian",
+   "age": 252,
+   "standing": 414,
+   "lost": 308,
+   "lost_pct": 74.4,
+   "by_group": {
+    "amm": {
+     "standing": 109,
+     "lost_pct": 83.5
+    },
+    "ela": {
+     "standing": 18,
+     "lost_pct": 27.8
+    },
+    "ins": {
+     "standing": 165,
+     "lost_pct": 66.1
+    },
+    "tem": {
+     "standing": 15,
+     "lost_pct": 66.7
+    },
+    "syn": {
+     "standing": 95,
+     "lost_pct": 87.4
+    }
+   }
+  },
+  {
+   "k": "etr",
+   "name": "End-Triassic",
+   "age": 201,
+   "standing": 244,
+   "lost": 81,
+   "lost_pct": 33.2,
+   "by_group": {
+    "amm": {
+     "standing": 42,
+     "lost_pct": 73.8
+    },
+    "ela": {
+     "standing": 24,
+     "lost_pct": 33.3
+    },
+    "ins": {
+     "standing": 109,
+     "lost_pct": 10.1
+    },
+    "syn": {
+     "standing": 15,
+     "lost_pct": 40.0
+    },
+    "the": {
+     "standing": 11,
+     "lost_pct": 18.2
+    },
+    "sau": {
+     "standing": 10,
+     "lost_pct": 50.0
+    }
+   }
+  },
+  {
+   "k": "ecr",
+   "name": "End-Cretaceous",
+   "age": 66,
+   "standing": 825,
+   "lost": 468,
+   "lost_pct": 56.7,
+   "by_group": {
+    "amm": {
+     "standing": 70,
+     "lost_pct": 97.1
+    },
+    "ela": {
+     "standing": 163,
+     "lost_pct": 36.2
+    },
+    "ins": {
+     "standing": 134,
+     "lost_pct": 1.5
+    },
+    "lis": {
+     "standing": 22,
+     "lost_pct": 40.9
+    },
+    "tes": {
+     "standing": 89,
+     "lost_pct": 36.0
+    },
+    "cro": {
+     "standing": 45,
+     "lost_pct": 57.8
+    },
+    "ple": {
+     "standing": 12,
+     "lost_pct": 100.0
+    },
+    "the": {
+     "standing": 81,
+     "lost_pct": 100.0
+    },
+    "sau": {
+     "standing": 29,
+     "lost_pct": 100.0
+    },
+    "orn": {
+     "standing": 58,
+     "lost_pct": 100.0
+    },
+    "mam": {
+     "standing": 66,
+     "lost_pct": 65.2
+    },
+    "ave": {
+     "standing": 21,
+     "lost_pct": 71.4
+    },
+    "mos": {
+     "standing": 23,
+     "lost_pct": 100.0
+    }
+   }
+  }
+ ],
+ "ext_bg_median": 36.8,
+ "ext_bg_p90": 62.9,
+ "ext_bg_n": 40,
+ "last": {
+  "tri": 265.6,
+  "eur": 279.5,
+  "pla": 352.8,
+  "amm": 69.1,
+  "ich": 97.2,
+  "ple": 69.1,
+  "mos": 66.9,
+  "ptr": 69.1,
+  "the": 69.1,
+  "sau": 69.1,
+  "orn": 69.1,
+  "tem": 120.5,
+  "syn": 117.3
+ },
+ "facts": {
+  "hom_afr_asia_pct": 87.8,
+  "hom_abs_lat_tropics_pct": 76.2,
+  "ins_top50_coll_pct": 25.2,
+  "ins_coll": 5580,
+  "tyr_north_pct": 100.0,
+  "tyr_n": 507,
+  "cer_north_pct": 100.0,
+  "cer_n": 752,
+  "abe_north_pct": 19.0,
+  "abe_n": 210,
+  "tit_north_pct": 54.9,
+  "tit_n": 1238,
+  "abe_south_india_pct": 88.1,
+  "trex_mt_n": 18,
+  "trex_mt_dlat": 6.9,
+  "alaska_polar_min_lat": 63.3
+ },
+ "frames": {
+  "n": 66,
+  "first": 540,
+  "last": 0,
+  "max_n": 89195,
+  "cells_total": 48774,
+  "kb_total": 3312
+ }
+}

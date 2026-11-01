@@ -1,0 +1,870 @@
+group,group_key,bin_young_ma,bin_old_ma,genera,occurrences
+Trilobites,tri,250.0,255.0,6,46
+Trilobites,tri,255.0,260.0,8,31
+Trilobites,tri,260.0,265.0,7,25
+Trilobites,tri,265.0,270.0,14,49
+Trilobites,tri,270.0,275.0,9,112
+Trilobites,tri,275.0,280.0,13,72
+Trilobites,tri,280.0,285.0,0,2
+Trilobites,tri,285.0,290.0,8,28
+Trilobites,tri,290.0,295.0,8,16
+Trilobites,tri,295.0,300.0,13,43
+Trilobites,tri,300.0,305.0,8,96
+Trilobites,tri,305.0,310.0,9,54
+Trilobites,tri,310.0,315.0,7,26
+Trilobites,tri,315.0,320.0,8,36
+Trilobites,tri,320.0,325.0,7,24
+Trilobites,tri,325.0,330.0,7,50
+Trilobites,tri,330.0,335.0,10,71
+Trilobites,tri,335.0,340.0,49,197
+Trilobites,tri,340.0,345.0,44,154
+Trilobites,tri,345.0,350.0,22,70
+Trilobites,tri,350.0,355.0,65,352
+Trilobites,tri,355.0,360.0,53,356
+Trilobites,tri,360.0,365.0,47,402
+Trilobites,tri,365.0,370.0,30,122
+Trilobites,tri,370.0,375.0,40,175
+Trilobites,tri,375.0,380.0,31,86
+Trilobites,tri,380.0,385.0,41,111
+Trilobites,tri,385.0,390.0,74,1023
+Trilobites,tri,390.0,395.0,144,975
+Trilobites,tri,395.0,400.0,119,465
+Trilobites,tri,400.0,405.0,143,609
+Trilobites,tri,405.0,410.0,61,133
+Trilobites,tri,410.0,415.0,131,1128
+Trilobites,tri,415.0,420.0,85,607
+Trilobites,tri,420.0,425.0,102,765
+Trilobites,tri,425.0,430.0,143,1363
+Trilobites,tri,430.0,435.0,115,848
+Trilobites,tri,435.0,440.0,147,1593
+Trilobites,tri,440.0,445.0,135,783
+Trilobites,tri,445.0,450.0,277,3606
+Trilobites,tri,450.0,455.0,286,4725
+Trilobites,tri,455.0,460.0,308,3099
+Trilobites,tri,460.0,465.0,328,3826
+Trilobites,tri,465.0,470.0,90,522
+Trilobites,tri,470.0,475.0,319,3341
+Trilobites,tri,475.0,480.0,162,1753
+Trilobites,tri,480.0,485.0,304,2904
+Trilobites,tri,485.0,490.0,249,1597
+Trilobites,tri,490.0,495.0,456,4535
+Trilobites,tri,495.0,500.0,329,2755
+Trilobites,tri,500.0,505.0,360,2505
+Trilobites,tri,505.0,510.0,296,2654
+Trilobites,tri,510.0,515.0,303,2040
+Trilobites,tri,515.0,520.0,178,838
+Trilobites,tri,520.0,525.0,5,7
+Trilobites,tri,525.0,530.0,8,18
+Sea scorpions,eur,250.0,255.0,1,1
+Sea scorpions,eur,275.0,280.0,1,1
+Sea scorpions,eur,280.0,285.0,1,2
+Sea scorpions,eur,285.0,290.0,2,3
+Sea scorpions,eur,295.0,300.0,1,3
+Sea scorpions,eur,300.0,305.0,3,13
+Sea scorpions,eur,305.0,310.0,4,11
+Sea scorpions,eur,310.0,315.0,3,11
+Sea scorpions,eur,315.0,320.0,2,15
+Sea scorpions,eur,320.0,325.0,1,2
+Sea scorpions,eur,325.0,330.0,3,3
+Sea scorpions,eur,335.0,340.0,3,3
+Sea scorpions,eur,340.0,345.0,3,3
+Sea scorpions,eur,350.0,355.0,2,6
+Sea scorpions,eur,360.0,365.0,3,4
+Sea scorpions,eur,365.0,370.0,4,4
+Sea scorpions,eur,370.0,375.0,3,4
+Sea scorpions,eur,375.0,380.0,2,3
+Sea scorpions,eur,385.0,390.0,3,7
+Sea scorpions,eur,390.0,395.0,1,1
+Sea scorpions,eur,395.0,400.0,0,1
+Sea scorpions,eur,400.0,405.0,7,14
+Sea scorpions,eur,405.0,410.0,11,20
+Sea scorpions,eur,410.0,415.0,4,12
+Sea scorpions,eur,415.0,420.0,17,71
+Sea scorpions,eur,420.0,425.0,34,201
+Sea scorpions,eur,425.0,430.0,19,58
+Sea scorpions,eur,430.0,435.0,19,60
+Sea scorpions,eur,435.0,440.0,18,41
+Sea scorpions,eur,440.0,445.0,1,1
+Sea scorpions,eur,445.0,450.0,3,11
+Sea scorpions,eur,450.0,455.0,1,3
+Sea scorpions,eur,455.0,460.0,1,1
+Sea scorpions,eur,460.0,465.0,1,1
+Armoured fish,pla,200.0,205.0,1,1
+Armoured fish,pla,310.0,315.0,1,1
+Armoured fish,pla,350.0,355.0,2,2
+Armoured fish,pla,360.0,365.0,18,39
+Armoured fish,pla,365.0,370.0,25,93
+Armoured fish,pla,370.0,375.0,15,31
+Armoured fish,pla,375.0,380.0,50,147
+Armoured fish,pla,380.0,385.0,49,126
+Armoured fish,pla,385.0,390.0,54,171
+Armoured fish,pla,390.0,395.0,27,132
+Armoured fish,pla,395.0,400.0,23,38
+Armoured fish,pla,400.0,405.0,49,74
+Armoured fish,pla,405.0,410.0,14,22
+Armoured fish,pla,410.0,415.0,20,39
+Armoured fish,pla,415.0,420.0,35,79
+Armoured fish,pla,420.0,425.0,1,3
+Armoured fish,pla,425.0,430.0,2,5
+Armoured fish,pla,435.0,440.0,1,1
+Ammonites,amm,60.0,65.0,2,11
+Ammonites,amm,65.0,70.0,67,2598
+Ammonites,amm,70.0,75.0,28,119
+Ammonites,amm,75.0,80.0,101,2667
+Ammonites,amm,80.0,85.0,80,947
+Ammonites,amm,85.0,90.0,106,1130
+Ammonites,amm,90.0,95.0,127,2487
+Ammonites,amm,95.0,100.0,166,3268
+Ammonites,amm,100.0,105.0,143,1994
+Ammonites,amm,105.0,110.0,151,1514
+Ammonites,amm,110.0,115.0,116,1090
+Ammonites,amm,115.0,120.0,123,1310
+Ammonites,amm,120.0,125.0,138,2302
+Ammonites,amm,125.0,130.0,95,2240
+Ammonites,amm,130.0,135.0,107,3813
+Ammonites,amm,135.0,140.0,38,104
+Ammonites,amm,140.0,145.0,145,1651
+Ammonites,amm,145.0,150.0,150,1813
+Ammonites,amm,150.0,155.0,101,1031
+Ammonites,amm,155.0,160.0,104,1628
+Ammonites,amm,160.0,165.0,174,3414
+Ammonites,amm,165.0,170.0,170,2494
+Ammonites,amm,170.0,175.0,67,1159
+Ammonites,amm,175.0,180.0,77,3586
+Ammonites,amm,180.0,185.0,67,2347
+Ammonites,amm,185.0,190.0,100,4662
+Ammonites,amm,190.0,195.0,58,263
+Ammonites,amm,195.0,200.0,95,2499
+Ammonites,amm,200.0,205.0,72,1610
+Ammonites,amm,205.0,210.0,32,177
+Ammonites,amm,210.0,215.0,60,379
+Ammonites,amm,215.0,220.0,69,209
+Ammonites,amm,220.0,225.0,68,512
+Ammonites,amm,230.0,235.0,130,1069
+Ammonites,amm,235.0,240.0,150,1873
+Ammonites,amm,240.0,245.0,207,4382
+Ammonites,amm,245.0,250.0,313,5912
+Ammonites,amm,250.0,255.0,143,3655
+Ammonites,amm,255.0,260.0,75,552
+Ammonites,amm,260.0,265.0,29,110
+Ammonites,amm,265.0,270.0,68,412
+Ammonites,amm,270.0,275.0,62,376
+Ammonites,amm,275.0,280.0,73,987
+Ammonites,amm,280.0,285.0,2,2
+Ammonites,amm,285.0,290.0,60,714
+Ammonites,amm,290.0,295.0,37,165
+Ammonites,amm,295.0,300.0,34,207
+Ammonites,amm,300.0,305.0,45,665
+Ammonites,amm,305.0,310.0,40,125
+Ammonites,amm,310.0,315.0,37,289
+Ammonites,amm,315.0,320.0,42,325
+Ammonites,amm,320.0,325.0,60,695
+Ammonites,amm,325.0,330.0,69,1244
+Ammonites,amm,330.0,335.0,35,349
+Ammonites,amm,335.0,340.0,39,247
+Ammonites,amm,340.0,345.0,29,92
+Ammonites,amm,345.0,350.0,8,19
+Ammonites,amm,350.0,355.0,54,604
+Ammonites,amm,355.0,360.0,26,147
+Ammonites,amm,360.0,365.0,63,635
+Ammonites,amm,365.0,370.0,76,636
+Ammonites,amm,370.0,375.0,56,706
+Ammonites,amm,375.0,380.0,35,396
+Ammonites,amm,380.0,385.0,48,350
+Ammonites,amm,385.0,390.0,28,125
+Ammonites,amm,390.0,395.0,30,503
+Ammonites,amm,395.0,400.0,25,198
+Ammonites,amm,400.0,405.0,17,79
+Ammonites,amm,405.0,410.0,17,80
+Ammonites,amm,410.0,415.0,3,9
+Sharks and rays,ela,0.0,5.0,84,1233
+Sharks and rays,ela,5.0,10.0,97,1497
+Sharks and rays,ela,10.0,15.0,102,1828
+Sharks and rays,ela,15.0,20.0,110,1308
+Sharks and rays,ela,20.0,25.0,54,208
+Sharks and rays,ela,25.0,30.0,71,331
+Sharks and rays,ela,30.0,35.0,75,695
+Sharks and rays,ela,35.0,40.0,147,2119
+Sharks and rays,ela,40.0,45.0,153,1794
+Sharks and rays,ela,45.0,50.0,71,298
+Sharks and rays,ela,50.0,55.0,133,1217
+Sharks and rays,ela,55.0,60.0,100,569
+Sharks and rays,ela,60.0,65.0,97,696
+Sharks and rays,ela,65.0,70.0,139,1770
+Sharks and rays,ela,70.0,75.0,63,311
+Sharks and rays,ela,75.0,80.0,133,1973
+Sharks and rays,ela,80.0,85.0,102,584
+Sharks and rays,ela,85.0,90.0,59,296
+Sharks and rays,ela,90.0,95.0,71,682
+Sharks and rays,ela,95.0,100.0,115,1428
+Sharks and rays,ela,100.0,105.0,55,410
+Sharks and rays,ela,105.0,110.0,49,232
+Sharks and rays,ela,110.0,115.0,45,120
+Sharks and rays,ela,115.0,120.0,39,104
+Sharks and rays,ela,120.0,125.0,47,204
+Sharks and rays,ela,125.0,130.0,24,56
+Sharks and rays,ela,130.0,135.0,38,83
+Sharks and rays,ela,135.0,140.0,7,107
+Sharks and rays,ela,140.0,145.0,11,55
+Sharks and rays,ela,145.0,150.0,25,48
+Sharks and rays,ela,150.0,155.0,21,149
+Sharks and rays,ela,155.0,160.0,15,36
+Sharks and rays,ela,160.0,165.0,22,60
+Sharks and rays,ela,165.0,170.0,34,114
+Sharks and rays,ela,170.0,175.0,12,21
+Sharks and rays,ela,175.0,180.0,32,134
+Sharks and rays,ela,180.0,185.0,14,44
+Sharks and rays,ela,185.0,190.0,11,55
+Sharks and rays,ela,190.0,195.0,1,2
+Sharks and rays,ela,195.0,200.0,8,50
+Sharks and rays,ela,200.0,205.0,26,329
+Sharks and rays,ela,205.0,210.0,2,2
+Sharks and rays,ela,210.0,215.0,6,23
+Sharks and rays,ela,215.0,220.0,19,188
+Sharks and rays,ela,220.0,225.0,8,33
+Sharks and rays,ela,230.0,235.0,24,130
+Sharks and rays,ela,235.0,240.0,30,403
+Sharks and rays,ela,240.0,245.0,20,119
+Sharks and rays,ela,245.0,250.0,17,133
+Sharks and rays,ela,250.0,255.0,12,51
+Sharks and rays,ela,255.0,260.0,9,42
+Sharks and rays,ela,260.0,265.0,6,34
+Sharks and rays,ela,265.0,270.0,10,99
+Sharks and rays,ela,270.0,275.0,7,26
+Sharks and rays,ela,275.0,280.0,5,12
+Sharks and rays,ela,280.0,285.0,4,13
+Sharks and rays,ela,285.0,290.0,7,20
+Sharks and rays,ela,290.0,295.0,6,26
+Sharks and rays,ela,295.0,300.0,7,13
+Sharks and rays,ela,300.0,305.0,11,20
+Sharks and rays,ela,305.0,310.0,11,46
+Sharks and rays,ela,310.0,315.0,9,24
+Sharks and rays,ela,315.0,320.0,6,15
+Sharks and rays,ela,325.0,330.0,8,15
+Sharks and rays,ela,330.0,335.0,3,19
+Sharks and rays,ela,335.0,340.0,8,18
+Sharks and rays,ela,340.0,345.0,2,2
+Sharks and rays,ela,350.0,355.0,5,9
+Sharks and rays,ela,365.0,370.0,3,8
+Sharks and rays,ela,370.0,375.0,1,4
+Sharks and rays,ela,375.0,380.0,1,10
+Sharks and rays,ela,380.0,385.0,0,1
+Sharks and rays,ela,385.0,390.0,1,3
+Sharks and rays,ela,390.0,395.0,1,2
+Sharks and rays,ela,395.0,400.0,0,1
+Sharks and rays,ela,400.0,405.0,1,1
+Sharks and rays,ela,405.0,410.0,1,5
+Sharks and rays,ela,415.0,420.0,0,1
+Insects,ins,0.0,5.0,935,5841
+Insects,ins,5.0,10.0,242,517
+Insects,ins,10.0,15.0,507,1481
+Insects,ins,15.0,20.0,1125,2849
+Insects,ins,20.0,25.0,50,132
+Insects,ins,25.0,30.0,571,1641
+Insects,ins,30.0,35.0,266,834
+Insects,ins,35.0,40.0,3079,10661
+Insects,ins,40.0,45.0,339,990
+Insects,ins,45.0,50.0,247,648
+Insects,ins,50.0,55.0,537,1391
+Insects,ins,55.0,60.0,48,108
+Insects,ins,60.0,65.0,161,264
+Insects,ins,65.0,70.0,16,69
+Insects,ins,70.0,75.0,0,1
+Insects,ins,75.0,80.0,178,399
+Insects,ins,80.0,85.0,134,211
+Insects,ins,85.0,90.0,39,98
+Insects,ins,90.0,95.0,202,313
+Insects,ins,95.0,100.0,108,157
+Insects,ins,100.0,105.0,170,261
+Insects,ins,105.0,110.0,103,186
+Insects,ins,110.0,115.0,71,149
+Insects,ins,115.0,120.0,1079,3122
+Insects,ins,120.0,125.0,938,1903
+Insects,ins,125.0,130.0,161,234
+Insects,ins,130.0,135.0,55,83
+Insects,ins,135.0,140.0,101,181
+Insects,ins,140.0,145.0,153,236
+Insects,ins,145.0,150.0,372,1268
+Insects,ins,150.0,155.0,522,1828
+Insects,ins,155.0,160.0,122,250
+Insects,ins,160.0,165.0,602,1305
+Insects,ins,165.0,170.0,171,325
+Insects,ins,170.0,175.0,25,31
+Insects,ins,175.0,180.0,232,592
+Insects,ins,180.0,185.0,364,1187
+Insects,ins,185.0,190.0,40,61
+Insects,ins,195.0,200.0,158,362
+Insects,ins,200.0,205.0,151,372
+Insects,ins,205.0,210.0,12,17
+Insects,ins,210.0,215.0,1,2
+Insects,ins,215.0,220.0,167,405
+Insects,ins,230.0,235.0,150,322
+Insects,ins,235.0,240.0,330,857
+Insects,ins,240.0,245.0,52,89
+Insects,ins,245.0,250.0,59,149
+Insects,ins,250.0,255.0,243,512
+Insects,ins,255.0,260.0,149,255
+Insects,ins,260.0,265.0,88,131
+Insects,ins,265.0,270.0,80,180
+Insects,ins,270.0,275.0,272,1035
+Insects,ins,275.0,280.0,310,673
+Insects,ins,280.0,285.0,6,9
+Insects,ins,285.0,290.0,166,664
+Insects,ins,290.0,295.0,22,54
+Insects,ins,295.0,300.0,175,499
+Insects,ins,300.0,305.0,235,950
+Insects,ins,305.0,310.0,220,563
+Insects,ins,310.0,315.0,183,362
+Insects,ins,315.0,320.0,110,173
+Insects,ins,320.0,325.0,26,35
+Insects,ins,325.0,330.0,7,8
+Insects,ins,360.0,365.0,1,1
+Insects,ins,385.0,390.0,0,2
+Insects,ins,470.0,475.0,1,1
+Temnospondyls,tem,90.0,95.0,1,1
+Temnospondyls,tem,110.0,115.0,1,1
+Temnospondyls,tem,120.0,125.0,1,7
+Temnospondyls,tem,140.0,145.0,1,3
+Temnospondyls,tem,150.0,155.0,1,4
+Temnospondyls,tem,155.0,160.0,0,1
+Temnospondyls,tem,160.0,165.0,3,7
+Temnospondyls,tem,165.0,170.0,2,4
+Temnospondyls,tem,180.0,185.0,1,2
+Temnospondyls,tem,190.0,195.0,1,1
+Temnospondyls,tem,195.0,200.0,2,7
+Temnospondyls,tem,200.0,205.0,9,24
+Temnospondyls,tem,205.0,210.0,0,1
+Temnospondyls,tem,210.0,215.0,3,5
+Temnospondyls,tem,215.0,220.0,11,208
+Temnospondyls,tem,230.0,235.0,13,75
+Temnospondyls,tem,235.0,240.0,13,62
+Temnospondyls,tem,240.0,245.0,33,115
+Temnospondyls,tem,245.0,250.0,63,355
+Temnospondyls,tem,250.0,255.0,43,155
+Temnospondyls,tem,255.0,260.0,11,28
+Temnospondyls,tem,260.0,265.0,11,43
+Temnospondyls,tem,265.0,270.0,14,31
+Temnospondyls,tem,270.0,275.0,11,19
+Temnospondyls,tem,275.0,280.0,19,76
+Temnospondyls,tem,280.0,285.0,7,34
+Temnospondyls,tem,285.0,290.0,23,82
+Temnospondyls,tem,290.0,295.0,41,164
+Temnospondyls,tem,295.0,300.0,24,89
+Temnospondyls,tem,300.0,305.0,30,52
+Temnospondyls,tem,305.0,310.0,20,43
+Temnospondyls,tem,310.0,315.0,8,19
+Temnospondyls,tem,315.0,320.0,5,11
+Temnospondyls,tem,320.0,325.0,2,2
+Temnospondyls,tem,325.0,330.0,1,2
+Temnospondyls,tem,330.0,335.0,3,4
+Temnospondyls,tem,335.0,340.0,0,1
+Early synapsids,syn,55.0,60.0,1,1
+Early synapsids,syn,70.0,75.0,1,1
+Early synapsids,syn,90.0,95.0,1,1
+Early synapsids,syn,95.0,100.0,0,1
+Early synapsids,syn,105.0,110.0,1,1
+Early synapsids,syn,110.0,115.0,0,1
+Early synapsids,syn,115.0,120.0,3,13
+Early synapsids,syn,120.0,125.0,2,8
+Early synapsids,syn,130.0,135.0,2,3
+Early synapsids,syn,140.0,145.0,2,6
+Early synapsids,syn,145.0,150.0,5,21
+Early synapsids,syn,150.0,155.0,5,8
+Early synapsids,syn,155.0,160.0,5,6
+Early synapsids,syn,160.0,165.0,7,12
+Early synapsids,syn,165.0,170.0,13,53
+Early synapsids,syn,175.0,180.0,4,4
+Early synapsids,syn,180.0,185.0,1,7
+Early synapsids,syn,185.0,190.0,2,3
+Early synapsids,syn,190.0,195.0,8,31
+Early synapsids,syn,195.0,200.0,23,80
+Early synapsids,syn,200.0,205.0,32,110
+Early synapsids,syn,210.0,215.0,3,5
+Early synapsids,syn,215.0,220.0,22,68
+Early synapsids,syn,220.0,225.0,1,1
+Early synapsids,syn,230.0,235.0,36,86
+Early synapsids,syn,235.0,240.0,24,96
+Early synapsids,syn,240.0,245.0,54,228
+Early synapsids,syn,245.0,250.0,30,173
+Early synapsids,syn,250.0,255.0,23,102
+Early synapsids,syn,255.0,260.0,152,1073
+Early synapsids,syn,260.0,265.0,116,410
+Early synapsids,syn,265.0,270.0,47,122
+Early synapsids,syn,270.0,275.0,8,11
+Early synapsids,syn,275.0,280.0,22,93
+Early synapsids,syn,280.0,285.0,12,50
+Early synapsids,syn,285.0,290.0,18,87
+Early synapsids,syn,290.0,295.0,14,88
+Early synapsids,syn,295.0,300.0,13,23
+Early synapsids,syn,300.0,305.0,21,39
+Early synapsids,syn,305.0,310.0,2,5
+Early synapsids,syn,310.0,315.0,4,4
+Early synapsids,syn,315.0,320.0,2,2
+Frogs and salamanders,lis,0.0,5.0,74,1573
+Frogs and salamanders,lis,5.0,10.0,37,230
+Frogs and salamanders,lis,10.0,15.0,43,353
+Frogs and salamanders,lis,15.0,20.0,39,153
+Frogs and salamanders,lis,20.0,25.0,10,18
+Frogs and salamanders,lis,25.0,30.0,31,71
+Frogs and salamanders,lis,30.0,35.0,18,53
+Frogs and salamanders,lis,35.0,40.0,13,75
+Frogs and salamanders,lis,40.0,45.0,11,35
+Frogs and salamanders,lis,45.0,50.0,3,16
+Frogs and salamanders,lis,50.0,55.0,20,58
+Frogs and salamanders,lis,55.0,60.0,16,62
+Frogs and salamanders,lis,60.0,65.0,14,82
+Frogs and salamanders,lis,65.0,70.0,23,468
+Frogs and salamanders,lis,70.0,75.0,8,28
+Frogs and salamanders,lis,75.0,80.0,20,450
+Frogs and salamanders,lis,80.0,85.0,7,43
+Frogs and salamanders,lis,85.0,90.0,3,10
+Frogs and salamanders,lis,90.0,95.0,14,63
+Frogs and salamanders,lis,95.0,100.0,7,55
+Frogs and salamanders,lis,100.0,105.0,0,4
+Frogs and salamanders,lis,105.0,110.0,4,18
+Frogs and salamanders,lis,110.0,115.0,7,33
+Frogs and salamanders,lis,115.0,120.0,12,29
+Frogs and salamanders,lis,120.0,125.0,16,56
+Frogs and salamanders,lis,125.0,130.0,1,7
+Frogs and salamanders,lis,130.0,135.0,1,11
+Frogs and salamanders,lis,135.0,140.0,0,4
+Frogs and salamanders,lis,140.0,145.0,6,35
+Frogs and salamanders,lis,145.0,150.0,5,36
+Frogs and salamanders,lis,150.0,155.0,3,12
+Frogs and salamanders,lis,155.0,160.0,3,4
+Frogs and salamanders,lis,160.0,165.0,4,10
+Frogs and salamanders,lis,165.0,170.0,8,56
+Frogs and salamanders,lis,170.0,175.0,1,1
+Frogs and salamanders,lis,175.0,180.0,2,5
+Frogs and salamanders,lis,190.0,195.0,1,5
+Frogs and salamanders,lis,215.0,220.0,0,2
+Frogs and salamanders,lis,230.0,235.0,2,3
+Frogs and salamanders,lis,245.0,250.0,1,1
+Frogs and salamanders,lis,250.0,255.0,1,1
+Turtles,tes,0.0,5.0,105,1679
+Turtles,tes,5.0,10.0,68,614
+Turtles,tes,10.0,15.0,77,722
+Turtles,tes,15.0,20.0,60,424
+Turtles,tes,20.0,25.0,18,99
+Turtles,tes,25.0,30.0,40,165
+Turtles,tes,30.0,35.0,51,186
+Turtles,tes,35.0,40.0,62,331
+Turtles,tes,40.0,45.0,64,514
+Turtles,tes,45.0,50.0,25,236
+Turtles,tes,50.0,55.0,62,529
+Turtles,tes,55.0,60.0,36,202
+Turtles,tes,60.0,65.0,55,492
+Turtles,tes,65.0,70.0,100,1486
+Turtles,tes,70.0,75.0,32,161
+Turtles,tes,75.0,80.0,83,1345
+Turtles,tes,80.0,85.0,19,75
+Turtles,tes,85.0,90.0,25,68
+Turtles,tes,90.0,95.0,20,126
+Turtles,tes,95.0,100.0,40,228
+Turtles,tes,100.0,105.0,24,72
+Turtles,tes,105.0,110.0,14,48
+Turtles,tes,110.0,115.0,20,85
+Turtles,tes,115.0,120.0,28,116
+Turtles,tes,120.0,125.0,25,132
+Turtles,tes,125.0,130.0,9,25
+Turtles,tes,130.0,135.0,15,59
+Turtles,tes,135.0,140.0,8,22
+Turtles,tes,140.0,145.0,16,68
+Turtles,tes,145.0,150.0,25,193
+Turtles,tes,150.0,155.0,30,162
+Turtles,tes,155.0,160.0,5,20
+Turtles,tes,160.0,165.0,12,34
+Turtles,tes,165.0,170.0,7,43
+Turtles,tes,170.0,175.0,0,1
+Turtles,tes,175.0,180.0,3,8
+Turtles,tes,180.0,185.0,1,1
+Turtles,tes,190.0,195.0,1,15
+Turtles,tes,195.0,200.0,5,18
+Turtles,tes,200.0,205.0,3,8
+Turtles,tes,210.0,215.0,1,1
+Turtles,tes,215.0,220.0,7,20
+Turtles,tes,230.0,235.0,1,1
+Turtles,tes,245.0,250.0,1,5
+Ichthyosaurs,ich,95.0,100.0,3,24
+Ichthyosaurs,ich,100.0,105.0,5,51
+Ichthyosaurs,ich,105.0,110.0,4,30
+Ichthyosaurs,ich,110.0,115.0,2,5
+Ichthyosaurs,ich,115.0,120.0,3,8
+Ichthyosaurs,ich,120.0,125.0,4,10
+Ichthyosaurs,ich,125.0,130.0,4,16
+Ichthyosaurs,ich,130.0,135.0,3,15
+Ichthyosaurs,ich,140.0,145.0,7,17
+Ichthyosaurs,ich,145.0,150.0,11,47
+Ichthyosaurs,ich,150.0,155.0,8,25
+Ichthyosaurs,ich,155.0,160.0,5,12
+Ichthyosaurs,ich,160.0,165.0,3,23
+Ichthyosaurs,ich,165.0,170.0,4,13
+Ichthyosaurs,ich,170.0,175.0,2,9
+Ichthyosaurs,ich,175.0,180.0,5,16
+Ichthyosaurs,ich,180.0,185.0,7,61
+Ichthyosaurs,ich,185.0,190.0,4,11
+Ichthyosaurs,ich,190.0,195.0,3,7
+Ichthyosaurs,ich,195.0,200.0,5,37
+Ichthyosaurs,ich,200.0,205.0,9,65
+Ichthyosaurs,ich,210.0,215.0,4,4
+Ichthyosaurs,ich,215.0,220.0,6,12
+Ichthyosaurs,ich,220.0,225.0,2,5
+Ichthyosaurs,ich,230.0,235.0,7,24
+Ichthyosaurs,ich,235.0,240.0,5,18
+Ichthyosaurs,ich,240.0,245.0,18,65
+Ichthyosaurs,ich,245.0,250.0,15,38
+Ichthyosaurs,ich,250.0,255.0,1,1
+Crocodile relatives,cro,0.0,5.0,28,583
+Crocodile relatives,cro,5.0,10.0,36,309
+Crocodile relatives,cro,10.0,15.0,32,289
+Crocodile relatives,cro,15.0,20.0,26,212
+Crocodile relatives,cro,20.0,25.0,5,28
+Crocodile relatives,cro,25.0,30.0,17,96
+Crocodile relatives,cro,30.0,35.0,7,51
+Crocodile relatives,cro,35.0,40.0,21,133
+Crocodile relatives,cro,40.0,45.0,22,169
+Crocodile relatives,cro,45.0,50.0,11,77
+Crocodile relatives,cro,50.0,55.0,34,267
+Crocodile relatives,cro,55.0,60.0,26,120
+Crocodile relatives,cro,60.0,65.0,32,206
+Crocodile relatives,cro,65.0,70.0,41,587
+Crocodile relatives,cro,70.0,75.0,34,134
+Crocodile relatives,cro,75.0,80.0,32,404
+Crocodile relatives,cro,80.0,85.0,14,35
+Crocodile relatives,cro,85.0,90.0,7,27
+Crocodile relatives,cro,90.0,95.0,10,37
+Crocodile relatives,cro,95.0,100.0,31,149
+Crocodile relatives,cro,100.0,105.0,11,58
+Crocodile relatives,cro,105.0,110.0,7,49
+Crocodile relatives,cro,110.0,115.0,13,80
+Crocodile relatives,cro,115.0,120.0,17,77
+Crocodile relatives,cro,120.0,125.0,22,147
+Crocodile relatives,cro,125.0,130.0,10,41
+Crocodile relatives,cro,130.0,135.0,15,51
+Crocodile relatives,cro,135.0,140.0,6,32
+Crocodile relatives,cro,140.0,145.0,13,106
+Crocodile relatives,cro,145.0,150.0,34,222
+Crocodile relatives,cro,150.0,155.0,29,154
+Crocodile relatives,cro,155.0,160.0,14,38
+Crocodile relatives,cro,160.0,165.0,23,88
+Crocodile relatives,cro,165.0,170.0,16,145
+Crocodile relatives,cro,170.0,175.0,2,5
+Crocodile relatives,cro,175.0,180.0,5,23
+Crocodile relatives,cro,180.0,185.0,5,41
+Crocodile relatives,cro,185.0,190.0,2,2
+Crocodile relatives,cro,190.0,195.0,4,16
+Crocodile relatives,cro,195.0,200.0,14,38
+Crocodile relatives,cro,200.0,205.0,3,21
+Crocodile relatives,cro,210.0,215.0,1,2
+Crocodile relatives,cro,215.0,220.0,7,31
+Crocodile relatives,cro,230.0,235.0,5,17
+Plesiosaurs,ple,60.0,65.0,0,1
+Plesiosaurs,ple,65.0,70.0,19,170
+Plesiosaurs,ple,70.0,75.0,9,50
+Plesiosaurs,ple,75.0,80.0,15,137
+Plesiosaurs,ple,80.0,85.0,9,35
+Plesiosaurs,ple,85.0,90.0,5,30
+Plesiosaurs,ple,90.0,95.0,14,61
+Plesiosaurs,ple,95.0,100.0,8,87
+Plesiosaurs,ple,100.0,105.0,5,35
+Plesiosaurs,ple,105.0,110.0,2,10
+Plesiosaurs,ple,110.0,115.0,4,20
+Plesiosaurs,ple,115.0,120.0,8,17
+Plesiosaurs,ple,120.0,125.0,7,29
+Plesiosaurs,ple,125.0,130.0,6,16
+Plesiosaurs,ple,130.0,135.0,3,16
+Plesiosaurs,ple,135.0,140.0,3,10
+Plesiosaurs,ple,140.0,145.0,6,23
+Plesiosaurs,ple,145.0,150.0,10,82
+Plesiosaurs,ple,150.0,155.0,6,59
+Plesiosaurs,ple,155.0,160.0,8,32
+Plesiosaurs,ple,160.0,165.0,17,80
+Plesiosaurs,ple,165.0,170.0,7,11
+Plesiosaurs,ple,170.0,175.0,1,6
+Plesiosaurs,ple,175.0,180.0,9,21
+Plesiosaurs,ple,180.0,185.0,7,18
+Plesiosaurs,ple,185.0,190.0,4,12
+Plesiosaurs,ple,190.0,195.0,4,14
+Plesiosaurs,ple,195.0,200.0,6,15
+Plesiosaurs,ple,200.0,205.0,10,38
+Plesiosaurs,ple,205.0,210.0,0,1
+Plesiosaurs,ple,215.0,220.0,1,1
+Plesiosaurs,ple,220.0,225.0,0,1
+Pterosaurs,ptr,65.0,70.0,18,59
+Pterosaurs,ptr,70.0,75.0,1,11
+Pterosaurs,ptr,75.0,80.0,16,82
+Pterosaurs,ptr,80.0,85.0,3,32
+Pterosaurs,ptr,85.0,90.0,6,21
+Pterosaurs,ptr,90.0,95.0,2,8
+Pterosaurs,ptr,95.0,100.0,17,93
+Pterosaurs,ptr,100.0,105.0,15,69
+Pterosaurs,ptr,105.0,110.0,7,28
+Pterosaurs,ptr,110.0,115.0,2,27
+Pterosaurs,ptr,115.0,120.0,39,100
+Pterosaurs,ptr,120.0,125.0,28,93
+Pterosaurs,ptr,125.0,130.0,3,18
+Pterosaurs,ptr,130.0,135.0,7,24
+Pterosaurs,ptr,135.0,140.0,4,9
+Pterosaurs,ptr,140.0,145.0,5,51
+Pterosaurs,ptr,145.0,150.0,19,111
+Pterosaurs,ptr,150.0,155.0,14,62
+Pterosaurs,ptr,155.0,160.0,11,19
+Pterosaurs,ptr,160.0,165.0,18,40
+Pterosaurs,ptr,165.0,170.0,5,39
+Pterosaurs,ptr,170.0,175.0,1,3
+Pterosaurs,ptr,175.0,180.0,1,2
+Pterosaurs,ptr,180.0,185.0,3,51
+Pterosaurs,ptr,190.0,195.0,1,3
+Pterosaurs,ptr,195.0,200.0,2,5
+Pterosaurs,ptr,200.0,205.0,3,7
+Pterosaurs,ptr,205.0,210.0,5,5
+Pterosaurs,ptr,210.0,215.0,5,17
+Pterosaurs,ptr,215.0,220.0,6,12
+Pterosaurs,ptr,230.0,235.0,0,4
+Theropods,the,65.0,70.0,141,1414
+Theropods,the,70.0,75.0,25,220
+Theropods,the,75.0,80.0,135,1532
+Theropods,the,80.0,85.0,18,167
+Theropods,the,85.0,90.0,24,111
+Theropods,the,90.0,95.0,26,179
+Theropods,the,95.0,100.0,44,336
+Theropods,the,100.0,105.0,15,151
+Theropods,the,105.0,110.0,38,142
+Theropods,the,110.0,115.0,46,309
+Theropods,the,115.0,120.0,106,367
+Theropods,the,120.0,125.0,98,413
+Theropods,the,125.0,130.0,25,108
+Theropods,the,130.0,135.0,25,203
+Theropods,the,135.0,140.0,11,89
+Theropods,the,140.0,145.0,18,157
+Theropods,the,145.0,150.0,24,424
+Theropods,the,150.0,155.0,27,255
+Theropods,the,155.0,160.0,25,107
+Theropods,the,160.0,165.0,28,72
+Theropods,the,165.0,170.0,28,206
+Theropods,the,170.0,175.0,6,23
+Theropods,the,175.0,180.0,4,16
+Theropods,the,180.0,185.0,7,56
+Theropods,the,185.0,190.0,11,57
+Theropods,the,190.0,195.0,10,59
+Theropods,the,195.0,200.0,18,266
+Theropods,the,200.0,205.0,25,320
+Theropods,the,210.0,215.0,3,14
+Theropods,the,215.0,220.0,19,196
+Theropods,the,220.0,225.0,0,2
+Theropods,the,230.0,235.0,8,45
+Theropods,the,240.0,245.0,3,17
+Theropods,the,245.0,250.0,2,2
+Sauropods,sau,65.0,70.0,46,659
+Sauropods,sau,70.0,75.0,21,134
+Sauropods,sau,75.0,80.0,27,180
+Sauropods,sau,80.0,85.0,8,28
+Sauropods,sau,85.0,90.0,16,57
+Sauropods,sau,90.0,95.0,4,31
+Sauropods,sau,95.0,100.0,18,149
+Sauropods,sau,100.0,105.0,9,62
+Sauropods,sau,105.0,110.0,18,83
+Sauropods,sau,110.0,115.0,25,140
+Sauropods,sau,115.0,120.0,21,120
+Sauropods,sau,120.0,125.0,17,139
+Sauropods,sau,125.0,130.0,9,77
+Sauropods,sau,130.0,135.0,13,83
+Sauropods,sau,135.0,140.0,9,34
+Sauropods,sau,140.0,145.0,8,70
+Sauropods,sau,145.0,150.0,37,716
+Sauropods,sau,150.0,155.0,33,260
+Sauropods,sau,155.0,160.0,19,53
+Sauropods,sau,160.0,165.0,15,56
+Sauropods,sau,165.0,170.0,25,146
+Sauropods,sau,170.0,175.0,6,17
+Sauropods,sau,175.0,180.0,4,16
+Sauropods,sau,180.0,185.0,9,30
+Sauropods,sau,185.0,190.0,8,28
+Sauropods,sau,190.0,195.0,6,10
+Sauropods,sau,195.0,200.0,25,192
+Sauropods,sau,200.0,205.0,20,89
+Sauropods,sau,205.0,210.0,1,2
+Sauropods,sau,210.0,215.0,4,11
+Sauropods,sau,215.0,220.0,25,137
+Sauropods,sau,220.0,225.0,1,2
+Sauropods,sau,230.0,235.0,16,25
+Sauropods,sau,235.0,240.0,1,1
+Sauropods,sau,240.0,245.0,4,5
+Ornithischians,orn,65.0,70.0,87,1425
+Ornithischians,orn,70.0,75.0,36,188
+Ornithischians,orn,75.0,80.0,149,2100
+Ornithischians,orn,80.0,85.0,14,71
+Ornithischians,orn,85.0,90.0,19,106
+Ornithischians,orn,90.0,95.0,18,144
+Ornithischians,orn,95.0,100.0,27,215
+Ornithischians,orn,100.0,105.0,20,144
+Ornithischians,orn,105.0,110.0,19,183
+Ornithischians,orn,110.0,115.0,41,251
+Ornithischians,orn,115.0,120.0,35,191
+Ornithischians,orn,120.0,125.0,37,319
+Ornithischians,orn,125.0,130.0,18,140
+Ornithischians,orn,130.0,135.0,21,156
+Ornithischians,orn,135.0,140.0,13,86
+Ornithischians,orn,140.0,145.0,13,85
+Ornithischians,orn,145.0,150.0,25,352
+Ornithischians,orn,150.0,155.0,18,137
+Ornithischians,orn,155.0,160.0,8,19
+Ornithischians,orn,160.0,165.0,20,54
+Ornithischians,orn,165.0,170.0,12,74
+Ornithischians,orn,170.0,175.0,2,7
+Ornithischians,orn,175.0,180.0,3,15
+Ornithischians,orn,180.0,185.0,3,4
+Ornithischians,orn,185.0,190.0,4,17
+Ornithischians,orn,190.0,195.0,4,31
+Ornithischians,orn,195.0,200.0,12,134
+Ornithischians,orn,200.0,205.0,7,53
+Ornithischians,orn,210.0,215.0,0,1
+Ornithischians,orn,215.0,220.0,7,31
+Ornithischians,orn,220.0,225.0,0,1
+Ornithischians,orn,230.0,235.0,5,14
+Ornithischians,orn,235.0,240.0,3,5
+Ornithischians,orn,240.0,245.0,1,5
+Other dinosaurs,din,65.0,70.0,4,339
+Other dinosaurs,din,70.0,75.0,2,41
+Other dinosaurs,din,75.0,80.0,5,219
+Other dinosaurs,din,80.0,85.0,2,25
+Other dinosaurs,din,85.0,90.0,5,51
+Other dinosaurs,din,90.0,95.0,2,40
+Other dinosaurs,din,95.0,100.0,7,60
+Other dinosaurs,din,100.0,105.0,3,31
+Other dinosaurs,din,105.0,110.0,0,16
+Other dinosaurs,din,110.0,115.0,3,53
+Other dinosaurs,din,115.0,120.0,2,60
+Other dinosaurs,din,120.0,125.0,0,47
+Other dinosaurs,din,125.0,130.0,0,23
+Other dinosaurs,din,130.0,135.0,1,28
+Other dinosaurs,din,135.0,140.0,0,31
+Other dinosaurs,din,140.0,145.0,0,28
+Other dinosaurs,din,145.0,150.0,1,97
+Other dinosaurs,din,150.0,155.0,0,44
+Other dinosaurs,din,155.0,160.0,0,12
+Other dinosaurs,din,160.0,165.0,0,14
+Other dinosaurs,din,165.0,170.0,0,43
+Other dinosaurs,din,170.0,175.0,0,9
+Other dinosaurs,din,175.0,180.0,0,2
+Other dinosaurs,din,180.0,185.0,0,13
+Other dinosaurs,din,185.0,190.0,0,16
+Other dinosaurs,din,190.0,195.0,0,8
+Other dinosaurs,din,195.0,200.0,10,87
+Other dinosaurs,din,200.0,205.0,11,42
+Other dinosaurs,din,205.0,210.0,0,1
+Other dinosaurs,din,215.0,220.0,9,42
+Other dinosaurs,din,220.0,225.0,0,1
+Other dinosaurs,din,230.0,235.0,8,40
+Other dinosaurs,din,235.0,240.0,0,2
+Other dinosaurs,din,240.0,245.0,3,27
+Other dinosaurs,din,245.0,250.0,2,4
+Mammals,mam,0.0,5.0,1495,44632
+Mammals,mam,5.0,10.0,1072,9137
+Mammals,mam,10.0,15.0,1061,12788
+Mammals,mam,15.0,20.0,891,6983
+Mammals,mam,20.0,25.0,414,2743
+Mammals,mam,25.0,30.0,645,3562
+Mammals,mam,30.0,35.0,667,5000
+Mammals,mam,35.0,40.0,654,5199
+Mammals,mam,40.0,45.0,570,3825
+Mammals,mam,45.0,50.0,349,2899
+Mammals,mam,50.0,55.0,565,10475
+Mammals,mam,55.0,60.0,298,3625
+Mammals,mam,60.0,65.0,286,2480
+Mammals,mam,65.0,70.0,95,1199
+Mammals,mam,70.0,75.0,10,20
+Mammals,mam,75.0,80.0,79,818
+Mammals,mam,80.0,85.0,22,76
+Mammals,mam,85.0,90.0,14,26
+Mammals,mam,90.0,95.0,26,97
+Mammals,mam,95.0,100.0,32,202
+Mammals,mam,100.0,105.0,10,23
+Mammals,mam,105.0,110.0,5,14
+Mammals,mam,110.0,115.0,35,96
+Mammals,mam,115.0,120.0,14,47
+Mammals,mam,120.0,125.0,42,83
+Mammals,mam,125.0,130.0,3,8
+Mammals,mam,130.0,135.0,8,18
+Mammals,mam,135.0,140.0,6,9
+Mammals,mam,140.0,145.0,36,132
+Mammals,mam,145.0,150.0,32,169
+Mammals,mam,150.0,155.0,34,76
+Mammals,mam,155.0,160.0,7,10
+Mammals,mam,160.0,165.0,10,21
+Mammals,mam,165.0,170.0,18,72
+Mammals,mam,175.0,180.0,7,8
+Mammals,mam,185.0,190.0,2,4
+Mammals,mam,195.0,200.0,6,14
+Mammals,mam,200.0,205.0,3,10
+Mammals,mam,210.0,215.0,0,1
+Mammals,mam,215.0,220.0,1,4
+Mammals,mam,230.0,235.0,1,1
+Mammals,mam,235.0,240.0,0,1
+Birds,ave,0.0,5.0,828,13126
+Birds,ave,5.0,10.0,133,548
+Birds,ave,10.0,15.0,118,399
+Birds,ave,15.0,20.0,108,374
+Birds,ave,20.0,25.0,47,83
+Birds,ave,25.0,30.0,66,146
+Birds,ave,30.0,35.0,67,155
+Birds,ave,35.0,40.0,92,239
+Birds,ave,40.0,45.0,67,140
+Birds,ave,45.0,50.0,11,26
+Birds,ave,50.0,55.0,97,292
+Birds,ave,55.0,60.0,29,80
+Birds,ave,60.0,65.0,12,30
+Birds,ave,65.0,70.0,31,135
+Birds,ave,70.0,75.0,7,12
+Birds,ave,75.0,80.0,16,165
+Birds,ave,80.0,85.0,4,19
+Birds,ave,85.0,90.0,6,10
+Birds,ave,90.0,95.0,10,23
+Birds,ave,95.0,100.0,6,26
+Birds,ave,100.0,105.0,3,7
+Birds,ave,105.0,110.0,6,24
+Birds,ave,110.0,115.0,6,22
+Birds,ave,115.0,120.0,24,49
+Birds,ave,120.0,125.0,14,43
+Birds,ave,125.0,130.0,2,3
+Birds,ave,130.0,135.0,2,8
+Birds,ave,135.0,140.0,4,6
+Birds,ave,140.0,145.0,4,8
+Birds,ave,145.0,150.0,0,1
+Birds,ave,150.0,155.0,1,5
+Birds,ave,155.0,160.0,1,1
+Mosasaurs,mos,60.0,65.0,0,1
+Mosasaurs,mos,65.0,70.0,29,331
+Mosasaurs,mos,70.0,75.0,12,90
+Mosasaurs,mos,75.0,80.0,21,259
+Mosasaurs,mos,80.0,85.0,9,43
+Mosasaurs,mos,85.0,90.0,10,63
+Mosasaurs,mos,90.0,95.0,8,31
+Mosasaurs,mos,95.0,100.0,6,14
+Elephants,pro,0.0,5.0,27,2945
+Elephants,pro,5.0,10.0,30,502
+Elephants,pro,10.0,15.0,32,622
+Elephants,pro,15.0,20.0,12,159
+Elephants,pro,20.0,25.0,3,6
+Elephants,pro,25.0,30.0,9,23
+Elephants,pro,30.0,35.0,5,17
+Elephants,pro,35.0,40.0,4,33
+Elephants,pro,40.0,45.0,3,5
+Elephants,pro,45.0,50.0,0,1
+Elephants,pro,50.0,55.0,3,8
+Elephants,pro,55.0,60.0,1,1
+Whales,cet,0.0,5.0,114,2838
+Whales,cet,5.0,10.0,151,817
+Whales,cet,10.0,15.0,129,996
+Whales,cet,15.0,20.0,87,522
+Whales,cet,20.0,25.0,36,98
+Whales,cet,25.0,30.0,58,298
+Whales,cet,30.0,35.0,19,58
+Whales,cet,35.0,40.0,36,417
+Whales,cet,40.0,45.0,27,86
+Whales,cet,45.0,50.0,1,6
+Whales,cet,50.0,55.0,2,2
+Hominids,hom,0.0,5.0,6,547
+Hominids,hom,5.0,10.0,11,27
+Hominids,hom,10.0,15.0,9,34
+Hominids,hom,15.0,20.0,3,6
